@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  @apply bg-chatgpt-main text-white;
+  @apply bg-background text-foreground;
 }
 
 .sidebar-item {
