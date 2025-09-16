@@ -2,14 +2,115 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  @apply bg-background text-foreground;
+@layer base {
+  :root {
+    /* Chakra UI Dark Theme Colors */
+    --background: 226 28% 7%;           /* gray.900 */
+    --foreground: 210 40% 98%;          /* whiteAlpha.900 */
+    
+    --card: 224 28% 10%;                /* gray.800 */
+    --card-foreground: 210 40% 98%;
+    
+    --popover: 224 28% 10%;             /* gray.800 */
+    --popover-foreground: 210 40% 98%;
+    
+    --primary: 200 100% 64%;            /* blue.400 */
+    --primary-foreground: 210 40% 2%;
+    
+    --secondary: 215 28% 17%;           /* gray.700 */
+    --secondary-foreground: 210 40% 98%;
+    
+    --muted: 215 28% 17%;               /* gray.700 */
+    --muted-foreground: 217 11% 65%;    /* gray.400 */
+    
+    --accent: 215 28% 17%;              /* gray.700 */
+    --accent-foreground: 210 40% 98%;
+    
+    --destructive: 0 84% 60%;           /* red.500 */
+    --destructive-foreground: 210 40% 98%;
+    
+    --border: 215 14% 34%;              /* gray.600 */
+    --input: 215 14% 34%;               /* gray.600 */
+    --ring: 200 100% 64%;               /* blue.400 */
+    
+    --radius: 0.5rem;
+    
+    /* Chakra UI specific colors */
+    --chakra-gray-50: 220 14% 96%;
+    --chakra-gray-100: 220 13% 91%;
+    --chakra-gray-200: 216 12% 84%;
+    --chakra-gray-300: 218 11% 65%;
+    --chakra-gray-400: 218 11% 65%;
+    --chakra-gray-500: 220 9% 46%;
+    --chakra-gray-600: 215 14% 34%;
+    --chakra-gray-700: 215 28% 17%;
+    --chakra-gray-800: 224 28% 10%;
+    --chakra-gray-900: 226 28% 7%;
+    
+    --chakra-blue-50: 213 94% 95%;
+    --chakra-blue-100: 214 95% 93%;
+    --chakra-blue-200: 213 97% 87%;
+    --chakra-blue-300: 212 96% 78%;
+    --chakra-blue-400: 200 100% 64%;
+    --chakra-blue-500: 207 90% 54%;
+    --chakra-blue-600: 208 79% 51%;
+    --chakra-blue-700: 211 79% 48%;
+    --chakra-blue-800: 213 78% 42%;
+    --chakra-blue-900: 214 78% 35%;
+    
+    --chakra-green-400: 137 72% 56%;
+    --chakra-green-500: 134 61% 41%;
+    
+    --chakra-red-400: 0 91% 71%;
+    --chakra-red-500: 0 84% 60%;
+    
+    --chakra-yellow-400: 45 93% 58%;
+    --chakra-purple-400: 270 95% 75%;
+  }
+
+  html {
+    @apply text-foreground;
+  }
+  
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
 }
 
-.sidebar-item {
-  @apply flex items-center gap-3 rounded-md px-3 py-3 text-sm transition-colors duration-200 hover:bg-chatgpt-hover cursor-pointer;
-}
-
-.action-button {
-  @apply flex items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-chatgpt-hover/50 border border-transparent hover:border-chatgpt-border transition-all duration-200;
+@layer components {
+  .chakra-card {
+    @apply bg-card border border-border rounded-lg shadow-sm;
+  }
+  
+  .chakra-button {
+    @apply inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
+  }
+  
+  .chakra-button-primary {
+    @apply chakra-button bg-primary text-primary-foreground hover:bg-primary/90;
+  }
+  
+  .chakra-button-secondary {
+    @apply chakra-button bg-secondary text-secondary-foreground hover:bg-secondary/80;
+  }
+  
+  .chakra-button-ghost {
+    @apply chakra-button hover:bg-accent hover:text-accent-foreground;
+  }
+  
+  .chakra-input {
+    @apply flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  
+  .sidebar-item {
+    @apply flex items-center gap-3 rounded-md px-3 py-3 text-sm transition-colors duration-200 hover:bg-accent cursor-pointer;
+  }
+  
+  .action-button {
+    @apply flex items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-accent/50 border border-transparent hover:border-border transition-all duration-200;
+  }
 }
