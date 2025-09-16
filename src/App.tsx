@@ -1,13 +1,13 @@
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Settings from "./pages/Settings";
 import Pricing from "./pages/Pricing";
 
 const App = () => (
-  <TooltipProvider>
+  <>
     <Toaster />
     <Sonner />
     <BrowserRouter>
@@ -17,7 +17,7 @@ const App = () => (
         <Route path="/pricing" element={<Pricing />} />
       </Routes>
     </BrowserRouter>
-  </TooltipProvider>
+  </>
 );
 
 export default App;
