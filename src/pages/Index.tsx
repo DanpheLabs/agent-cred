@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+
 import { useToast } from '@/hooks/use-toast';
 import Sidebar from '@/components/Sidebar';
-import ChatHeader from '@/components/ChatHeader';
+
 import ChatInput from '@/components/ChatInput';
 import ActionButtons from '@/components/ActionButtons';
 import MessageList from '@/components/MessageList';
