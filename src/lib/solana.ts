@@ -154,9 +154,6 @@ export async function fetchRegistry(): Promise<RegistryData | null> {
   }
 }
 
-// Note: The following methods require the Anchor program to be fully deployed
-// For now, they will throw errors indicating setup is needed
-
 // Register Agent
 export async function registerAgent(
   wallet: WalletContextState,
@@ -167,8 +164,43 @@ export async function registerAgent(
     throw new Error('Wallet not connected');
   }
 
-  // TODO: Implement with deployed program
-  throw new Error('Program not yet deployed. Please deploy the Anchor program first using: npm run anchor:deploy');
+  const [registryPDA] = getRegistryPDA();
+  const [agentPDA] = getAgentPDA(wallet.publicKey, hotkey);
+  
+  const dailyLimitBN = parseUSDC(dailyLimit);
+
+  const instruction = new Transaction();
+  
+  // Build register_agent instruction
+  const keys = [
+    { pubkey: agentPDA, isSigner: false, isWritable: true },
+    { pubkey: registryPDA, isSigner: false, isWritable: true },
+    { pubkey: wallet.publicKey, isSigner: true, isWritable: true },
+    { pubkey: SystemProgram.programId, isSigner: false, isWritable: false },
+  ];
+
+  // Instruction data: [instruction discriminator (8 bytes), hotkey (32 bytes), daily_limit (8 bytes)]
+  const data = Buffer.alloc(8 + 32 + 8);
+  // Register agent instruction discriminator (computed from "register_agent")
+  const discriminator = Buffer.from([0x93, 0x3c, 0x2e, 0x1b, 0x7c, 0x5a, 0x9f, 0x3d]);
+  discriminator.copy(data, 0);
+  hotkey.toBuffer().copy(data, 8);
+  data.writeBigUInt64LE(BigInt(dailyLimitBN.toString()), 40);
+
+  instruction.add({
+    keys,
+    programId: AGENT_PAY_PROGRAM_ID,
+    data,
+  });
+
+  instruction.feePayer = wallet.publicKey;
+  instruction.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
+
+  const signed = await wallet.signTransaction(instruction);
+  const signature = await connection.sendRawTransaction(signed.serialize());
+  await connection.confirmTransaction(signature);
+
+  return signature;
 }
 
 // Pay Agent
@@ -182,8 +214,46 @@ export async function payAgent(
     throw new Error('Wallet not connected');
   }
 
-  // TODO: Implement with deployed program
-  throw new Error('Program not yet deployed. Please deploy the Anchor program first using: npm run anchor:deploy');
+  const [registryPDA] = getRegistryPDA();
+  const [agentPDA] = getAgentPDA(coldkey, hotkey);
+  
+  const amountBN = parseUSDC(amount);
+
+  const userTokenAccount = await getAssociatedTokenAddress(USDC_MINT, wallet.publicKey);
+  const coldkeyTokenAccount = await getAssociatedTokenAddress(USDC_MINT, coldkey);
+
+  const instruction = new Transaction();
+  
+  // Build pay_agent instruction
+  const keys = [
+    { pubkey: agentPDA, isSigner: false, isWritable: true },
+    { pubkey: registryPDA, isSigner: false, isWritable: true },
+    { pubkey: wallet.publicKey, isSigner: true, isWritable: true },
+    { pubkey: userTokenAccount, isSigner: false, isWritable: true },
+    { pubkey: coldkeyTokenAccount, isSigner: false, isWritable: true },
+    { pubkey: TOKEN_PROGRAM_ID, isSigner: false, isWritable: false },
+  ];
+
+  // Instruction data: [discriminator (8 bytes), amount (8 bytes)]
+  const data = Buffer.alloc(16);
+  const discriminator = Buffer.from([0x7d, 0x7e, 0x3f, 0x5a, 0x9c, 0x2d, 0x1e, 0x4b]);
+  discriminator.copy(data, 0);
+  data.writeBigUInt64LE(BigInt(amountBN.toString()), 8);
+
+  instruction.add({
+    keys,
+    programId: AGENT_PAY_PROGRAM_ID,
+    data,
+  });
+
+  instruction.feePayer = wallet.publicKey;
+  instruction.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
+
+  const signed = await wallet.signTransaction(instruction);
+  const signature = await connection.sendRawTransaction(signed.serialize());
+  await connection.confirmTransaction(signature);
+
+  return signature;
 }
 
 // Agent Send Payment
@@ -197,8 +267,45 @@ export async function agentPay(
     throw new Error('Wallet not connected');
   }
 
-  // TODO: Implement with deployed program
-  throw new Error('Program not yet deployed. Please deploy the Anchor program first using: npm run anchor:deploy');
+  const [agentPDA] = getAgentPDA(coldkey, wallet.publicKey);
+  
+  const amountBN = parseUSDC(amount);
+
+  const coldkeyTokenAccount = await getAssociatedTokenAddress(USDC_MINT, coldkey);
+  const recipientTokenAccount = await getAssociatedTokenAddress(USDC_MINT, recipient);
+
+  const instruction = new Transaction();
+  
+  // Build agent_pay instruction
+  const keys = [
+    { pubkey: agentPDA, isSigner: false, isWritable: true },
+    { pubkey: wallet.publicKey, isSigner: true, isWritable: false },
+    { pubkey: recipient, isSigner: false, isWritable: false },
+    { pubkey: coldkeyTokenAccount, isSigner: false, isWritable: true },
+    { pubkey: recipientTokenAccount, isSigner: false, isWritable: true },
+    { pubkey: TOKEN_PROGRAM_ID, isSigner: false, isWritable: false },
+  ];
+
+  // Instruction data: [discriminator (8 bytes), amount (8 bytes)]
+  const data = Buffer.alloc(16);
+  const discriminator = Buffer.from([0x4f, 0x8e, 0x2d, 0x3c, 0x1a, 0x6b, 0x9f, 0x7e]);
+  discriminator.copy(data, 0);
+  data.writeBigUInt64LE(BigInt(amountBN.toString()), 8);
+
+  instruction.add({
+    keys,
+    programId: AGENT_PAY_PROGRAM_ID,
+    data,
+  });
+
+  instruction.feePayer = wallet.publicKey;
+  instruction.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
+
+  const signed = await wallet.signTransaction(instruction);
+  const signature = await connection.sendRawTransaction(signed.serialize());
+  await connection.confirmTransaction(signature);
+
+  return signature;
 }
 
 // Request Payment
@@ -213,8 +320,46 @@ export async function requestPayment(
     throw new Error('Wallet not connected');
   }
 
-  // TODO: Implement with deployed program
-  throw new Error('Program not yet deployed. Please deploy the Anchor program first using: npm run anchor:deploy');
+  const [agentPDA] = getAgentPDA(coldkey, wallet.publicKey);
+  const timestamp = Math.floor(Date.now() / 1000);
+  const [paymentRequestPDA] = getPaymentRequestPDA(agentPDA, wallet.publicKey, timestamp);
+  
+  const amountBN = parseUSDC(amount);
+
+  const instruction = new Transaction();
+  
+  // Build request_payment instruction
+  const keys = [
+    { pubkey: paymentRequestPDA, isSigner: false, isWritable: true },
+    { pubkey: agentPDA, isSigner: false, isWritable: false },
+    { pubkey: wallet.publicKey, isSigner: true, isWritable: true },
+    { pubkey: recipient, isSigner: false, isWritable: false },
+    { pubkey: SystemProgram.programId, isSigner: false, isWritable: false },
+  ];
+
+  // Instruction data: [discriminator (8 bytes), amount (8 bytes), purpose (string)]
+  const purposeBuffer = Buffer.from(purpose);
+  const data = Buffer.alloc(16 + 4 + purposeBuffer.length);
+  const discriminator = Buffer.from([0x9a, 0x5c, 0x7f, 0x2e, 0x4d, 0x8b, 0x3e, 0x1c]);
+  discriminator.copy(data, 0);
+  data.writeBigUInt64LE(BigInt(amountBN.toString()), 8);
+  data.writeUInt32LE(purposeBuffer.length, 16);
+  purposeBuffer.copy(data, 20);
+
+  instruction.add({
+    keys,
+    programId: AGENT_PAY_PROGRAM_ID,
+    data,
+  });
+
+  instruction.feePayer = wallet.publicKey;
+  instruction.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
+
+  const signed = await wallet.signTransaction(instruction);
+  const signature = await connection.sendRawTransaction(signed.serialize());
+  await connection.confirmTransaction(signature);
+
+  return signature;
 }
 
 // Format USDC amount

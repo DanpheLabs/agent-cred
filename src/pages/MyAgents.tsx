@@ -4,13 +4,17 @@ import { AgentList } from "@/components/AgentList";
 import { RegisterAgentDialog } from "@/components/RegisterAgentDialog";
 import { AgentSettingsDialog } from "@/components/AgentSettingsDialog";
 import { Button } from "@/components/ui/button";
-import { Plus, RefreshCw } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import { Plus, RefreshCw, Network, Wallet } from "lucide-react";
 import { useWallet } from '@solana/wallet-adapter-react';
 import { getAgents, deleteAgent, Agent } from "@/lib/storage";
+import { useSolanaAgent } from "@/hooks/useSolanaAgent";
+import { AGENT_PAY_PROGRAM_ID, USDC_MINT } from "@/lib/solana";
 import { toast } from "sonner";
 
 export default function MyAgents() {
   const { connected } = useWallet();
+  const { registry } = useSolanaAgent();
   const [agents, setAgents] = useState<Agent[]>([]);
   const [registerDialogOpen, setRegisterDialogOpen] = useState(false);
   const [settingsDialogOpen, setSettingsDialogOpen] = useState(false);
@@ -42,6 +46,45 @@ export default function MyAgents() {
       <Navbar />
       <main className="pt-24 px-6 pb-20">
         <div className="container mx-auto max-w-7xl">
+          {/* Contract Info Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <Card className="glass p-6 rounded-2xl border-border/50">
+              <div className="flex items-start gap-3">
+                <div className="p-2 rounded-lg bg-primary/10">
+                  <Network className="h-5 w-5 text-primary" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm text-muted-foreground mb-1">Network</p>
+                  <p className="font-mono text-sm font-semibold">Solana Devnet</p>
+                </div>
+              </div>
+            </Card>
+
+            <Card className="glass p-6 rounded-2xl border-border/50">
+              <div className="flex items-start gap-3">
+                <div className="p-2 rounded-lg bg-secondary/10">
+                  <Wallet className="h-5 w-5 text-secondary" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm text-muted-foreground mb-1">AgentPay Contract</p>
+                  <p className="font-mono text-xs break-all">{AGENT_PAY_PROGRAM_ID.toBase58().slice(0, 8)}...{AGENT_PAY_PROGRAM_ID.toBase58().slice(-8)}</p>
+                </div>
+              </div>
+            </Card>
+
+            <Card className="glass p-6 rounded-2xl border-border/50">
+              <div className="flex items-start gap-3">
+                <div className="p-2 rounded-lg bg-accent/10">
+                  <Wallet className="h-5 w-5 text-accent" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm text-muted-foreground mb-1">USDC Token</p>
+                  <p className="font-mono text-xs break-all">{USDC_MINT.toBase58().slice(0, 8)}...{USDC_MINT.toBase58().slice(-8)}</p>
+                </div>
+              </div>
+            </Card>
+          </div>
+
           <div className="flex items-center justify-between mb-8">
             <div>
               <h1 className="text-4xl font-bold mb-2">My Agents</h1>
