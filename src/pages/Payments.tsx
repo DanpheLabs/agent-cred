@@ -14,6 +14,8 @@ import { toast } from "sonner";
 export default function Payments() {
   const { connected, publicKey } = useWallet();
   const agents = getAgents().filter(a => a.status === 'active');
+  const [showSdkCode, setShowSdkCode] = useState(false);
+  const [currentSdkCode, setCurrentSdkCode] = useState("");
   const pendingRequests = getPendingRequests();
 
   const [selectedAgent, setSelectedAgent] = useState("");
@@ -25,11 +27,34 @@ export default function Payments() {
   const [requestPurpose, setRequestPurpose] = useState("");
 
   // User → Agent Payment
+  const generatePayAgentCode = () => {
+    const code = `// Pay an Agent - User to Agent USDC Payment
+import { AgentPaySDK } from 'agentpay-sdk';
+
+const sdk = new AgentPaySDK({ 
+  apiKey: 'YOUR_API_KEY',
+  network: 'devnet' 
+});
+
+// Send payment to agent
+const result = await sdk.payAgent({
+  agentHotkey: '${selectedAgent ? agents.find(a => a.id === selectedAgent)?.hotkey : 'AGENT_HOTKEY'}',
+  amount: ${payAmount || '0'},
+  memo: 'Payment for service'
+});
+
+console.log('Transaction:', result.signature);
+console.log('Explorer:', result.explorerUrl);`;
+    setCurrentSdkCode(code);
+    setShowSdkCode(true);
+  };
+
   const handlePayAgent = () => {
     if (!selectedAgent || !payAmount) {
       toast.error("Please select an agent and enter amount");
       return;
     }
+    generatePayAgentCode();
 
     const agent = agents.find(a => a.id === selectedAgent);
     if (!agent) return;
@@ -178,7 +203,19 @@ export default function Payments() {
               <p className="text-muted-foreground">Please connect your Solana wallet to make payments</p>
             </div>
           ) : (
-            <Tabs defaultValue="pay-agent" className="space-y-6">
+            <div className="space-y-6">
+              <div className="flex justify-end">
+                <Button 
+                  variant="outline" 
+                  onClick={() => setShowSdkCode(!showSdkCode)}
+                >
+                  {showSdkCode ? "Hide" : "Show"} SDK Code
+                </Button>
+              </div>
+
+              <div className={`grid gap-6 ${showSdkCode ? 'lg:grid-cols-2' : 'lg:grid-cols-1'}`}>
+                <div>
+                  <Tabs defaultValue="pay-agent" className="space-y-6">
               <TabsList className="grid w-full grid-cols-3">
                 <TabsTrigger value="pay-agent">Another Agent → Your Agent</TabsTrigger>
                 <TabsTrigger value="agent-pay">Your Agent → Another Agent</TabsTrigger>
@@ -398,6 +435,26 @@ export default function Payments() {
                 </Card>
               </TabsContent>
             </Tabs>
+                </div>
+
+                {showSdkCode && (
+                  <Card className="glass p-6 rounded-2xl border-border/50 h-fit sticky top-24">
+                    <h3 className="text-xl font-semibold mb-4">SDK Code Example</h3>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      Use this code in your application to integrate AgentPay
+                    </p>
+                    <pre className="bg-black/50 p-4 rounded-lg overflow-x-auto text-xs">
+                      <code>{currentSdkCode || "// Select an action to see SDK code example"}</code>
+                    </pre>
+                    <div className="mt-4 p-3 bg-primary/10 rounded-lg border border-primary/20">
+                      <p className="text-xs text-muted-foreground">
+                        💡 Install SDK: <code className="text-primary">npm install agentpay-sdk</code>
+                      </p>
+                    </div>
+                  </Card>
+                )}
+              </div>
+            </div>
           )}
         </div>
       </main>

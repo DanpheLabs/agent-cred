@@ -86,7 +86,33 @@ export default function SDK() {
             </Card>
 
             <Card className="glass p-6 rounded-2xl border-border/50">
-              <h3 className="text-xl font-semibold mb-4">Your API Keys</h3>
+              <h3 className="text-xl font-semibold mb-4">Download SDK</h3>
+              <div className="space-y-4 mb-6">
+                <div className="p-4 border border-primary/20 rounded-lg bg-primary/5">
+                  <h4 className="font-semibold mb-2">📦 NPM Package</h4>
+                  <pre className="bg-black/50 p-3 rounded text-sm mb-2">
+                    <code>npm install agentpay-sdk</code>
+                  </pre>
+                  <Button variant="outline" size="sm" onClick={() => {
+                    window.open('https://www.npmjs.com/package/agentpay-sdk', '_blank');
+                  }}>
+                    View on NPM
+                  </Button>
+                </div>
+                <div className="p-4 border border-secondary/20 rounded-lg bg-secondary/5">
+                  <h4 className="font-semibold mb-2">🔗 GitHub Repository</h4>
+                  <p className="text-sm text-muted-foreground mb-2">
+                    View source code, examples, and contribute
+                  </p>
+                  <Button variant="outline" size="sm" onClick={() => {
+                    window.open('https://github.com/agentpay/sdk', '_blank');
+                  }}>
+                    View on GitHub
+                  </Button>
+                </div>
+              </div>
+
+              <h3 className="text-xl font-semibold mb-4 mt-8">Your API Keys</h3>
               <div className="space-y-3">
                 {apiKeys.map(key => (
                   <div key={key.id} className="flex items-center justify-between p-3 border rounded-lg">
