@@ -26,27 +26,84 @@ export default function Payments() {
   const [requestAmount, setRequestAmount] = useState("");
   const [requestPurpose, setRequestPurpose] = useState("");
 
-  // User → Agent Payment
+  // Generate SDK code based on selected tab
   const generatePayAgentCode = () => {
+    const agent = selectedAgent ? agents.find(a => a.id === selectedAgent) : null;
     const code = `// Pay an Agent - User to Agent USDC Payment
 import { AgentPaySDK } from 'agentpay-sdk';
+import { Connection, PublicKey } from '@solana/web3.js';
 
+// Initialize SDK
 const sdk = new AgentPaySDK({ 
-  apiKey: 'YOUR_API_KEY',
-  network: 'devnet' 
+  network: 'devnet',
+  programId: 'AgentPay11111111111111111111111111111111111'
 });
+
+// Connect wallet
+const connection = new Connection('https://api.devnet.solana.com');
 
 // Send payment to agent
 const result = await sdk.payAgent({
-  agentHotkey: '${selectedAgent ? agents.find(a => a.id === selectedAgent)?.hotkey : 'AGENT_HOTKEY'}',
-  amount: ${payAmount || '0'},
-  memo: 'Payment for service'
+  coldkey: '${agent?.coldkey || 'AGENT_COLDKEY_ADDRESS'}',
+  hotkey: '${agent?.hotkey || 'AGENT_HOTKEY_ADDRESS'}',
+  amount: ${payAmount || '10'}, // USDC amount
+  memo: 'Payment for AI service'
 });
 
-console.log('Transaction:', result.signature);
-console.log('Explorer:', result.explorerUrl);`;
-    setCurrentSdkCode(code);
-    setShowSdkCode(true);
+console.log('✅ Payment successful!');
+console.log('Signature:', result.signature);
+console.log('Explorer:', \`https://explorer.solana.com/tx/\${result.signature}?cluster=devnet\`);`;
+    return code;
+  };
+
+  const generateAgentPayCode = () => {
+    const agent = selectedAgent ? agents.find(a => a.id === selectedAgent) : null;
+    const code = `// Agent Instant Payment - Within Daily Limit
+import { AgentPaySDK } from 'agentpay-sdk';
+
+const sdk = new AgentPaySDK({ 
+  network: 'devnet',
+  programId: 'AgentPay11111111111111111111111111111111111'
+});
+
+// Agent sends payment (requires hotkey wallet)
+const result = await sdk.agentPay({
+  coldkey: '${agent?.coldkey || 'AGENT_COLDKEY_ADDRESS'}',
+  recipient: '${agentPayRecipient || 'RECIPIENT_ADDRESS'}',
+  amount: ${agentPayAmount || '5'}, // USDC amount
+});
+
+// Check daily limit status
+const agentData = await sdk.getAgent('${agent?.coldkey || 'AGENT_COLDKEY_ADDRESS'}', '${agent?.hotkey || 'AGENT_HOTKEY_ADDRESS'}');
+console.log('Daily spent:', agentData.dailySpent, '/', agentData.dailyLimit);
+console.log('Payment signature:', result.signature);`;
+    return code;
+  };
+
+  const generateRequestPaymentCode = () => {
+    const agent = selectedAgent ? agents.find(a => a.id === selectedAgent) : null;
+    const code = `// Request Payment Approval - Exceeds Daily Limit
+import { AgentPaySDK } from 'agentpay-sdk';
+
+const sdk = new AgentPaySDK({ 
+  network: 'devnet',
+  programId: 'AgentPay11111111111111111111111111111111111'
+});
+
+// Submit payment request for coldkey approval
+const request = await sdk.requestPayment({
+  coldkey: '${agent?.coldkey || 'AGENT_COLDKEY_ADDRESS'}',
+  recipient: '${requestRecipient || 'RECIPIENT_ADDRESS'}',
+  amount: ${requestAmount || '100'}, // Large amount requiring approval
+  purpose: '${requestPurpose || 'High-value transaction for service XYZ'}'
+});
+
+console.log('Request ID:', request.id);
+console.log('Status:', request.status); // 'pending'
+
+// Coldkey owner will receive notification to approve/reject
+// After approval, payment executes automatically`;
+    return code;
   };
 
   const handlePayAgent = () => {
@@ -54,7 +111,8 @@ console.log('Explorer:', result.explorerUrl);`;
       toast.error("Please select an agent and enter amount");
       return;
     }
-    generatePayAgentCode();
+    setCurrentSdkCode(generatePayAgentCode());
+    setShowSdkCode(true);
 
     const agent = agents.find(a => a.id === selectedAgent);
     if (!agent) return;
@@ -89,6 +147,8 @@ console.log('Explorer:', result.explorerUrl);`;
       toast.error("Please fill all fields");
       return;
     }
+    setCurrentSdkCode(generateAgentPayCode());
+    setShowSdkCode(true);
 
     const agent = agents.find(a => a.id === selectedAgent);
     if (!agent) return;
@@ -131,6 +191,8 @@ console.log('Explorer:', result.explorerUrl);`;
       toast.error("Please fill all fields");
       return;
     }
+    setCurrentSdkCode(generateRequestPaymentCode());
+    setShowSdkCode(true);
 
     const agent = agents.find(a => a.id === selectedAgent);
     if (!agent) return;
