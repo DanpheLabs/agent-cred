@@ -49,7 +49,7 @@ export const Navbar = () => {
             to="/analytics" 
             className={`text-sm font-medium transition-colors ${isActive('/analytics') ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-foreground'}`}
           >
-            Analytics
+            Transactions
           </Link>
           <Link 
             to="/payments" 

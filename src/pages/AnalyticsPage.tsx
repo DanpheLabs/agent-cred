@@ -17,8 +17,8 @@ export default function AnalyticsPage() {
       <main className="pt-24 px-6 pb-20">
         <div className="container mx-auto max-w-7xl">
           <div className="mb-8">
-            <h1 className="text-4xl font-bold mb-2">Analytics</h1>
-            <p className="text-muted-foreground">Real-time on-chain metrics and statistics</p>
+            <h1 className="text-4xl font-bold mb-2">Transactions</h1>
+            <p className="text-muted-foreground">Real-time on-chain transactions and history</p>
           </div>
           
           {!connected ? (
