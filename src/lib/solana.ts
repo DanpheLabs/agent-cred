@@ -79,35 +79,52 @@ export interface PaymentRequestData {
   bump: number;
 }
 
-// Initialize AgentPay Program
-export async function getProgram(wallet: WalletContextState) {
-  if (!wallet.publicKey || !wallet.signTransaction) {
-    throw new Error('Wallet not connected');
-  }
-
-  const provider = new AnchorProvider(
-    connection,
-    wallet as any,
-    { commitment: 'confirmed' }
-  );
-
-  // Load IDL (you'll need to import the actual IDL)
-  const idl = await Program.fetchIdl(AGENT_PAY_PROGRAM_ID, provider);
-  
-  if (!idl) {
-    throw new Error('IDL not found');
-  }
-
-  return new Program(idl as Idl, AGENT_PAY_PROGRAM_ID, provider);
-}
-
-// Fetch Agent Data
+// Fetch Agent Data (simplified - reads account data directly)
 export async function fetchAgent(coldkey: PublicKey, hotkey: PublicKey): Promise<AgentData | null> {
   try {
-    const program = await getProgram({ publicKey: coldkey } as any);
     const [agentPDA] = getAgentPDA(coldkey, hotkey);
-    const agent = await program.account.agent.fetch(agentPDA);
-    return agent as AgentData;
+    const accountInfo = await connection.getAccountInfo(agentPDA);
+    
+    if (!accountInfo) {
+      return null;
+    }
+
+    // Parse account data (simplified - in production, use Anchor's IDL)
+    // This is a basic deserialization - adjust based on actual account structure
+    const data = accountInfo.data;
+    
+    // Skip discriminator (8 bytes) and parse fields
+    let offset = 8;
+    
+    const coldkeyBytes = data.slice(offset, offset + 32);
+    offset += 32;
+    const hotkeyBytes = data.slice(offset, offset + 32);
+    offset += 32;
+    const dailyLimit = new BN(data.slice(offset, offset + 8), 'le');
+    offset += 8;
+    const dailySpent = new BN(data.slice(offset, offset + 8), 'le');
+    offset += 8;
+    const lastResetTimestamp = new BN(data.slice(offset, offset + 8), 'le');
+    offset += 8;
+    const isActive = data[offset] === 1;
+    offset += 1;
+    const totalReceived = new BN(data.slice(offset, offset + 8), 'le');
+    offset += 8;
+    const totalSent = new BN(data.slice(offset, offset + 8), 'le');
+    offset += 8;
+    const bump = data[offset];
+
+    return {
+      coldkey: new PublicKey(coldkeyBytes),
+      hotkey: new PublicKey(hotkeyBytes),
+      dailyLimit,
+      dailySpent,
+      lastResetTimestamp,
+      isActive,
+      totalReceived,
+      totalSent,
+      bump,
+    };
   } catch (error) {
     console.error('Error fetching agent:', error);
     return null;
@@ -137,6 +154,9 @@ export async function fetchRegistry(): Promise<RegistryData | null> {
   }
 }
 
+// Note: The following methods require the Anchor program to be fully deployed
+// For now, they will throw errors indicating setup is needed
+
 // Register Agent
 export async function registerAgent(
   wallet: WalletContextState,
@@ -147,21 +167,8 @@ export async function registerAgent(
     throw new Error('Wallet not connected');
   }
 
-  const program = await getProgram(wallet);
-  const [registryPDA] = getRegistryPDA();
-  const [agentPDA] = getAgentPDA(wallet.publicKey, hotkey);
-
-  const tx = await program.methods
-    .registerAgent(hotkey, new BN(dailyLimit * 1_000_000))
-    .accounts({
-      agent: agentPDA,
-      registry: registryPDA,
-      coldkey: wallet.publicKey,
-      systemProgram: SystemProgram.programId,
-    })
-    .rpc();
-
-  return tx;
+  // TODO: Implement with deployed program
+  throw new Error('Program not yet deployed. Please deploy the Anchor program first using: npm run anchor:deploy');
 }
 
 // Pay Agent
@@ -175,26 +182,8 @@ export async function payAgent(
     throw new Error('Wallet not connected');
   }
 
-  const program = await getProgram(wallet);
-  const [agentPDA] = getAgentPDA(coldkey, hotkey);
-  const [registryPDA] = getRegistryPDA();
-
-  const userTokenAccount = await getAssociatedTokenAddress(USDC_MINT, wallet.publicKey);
-  const coldkeyTokenAccount = await getAssociatedTokenAddress(USDC_MINT, coldkey);
-
-  const tx = await program.methods
-    .payAgent(new BN(amount * 1_000_000))
-    .accounts({
-      agent: agentPDA,
-      registry: registryPDA,
-      user: wallet.publicKey,
-      userTokenAccount,
-      coldkeyTokenAccount,
-      tokenProgram: TOKEN_PROGRAM_ID,
-    })
-    .rpc();
-
-  return tx;
+  // TODO: Implement with deployed program
+  throw new Error('Program not yet deployed. Please deploy the Anchor program first using: npm run anchor:deploy');
 }
 
 // Agent Send Payment
@@ -208,25 +197,8 @@ export async function agentPay(
     throw new Error('Wallet not connected');
   }
 
-  const program = await getProgram(wallet);
-  const [agentPDA] = getAgentPDA(coldkey, wallet.publicKey);
-
-  const coldkeyTokenAccount = await getAssociatedTokenAddress(USDC_MINT, coldkey);
-  const recipientTokenAccount = await getAssociatedTokenAddress(USDC_MINT, recipient);
-
-  const tx = await program.methods
-    .agentPay(new BN(amount * 1_000_000))
-    .accounts({
-      agent: agentPDA,
-      hotkey: wallet.publicKey,
-      recipient,
-      coldkeyTokenAccount,
-      recipientTokenAccount,
-      tokenProgram: TOKEN_PROGRAM_ID,
-    })
-    .rpc();
-
-  return tx;
+  // TODO: Implement with deployed program
+  throw new Error('Program not yet deployed. Please deploy the Anchor program first using: npm run anchor:deploy');
 }
 
 // Request Payment
@@ -241,23 +213,8 @@ export async function requestPayment(
     throw new Error('Wallet not connected');
   }
 
-  const program = await getProgram(wallet);
-  const [agentPDA] = getAgentPDA(coldkey, wallet.publicKey);
-  const timestamp = Math.floor(Date.now() / 1000);
-  const [paymentRequestPDA] = getPaymentRequestPDA(agentPDA, wallet.publicKey, timestamp);
-
-  const tx = await program.methods
-    .requestPayment(new BN(amount * 1_000_000), purpose)
-    .accounts({
-      paymentRequest: paymentRequestPDA,
-      agent: agentPDA,
-      hotkey: wallet.publicKey,
-      recipient,
-      systemProgram: SystemProgram.programId,
-    })
-    .rpc();
-
-  return tx;
+  // TODO: Implement with deployed program
+  throw new Error('Program not yet deployed. Please deploy the Anchor program first using: npm run anchor:deploy');
 }
 
 // Format USDC amount

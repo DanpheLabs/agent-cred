@@ -1,15 +1,16 @@
 import { NavLink } from "react-router-dom";
 import { Card } from "@/components/ui/card";
-import { Home, BookOpen, Code, Zap, Radio, FileText } from "lucide-react";
+import { Home, BookOpen, Code, Zap, Radio, FileText, Box } from "lucide-react";
 
 export const DocsSidebar = () => {
   const navItems = [
     { path: "/docs", label: "Overview", icon: Home },
     { path: "/docs/getting-started", label: "Getting Started", icon: BookOpen },
+    { path: "/docs/architecture", label: "Architecture", icon: Box },
     { path: "/docs/sdk", label: "SDK Reference", icon: Code },
     { path: "/docs/gasless", label: "Gasless Transactions", icon: Zap },
-    { path: "/docs/monitoring", label: "Light Client", icon: Radio },
     { path: "/docs/http-402", label: "HTTP 402 Protocol", icon: FileText },
+    { path: "/docs/monitoring", label: "Light Client", icon: Radio },
   ];
 
   return (

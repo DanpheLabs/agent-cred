@@ -10,6 +10,12 @@ import Payments from "./pages/Payments";
 import AnalyticsPage from "./pages/AnalyticsPage";
 import SDK from "./pages/SDK";
 import Docs from "./pages/Docs";
+import DocsGettingStarted from "./pages/DocsGettingStarted";
+import DocsArchitecture from "./pages/DocsArchitecture";
+import DocsSDK from "./pages/DocsSDK";
+import DocsGasless from "./pages/DocsGasless";
+import DocsHTTP402 from "./pages/DocsHTTP402";
+import DocsMonitoring from "./pages/DocsMonitoring";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +34,12 @@ const App = () => (
           <Route path="/analytics" element={<AnalyticsPage />} />
           <Route path="/sdk" element={<SDK />} />
           <Route path="/docs" element={<Docs />} />
+          <Route path="/docs/getting-started" element={<DocsGettingStarted />} />
+          <Route path="/docs/architecture" element={<DocsArchitecture />} />
+          <Route path="/docs/sdk" element={<DocsSDK />} />
+          <Route path="/docs/gasless" element={<DocsGasless />} />
+          <Route path="/docs/http-402" element={<DocsHTTP402 />} />
+          <Route path="/docs/monitoring" element={<DocsMonitoring />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
