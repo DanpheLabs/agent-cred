@@ -61,7 +61,7 @@ export const Navbar = () => {
             to="/sdk" 
             className={`text-sm font-medium transition-colors ${isActive('/sdk') ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-foreground'}`}
           >
-            SDK
+            API
           </Link>
           <Link 
             to="/docs" 

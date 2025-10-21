@@ -47,7 +47,7 @@ export default function MyAgents() {
       <main className="pt-24 px-6 pb-20">
         <div className="container mx-auto max-w-7xl">
           {/* Contract Info Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <Card className="glass p-6 rounded-2xl border-border/50">
               <div className="flex items-start gap-3">
                 <div className="p-2 rounded-lg bg-primary/10">
@@ -83,7 +83,7 @@ export default function MyAgents() {
                 </div>
               </div>
             </Card>
-          </div>
+          </div> */}
 
           <div className="flex items-center justify-between mb-8">
             <div>

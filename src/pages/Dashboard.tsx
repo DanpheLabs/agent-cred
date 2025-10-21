@@ -59,7 +59,25 @@ export default function Dashboard() {
           ) : (
             <div className="space-y-6">
               {/* Contract Information */}
-              <Card className="glass p-6 rounded-2xl border-border/50">
+           
+           
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <WalletCard
+                  title="Owner Wallet"
+                  address={wallet?.ownerAddress || publicKey?.toBase58() || ""}
+                  balance={walletBalance}
+                  variant="owner"
+                />
+                <WalletCard
+                  title="Total Agent Balance"
+                  address={`${agents.length} Active Agents`}
+                  balance={totalAgentBalance}
+                  variant="agent"
+                />
+              </div>
+
+              <Analytics />
+      <Card className="glass p-6 rounded-2xl border-border/50">
                 <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
                   <Database className="h-5 w-5 text-primary" />
                   Contract Information
@@ -98,6 +116,7 @@ export default function Dashboard() {
                     </div>
                   </div>
                 </div>
+                
                 {registry && (
                   <div className="mt-4 pt-4 border-t border-border/50">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -113,74 +132,7 @@ export default function Dashboard() {
                   </div>
                 )}
               </Card>
-
-              <Analytics />
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <WalletCard
-                  title="Owner Wallet"
-                  address={wallet?.ownerAddress || publicKey?.toBase58() || ""}
-                  balance={walletBalance}
-                  variant="owner"
-                />
-                <WalletCard
-                  title="Total Agent Balance"
-                  address={`${agents.length} Active Agents`}
-                  balance={totalAgentBalance}
-                  variant="agent"
-                />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <Card className="glass p-6 rounded-2xl border-border/50">
-                  <div className="flex items-center gap-3 mb-2">
-                    <TrendingUp className="h-5 w-5 text-primary" />
-                    <h3 className="font-semibold">Total Received</h3>
-                  </div>
-                  <p className="text-3xl font-bold">{totalReceived.toFixed(2)} USDC</p>
-                  <p className="text-sm text-muted-foreground mt-1">All-time payments to agents</p>
-                </Card>
-
-                <Card className="glass p-6 rounded-2xl border-border/50">
-                  <div className="flex items-center gap-3 mb-2">
-                    <ArrowUpDown className="h-5 w-5 text-secondary" />
-                    <h3 className="font-semibold">Total Sent</h3>
-                  </div>
-                  <p className="text-3xl font-bold">{totalSent.toFixed(2)} USDC</p>
-                  <p className="text-sm text-muted-foreground mt-1">Agent payouts completed</p>
-                </Card>
-
-                <Card className="glass p-6 rounded-2xl border-border/50">
-                  <div className="flex items-center gap-3 mb-2">
-                    <Clock className="h-5 w-5 text-accent" />
-                    <h3 className="font-semibold">Recent Activity</h3>
-                  </div>
-                  <p className="text-3xl font-bold">{transactions.length}</p>
-                  <p className="text-sm text-muted-foreground mt-1">Total transactions</p>
-                </Card>
-              </div>
-
-              {recentTransactions.length > 0 && (
-                <Card className="glass p-6 rounded-2xl border-border/50">
-                  <h3 className="text-xl font-semibold mb-4">Recent Transactions</h3>
-                  <div className="space-y-3">
-                    {recentTransactions.map((tx) => (
-                      <div key={tx.id} className="flex items-center justify-between p-3 border border-border/50 rounded-lg">
-                        <div>
-                          <p className="font-medium">{tx.description}</p>
-                          <p className="text-xs text-muted-foreground">
-                            {new Date(tx.timestamp).toLocaleString()}
-                          </p>
-                        </div>
-                        <div className="text-right">
-                          <p className="font-bold">{tx.amount.toFixed(2)} USDC</p>
-                          <p className="text-xs text-muted-foreground capitalize">{tx.status}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </Card>
-              )}
+   
             </div>
           )}
         </div>

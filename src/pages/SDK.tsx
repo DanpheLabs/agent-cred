@@ -61,9 +61,9 @@ export default function SDK() {
               <h3 className="text-xl font-semibold mb-4">Generate API Key</h3>
               <div className="space-y-4">
                 <div>
-                  <label className="text-sm font-medium mb-2 block">Key Name</label>
+                  <label className="text-sm font-medium mb-2 block">Name your keys</label>
                   <Input
-                    placeholder="Production Key"
+                    placeholder="Key Name"
                     value={keyName}
                     onChange={(e) => setKeyName(e.target.value)}
                   />
@@ -98,18 +98,13 @@ export default function SDK() {
                   }}>
                     View on NPM
                   </Button>
-                </div>
-                <div className="p-4 border border-secondary/20 rounded-lg bg-secondary/5">
-                  <h4 className="font-semibold mb-2">🔗 GitHub Repository</h4>
-                  <p className="text-sm text-muted-foreground mb-2">
-                    View source code, examples, and contribute
-                  </p>
-                  <Button variant="outline" size="sm" onClick={() => {
+                        <Button variant="outline" size="sm" onClick={() => {
                     window.open('https://github.com/agentpay/sdk', '_blank');
                   }}>
                     View on GitHub
                   </Button>
                 </div>
+           
               </div>
 
               <h3 className="text-xl font-semibold mb-4 mt-8">Your API Keys</h3>

@@ -28,66 +28,7 @@ export default function AnalyticsPage() {
             </div>
           ) : (
             <>
-              {/* Network Info */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                <Card className="glass p-6 rounded-2xl border-border/50">
-                  <div className="flex items-start gap-3">
-                    <div className="p-2 rounded-lg bg-primary/10">
-                      <Network className="h-5 w-5 text-primary" />
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-sm text-muted-foreground mb-1">Network</p>
-                      <p className="font-semibold">Solana Devnet</p>
-                    </div>
-                  </div>
-                </Card>
-
-                <Card className="glass p-6 rounded-2xl border-border/50">
-                  <div className="flex items-start gap-3">
-                    <div className="p-2 rounded-lg bg-secondary/10">
-                      <Wallet className="h-5 w-5 text-secondary" />
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-sm text-muted-foreground mb-1">Program ID</p>
-                      <p className="font-mono text-xs break-all">
-                        {AGENT_PAY_PROGRAM_ID.toBase58().slice(0, 8)}...
-                      </p>
-                    </div>
-                  </div>
-                </Card>
-
-                <Card className="glass p-6 rounded-2xl border-border/50">
-                  <div className="flex items-start gap-3">
-                    <div className="p-2 rounded-lg bg-accent/10">
-                      <Users className="h-5 w-5 text-accent" />
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-sm text-muted-foreground mb-1">Total Agents</p>
-                      <p className="text-2xl font-bold">
-                        {registry ? registry.agentCount.toString() : '0'}
-                      </p>
-                    </div>
-                  </div>
-                </Card>
-
-                <Card className="glass p-6 rounded-2xl border-border/50">
-                  <div className="flex items-start gap-3">
-                    <div className="p-2 rounded-lg bg-primary/10">
-                      <TrendingUp className="h-5 w-5 text-primary" />
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-sm text-muted-foreground mb-1">Total Volume</p>
-                      <p className="text-2xl font-bold">
-                        {registry ? `$${formatUSDC(registry.totalVolume)}` : '$0.00'}
-                      </p>
-                    </div>
-                  </div>
-                </Card>
-              </div>
-
-              <div className="mb-12">
-                <Analytics />
-              </div>
+ 
               
               <TransactionHistory />
             </>

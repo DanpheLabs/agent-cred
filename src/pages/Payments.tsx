@@ -279,8 +279,8 @@ console.log('Status:', request.status); // 'pending'
                 <div>
                   <Tabs defaultValue="pay-agent" className="space-y-6">
               <TabsList className="grid w-full grid-cols-3">
-                <TabsTrigger value="pay-agent">Another Agent → Your Agent</TabsTrigger>
-                <TabsTrigger value="agent-pay">Your Agent → Another Agent</TabsTrigger>
+                <TabsTrigger value="pay-agent">Agent → Your Agent</TabsTrigger>
+                <TabsTrigger value="agent-pay">Your Agent → Agent</TabsTrigger>
                 <TabsTrigger value="approvals">
                   Approvals {pendingRequests.length > 0 && `(${pendingRequests.length})`}
                 </TabsTrigger>

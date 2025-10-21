@@ -25,47 +25,58 @@ export const Hero = () => {
   return (
     <section className="h-full flex items-center justify-center px-6">
       <div className="container mx-auto text-center max-w-4xl">
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-primary/20 mb-6">
-          <Zap className="w-4 h-4 text-primary" />
-          <span className="text-sm font-medium">Powered by Solana Devnet</span>
+        <div className="inline-flex items-center gap-2 px-4 py-2 mb-24">
+
         </div>
-        
+
         <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
           Payment Gateway for{" "}
           <span className="gradient-text">AI Agents</span>
         </h1>
-        
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-primary/20 mb-6">
+          <Zap className="w-4 h-4 text-primary" />
+          <span className="text-sm font-medium">Powered by Solana Devnet</span>
+        </div>
         <p className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">
-          Secure, automated payments for AI agents on Solana. Set spending limits, 
+          Secure, automated payments for AI agents on Solana. Set spending limits,
           track earnings, and maintain full custody of your funds.
         </p>
-        
+
         {/* Live Stats from Chain */}
         <div className="mb-10 flex justify-center gap-8 flex-wrap">
           <div className="flex items-center gap-2">
-            <Users className="h-5 w-5 text-primary" />
             <div className="text-left">
-              <p className="text-2xl font-bold">{stats.agents}</p>
+              <div className="flex justify-center ">
+                <Users className="h-5 w-5 mx-2 mt-2 text-primary" />
+                <p className="text-2xl font-bold">{stats.agents}</p>
+
+              </div>
               <p className="text-xs text-muted-foreground">Active Agents</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <DollarSign className="h-5 w-5 text-secondary" />
             <div className="text-left">
-              <p className="text-2xl font-bold">${stats.volume}</p>
+              <div className="flex justify-center ">
+
+                <DollarSign className="h-5 w-5  mx-2 mt-2 text-secondary" />
+                <p className="text-2xl font-bold">{stats.volume}</p>
+              </div>
               <p className="text-xs text-muted-foreground">Total Volume</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <TrendingUp className="h-5 w-5 text-accent" />
             <div className="text-left">
-              <p className="text-2xl font-bold">{stats.transactions}</p>
+              <div className="flex justify-center ">
+                <TrendingUp className="h-5 w-5 mx-2 mt-2 text-accent" />
+                <p className="text-2xl font-bold">{stats.transactions}</p>
+
+              </div>
               <p className="text-xs text-muted-foreground">Transactions</p>
             </div>
           </div>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        {/* <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link to="/dashboard">
             <Button 
               size="lg" 
@@ -84,8 +95,8 @@ export const Hero = () => {
               Learn More
             </Button>
           </Link>
-        </div>
-        
+        </div> */}
+
         <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
           {[
             {

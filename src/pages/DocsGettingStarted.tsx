@@ -27,7 +27,7 @@ export default function DocsGettingStarted() {
 
                   <section>
                     <h3 className="text-2xl font-semibold mb-3">1. Install SDK</h3>
-                    <pre className="bg-black/50 p-4 rounded-lg mb-4"><code>npm install agentpay-sdk @solana/web3.js</code></pre>
+                    <pre className="bg-black/50 p-4 rounded-lg mb-4"><code >npm install agentpay-sdk @solana/web3.js</code></pre>
                     <p className="text-sm text-muted-foreground">
                       Or with yarn: <code>yarn add agentpay-sdk @solana/web3.js</code>
                     </p>
@@ -38,7 +38,9 @@ export default function DocsGettingStarted() {
                     <p className="text-muted-foreground mb-3">
                       You'll need two Solana wallets: a coldkey (asset owner) and a hotkey (operational wallet)
                     </p>
-                    <pre className="bg-black/50 p-4 rounded-lg overflow-x-auto mb-2"><code>{`// Generate new keypairs or use existing wallets
+
+                    
+                    <pre className="bg-black/50 p-4 rounded-lg overflow-x-auto mb-2"><code lang="react">{`// Generate new keypairs or use existing wallets
 import { Keypair } from '@solana/web3.js';
 
 // Coldkey: Your main secure wallet (keep private!)
@@ -50,6 +52,8 @@ const hotkey = Keypair.generate();
 console.log('Hotkey:', hotkey.publicKey.toString());
 
 // Save these securely! You'll need them to register your agent`}</code></pre>
+
+
                     <div className="p-3 bg-accent/10 rounded-lg border border-accent/20 text-sm">
                       <p className="text-muted-foreground">
                         💡 <strong>Pro tip:</strong> Use your existing Phantom/Solflare wallet as coldkey for easier management

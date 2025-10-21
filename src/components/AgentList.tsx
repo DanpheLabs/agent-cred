@@ -31,13 +31,79 @@ export const AgentList = ({ agents, onDeleteAgent, onSelectAgent }: AgentListPro
       {agents.map((agent) => (
         <Card key={agent.id} className="glass p-6 rounded-2xl border-border/50 glow-hover">
           <div className="flex items-start justify-between mb-4">
-            <div>
+            <div className="grid grid-cols-2 gap-2">
               <h3 className="font-semibold text-lg mb-1">{agent.name}</h3>
-              <Badge variant={agent.status === 'active' ? 'default' : 'secondary'}>
+              {/* <Badge variant={agent.status === 'active' ? 'default' : 'secondary'}>
                 {agent.status}
-              </Badge>
+              </Badge> */}
             </div>
-            <div className="flex gap-2">
+           <div>
+              <p className="text-xl font-bold gradient-text">{agent.balance.toFixed(2)} USDC</p>
+              <p className="text-xs text-muted-foreground mb-1">Balance</p>
+            </div>
+          </div>
+          
+          <div className="space-y-3">
+            <div className="grid grid-cols-2 gap-2">
+
+
+            <div>
+              <p className="text-xs text-muted-foreground mb-1 ">Hotkey (Operational)</p>
+              <div className="flex items-center gap-2">
+                <code className="text-xs gradient-text font-mono">
+                  {agent.hotkey.slice(0, 6)}...{agent.hotkey.slice(-4)}
+                </code>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-5 w-5"
+                  onClick={() => copyAddress(agent.hotkey)}
+                >
+                  <Copy className="h-3 w-3" />
+                </Button>
+              </div>
+            </div>
+
+            <div>
+              <p className="text-xs text-muted-foreground mb-1">Coldkey (Owner)</p>
+              <div className="flex items-center gap-2">
+                <code className="text-xs gradient-text font-mono">
+                  {agent.coldkey.slice(0, 6)}...{agent.coldkey.slice(-4)}
+                </code>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-5 w-5"
+                  onClick={() => copyAddress(agent.coldkey)}
+                >
+                  <Copy className="h-3 w-3" />
+                </Button>
+              </div>
+            </div>
+                      </div>  
+          
+            
+            <div className="grid grid-cols-2 gap-2">
+              <div>
+                <p className="text-xs text-muted-foreground">Daily Limit</p>
+                <p className="text-sm gradient-text font-semibold">{agent.dailyLimit} USDC</p>
+              </div>
+              <div>
+                <p className="text-xs text-muted-foreground">Spent Today</p>
+                <p className="text-sm gradient-text font-semibold">{agent.dailySpent} USDC</p>
+              </div>
+            </div>
+            
+            <div>
+              
+              <div className="flex items-center gap-2">
+              <p className="text-xs text-muted-foreground mb-0">Endpoint</p>
+                
+                <code className="underline text-xs font-mono truncate flex-1">
+                  {agent.endpoint}
+                </code>
+
+                   <div className="flex gap-2">
               <Button
                 variant="ghost"
                 size="icon"
@@ -55,65 +121,6 @@ export const AgentList = ({ agents, onDeleteAgent, onSelectAgent }: AgentListPro
                 <Trash2 className="h-4 w-4" />
               </Button>
             </div>
-          </div>
-          
-          <div className="space-y-3">
-            <div>
-              <p className="text-xs text-muted-foreground mb-1">Hotkey (Operational)</p>
-              <div className="flex items-center gap-2">
-                <code className="text-xs font-mono">
-                  {agent.hotkey.slice(0, 6)}...{agent.hotkey.slice(-4)}
-                </code>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-5 w-5"
-                  onClick={() => copyAddress(agent.hotkey)}
-                >
-                  <Copy className="h-3 w-3" />
-                </Button>
-              </div>
-            </div>
-
-            <div>
-              <p className="text-xs text-muted-foreground mb-1">Coldkey (Owner)</p>
-              <div className="flex items-center gap-2">
-                <code className="text-xs font-mono">
-                  {agent.coldkey.slice(0, 6)}...{agent.coldkey.slice(-4)}
-                </code>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-5 w-5"
-                  onClick={() => copyAddress(agent.coldkey)}
-                >
-                  <Copy className="h-3 w-3" />
-                </Button>
-              </div>
-            </div>
-            
-            <div>
-              <p className="text-xs text-muted-foreground mb-1">Balance</p>
-              <p className="text-xl font-bold gradient-text">{agent.balance.toFixed(2)} USDC</p>
-            </div>
-            
-            <div className="grid grid-cols-2 gap-2">
-              <div>
-                <p className="text-xs text-muted-foreground">Daily Limit</p>
-                <p className="text-sm font-semibold">{agent.dailyLimit} USDC</p>
-              </div>
-              <div>
-                <p className="text-xs text-muted-foreground">Spent Today</p>
-                <p className="text-sm font-semibold">{agent.dailySpent} USDC</p>
-              </div>
-            </div>
-            
-            <div>
-              <p className="text-xs text-muted-foreground mb-1">Endpoint</p>
-              <div className="flex items-center gap-2">
-                <code className="text-xs font-mono truncate flex-1">
-                  {agent.endpoint}
-                </code>
                 <Button
                   variant="ghost"
                   size="icon"
