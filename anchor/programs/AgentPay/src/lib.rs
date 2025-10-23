@@ -1,12 +1,11 @@
 use anchor_lang::prelude::*;
 use anchor_spl::token::{self, Token, TokenAccount, Transfer};
 
-declare_id!("AgentPay11111111111111111111111111111111111");
+declare_id!("2hpe9fZeZvPbuFukKFqaVUq2YfDeLZymZbq7YGGkpxhE");
 
 #[program]
 pub mod agent_pay {
     use super::*;
-
     /// Initialize the agent registry
     pub fn initialize_registry(ctx: Context<InitializeRegistry>) -> Result<()> {
         let registry = &mut ctx.accounts.registry;
@@ -127,14 +126,40 @@ pub mod agent_pay {
         ctx: Context<AgentPay>,
         amount: u64,
     ) -> Result<()> {
-        let agent = &mut ctx.accounts.agent;
+        // 1. Initial Checks and Immutable Accesses (NO mutable borrow of 'agent' yet)
         let clock = Clock::get()?;
+        let current_agent = &ctx.accounts.agent; // Use immutable access for checks and lookups
 
-        require!(agent.is_active, ErrorCode::AgentInactive);
+        require!(current_agent.is_active, ErrorCode::AgentInactive);
         require!(
-            ctx.accounts.hotkey.key() == agent.hotkey,
+            ctx.accounts.hotkey.key() == current_agent.hotkey,
             ErrorCode::UnauthorizedHotkey
         );
+
+        // 2. CPI Setup (Immutable access to ctx.accounts.agent for authority)
+        // Transfer USDC from coldkey to recipient
+        let seeds = &[
+            b"agent",
+            current_agent.coldkey.as_ref(), // Immutable read is fine here
+            current_agent.hotkey.as_ref(),   // Immutable read is fine here
+            &[current_agent.bump],           // Immutable read is fine here
+        ];
+        
+        let signer = &[&seeds[..]];
+
+        let cpi_accounts = Transfer {
+            from: ctx.accounts.coldkey_token_account.to_account_info(),
+            to: ctx.accounts.recipient_token_account.to_account_info(),
+            // This is the IMMUTABLE BORROW point - we use the account info directly
+            authority: ctx.accounts.agent.to_account_info(),
+        };
+        let cpi_program = ctx.accounts.token_program.to_account_info();
+        
+        let cpi_ctx = CpiContext::new_with_signer(cpi_program, cpi_accounts, signer);
+        token::transfer(cpi_ctx, amount)?; // CPI is completed. Immutable borrow ends.
+
+        // 3. Mutable Update Logic (SAFE to start mutable borrow now)
+        let agent = &mut ctx.accounts.agent; // MUTABLE BORROW starts here
 
         // Reset daily spending if new day
         if clock.unix_timestamp - agent.last_reset_timestamp >= 86400 {
@@ -142,33 +167,17 @@ pub mod agent_pay {
             agent.last_reset_timestamp = clock.unix_timestamp;
         }
 
-        // Check daily limit
+        // Check daily limit (needs to be checked *after* potential reset)
         require!(
             agent.daily_spent + amount <= agent.daily_limit,
             ErrorCode::DailyLimitExceeded
         );
 
-        // Transfer USDC from coldkey to recipient
-        let seeds = &[
-            b"agent",
-            agent.coldkey.as_ref(),
-            agent.hotkey.as_ref(),
-            &[agent.bump],
-        ];
-        let signer = &[&seeds[..]];
-
-        let cpi_accounts = Transfer {
-            from: ctx.accounts.coldkey_token_account.to_account_info(),
-            to: ctx.accounts.recipient_token_account.to_account_info(),
-            authority: ctx.accounts.agent.to_account_info(),
-        };
-        let cpi_program = ctx.accounts.token_program.to_account_info();
-        let cpi_ctx = CpiContext::new_with_signer(cpi_program, cpi_accounts, signer);
-        token::transfer(cpi_ctx, amount)?;
-
+        // Update spending
         agent.daily_spent += amount;
         agent.total_sent += amount;
 
+        // 4. Finalize
         emit!(AgentPaymentMade {
             agent: agent.hotkey,
             recipient: ctx.accounts.recipient.key(),
@@ -181,41 +190,47 @@ pub mod agent_pay {
     }
 
     /// Agent requests payment approval
-    pub fn request_payment(
-        ctx: Context<RequestPayment>,
-        amount: u64,
-        purpose: String,
-    ) -> Result<()> {
-        let agent = &ctx.accounts.agent;
-        let request = &mut ctx.accounts.payment_request;
+/// Agent requests payment approval
+pub fn request_payment(
+    ctx: Context<RequestPayment>,
+    amount: u64,
+    purpose: String,
+    request_nonce: i64,  // Must match #[instruction]
+) -> Result<()> {
+    let agent = &ctx.accounts.agent;
+    let request = &mut ctx.accounts.payment_request;
+    let clock = Clock::get()?;
 
-        require!(agent.is_active, ErrorCode::AgentInactive);
-        require!(
-            ctx.accounts.hotkey.key() == agent.hotkey,
-            ErrorCode::UnauthorizedHotkey
-        );
-        require!(purpose.len() <= 200, ErrorCode::PurposeTooLong);
+    require!(agent.is_active, ErrorCode::AgentInactive);
+    require!(
+        ctx.accounts.hotkey.key() == agent.hotkey,
+        ErrorCode::UnauthorizedHotkey
+    );
+    require!(purpose.len() <= 200, ErrorCode::PurposeTooLong);
 
-        request.agent = agent.key();
-        request.hotkey = agent.hotkey;
-        request.coldkey = agent.coldkey;
-        request.recipient = ctx.accounts.recipient.key();
-        request.amount = amount;
-        request.purpose = purpose;
-        request.status = PaymentStatus::Pending;
-        request.requested_at = Clock::get()?.unix_timestamp;
-        request.bump = ctx.bumps.payment_request;
+    request.agent = agent.key();
+    request.hotkey = agent.hotkey;
+    request.coldkey = agent.coldkey;
+    request.recipient = ctx.accounts.recipient.key();
+    request.amount = amount;
+    request.purpose = purpose;
+    request.status = PaymentStatus::Pending;
+    request.requested_at = clock.unix_timestamp;
+    request.bump = ctx.bumps.payment_request;
 
-        emit!(PaymentRequested {
-            request_id: request.key(),
-            agent: agent.hotkey,
-            recipient: ctx.accounts.recipient.key(),
-            amount,
-            timestamp: request.requested_at,
-        });
+    emit!(PaymentRequested {
+        request_id: request.key(),
+        agent: agent.hotkey,
+        recipient: ctx.accounts.recipient.key(),
+        amount,
+        timestamp: request.requested_at,
+    });
 
-        Ok(())
-    }
+    Ok(())
+}
+
+
+
 
     /// Coldkey approves payment request
     pub fn approve_payment(ctx: Context<ApprovePayment>) -> Result<()> {
@@ -352,6 +367,7 @@ pub struct AgentPay<'info> {
 }
 
 #[derive(Accounts)]
+#[instruction(amount: u64, purpose: String, request_nonce: i64)]
 pub struct RequestPayment<'info> {
     #[account(
         init,
@@ -361,7 +377,7 @@ pub struct RequestPayment<'info> {
             b"payment_request",
             agent.key().as_ref(),
             hotkey.key().as_ref(),
-            &Clock::get()?.unix_timestamp.to_le_bytes()
+            &request_nonce.to_le_bytes()
         ],
         bump
     )]
