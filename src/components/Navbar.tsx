@@ -58,6 +58,12 @@ export const Navbar = () => {
             Playground
           </Link>
           <Link 
+            to="/use-cases" 
+            className={`text-sm font-medium transition-colors ${isActive('/use-cases') ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-foreground'}`}
+          >
+            Use Cases
+          </Link>
+          <Link 
             to="/sdk" 
             className={`text-sm font-medium transition-colors ${isActive('/sdk') ? 'text-primary font-semibold' : 'text-muted-foreground hover:text-foreground'}`}
           >

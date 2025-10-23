@@ -1,8 +1,25 @@
 import { Navbar } from "@/components/Navbar";
 import { DocsSidebar } from "@/components/DocsSidebar";
 import { Card } from "@/components/ui/card";
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 export default function Docs() {
+  const quickStartCode = `npm install agentpay-sdk
+
+import { AgentPaySDK } from "agentpay-sdk";
+
+const sdk = new AgentPaySDK({
+  apiKey: "YOUR_API_KEY",
+  network: "mainnet-beta"
+});
+
+// Start accepting payments
+await sdk.payAgent({
+  agentHotkey: "AGENT_HOTKEY",
+  amount: 10.5
+});`;
+
   return (
     <div className="min-h-screen">
       <Navbar />
@@ -35,19 +52,19 @@ export default function Docs() {
                   <section>
                     <h3 className="text-2xl font-semibold mb-3">Key Features</h3>
                     <div className="grid gap-4">
-                      <div className="p-4 border border-primary/20 rounded-lg bg-primary/5">
+                      <div className="p-4 glass border border-primary/20 rounded-lg">
                         <h4 className="font-semibold mb-2">🔐 Dual-Key Security</h4>
                         <p className="text-sm text-muted-foreground">
                           Hotkey for autonomous operations, coldkey for owner control and approvals
                         </p>
                       </div>
-                      <div className="p-4 border border-secondary/20 rounded-lg bg-secondary/5">
+                      <div className="p-4 glass border border-secondary/20 rounded-lg">
                         <h4 className="font-semibold mb-2">⚡ Gasless Transactions</h4>
                         <p className="text-sm text-muted-foreground">
                           Using HTTP 402 protocol, agents can receive payments without gas fees
                         </p>
                       </div>
-                      <div className="p-4 border border-accent/20 rounded-lg bg-accent/5">
+                      <div className="p-4 glass border border-accent/20 rounded-lg">
                         <h4 className="font-semibold mb-2">📡 Real-time Monitoring</h4>
                         <p className="text-sm text-muted-foreground">
                           Light client monitors on-chain transactions and notifies agents instantly
@@ -58,22 +75,17 @@ export default function Docs() {
 
                   <section>
                     <h3 className="text-2xl font-semibold mb-3">Quick Start</h3>
-                    <pre className="bg-black/50 p-4 rounded-lg overflow-x-auto">
-                      <code className="text-sm">{`npm install agentpay-sdk
-
-import { AgentPaySDK } from "agentpay-sdk";
-
-const sdk = new AgentPaySDK({
-  apiKey: "YOUR_API_KEY",
-  network: "mainnet-beta"
-});
-
-// Start accepting payments
-await sdk.payAgent({
-  agentHotkey: "AGENT_HOTKEY",
-  amount: 10.5
-});`}</code>
-                    </pre>
+                    <SyntaxHighlighter 
+                      language="typescript" 
+                      style={vscDarkPlus}
+                      customStyle={{
+                        borderRadius: '0.5rem',
+                        padding: '1.5rem',
+                        fontSize: '0.875rem'
+                      }}
+                    >
+                      {quickStartCode}
+                    </SyntaxHighlighter>
                   </section>
 
                   <section>

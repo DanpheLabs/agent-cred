@@ -3,9 +3,12 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { saveAgent, generateMockAddress } from "@/lib/storage";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
-import { Agent } from "@/lib/storage";
+import { useWallet } from '@solana/wallet-adapter-react';
+import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
+import { supabase } from "@/integrations/supabase/client";
+import { generateMockAddress } from "@/lib/storage";
 
 interface RegisterAgentDialogProps {
   open: boolean;
@@ -14,40 +17,76 @@ interface RegisterAgentDialogProps {
 }
 
 export const RegisterAgentDialog = ({ open, onOpenChange, onAgentCreated }: RegisterAgentDialogProps) => {
+  const { publicKey: walletPublicKey } = useWallet();
   const [name, setName] = useState("");
   const [endpoint, setEndpoint] = useState("");
   const [dailyLimit, setDailyLimit] = useState("");
+  const [hotkeyMethod, setHotkeyMethod] = useState<"wallet" | "paste">("wallet");
+  const [pastedHotkey, setPastedHotkey] = useState("");
+  const [hotkeyWallet, setHotkeyWallet] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!name || !endpoint || !dailyLimit) {
-      toast.error("Please fill in all fields");
+    if (!name || !endpoint || !dailyLimit || !walletPublicKey) {
+      toast.error("Please fill in all fields and connect your wallet");
       return;
     }
 
-    const newAgent: Agent = {
+    let hotkey = "";
+    if (hotkeyMethod === "wallet") {
+      if (!hotkeyWallet) {
+        toast.error("Please connect the hotkey wallet");
+        return;
+      }
+      hotkey = hotkeyWallet;
+    } else {
+      if (!pastedHotkey) {
+        toast.error("Please paste the agent's public key");
+        return;
+      }
+      hotkey = pastedHotkey;
+    }
+
+    const newAgent = {
       id: `agent_${Date.now()}`,
+      wallet_address: walletPublicKey.toBase58(),
       name,
       endpoint,
-      hotkey: generateMockAddress(),
-      coldkey: generateMockAddress(),
-      dailyLimit: parseFloat(dailyLimit),
-      dailySpent: 0,
-      lastResetDate: new Date().toISOString(),
+      hotkey,
+      coldkey: walletPublicKey.toBase58(),
+      daily_limit: parseFloat(dailyLimit),
+      daily_spent: 0,
+      last_reset_date: new Date().toISOString(),
       balance: 0,
-      totalReceived: 0,
-      totalSent: 0,
+      total_received: 0,
+      total_sent: 0,
       status: 'active',
-      createdAt: new Date().toISOString(),
+      created_at: new Date().toISOString(),
     };
 
-    saveAgent(newAgent);
+    // Set wallet context for RLS
+    await supabase.rpc('set_wallet_context', {
+      wallet_addr: walletPublicKey.toBase58()
+    });
+
+    const { error } = await supabase
+      .from('agents')
+      .insert([newAgent]);
+
+    if (error) {
+      console.error('Error saving agent:', error);
+      toast.error("Failed to register agent");
+      return;
+    }
+
     toast.success("Agent registered successfully!");
     
     setName("");
     setEndpoint("");
     setDailyLimit("");
+    setPastedHotkey("");
+    setHotkeyWallet(null);
     onOpenChange(false);
     onAgentCreated();
   };
@@ -83,6 +122,46 @@ export const RegisterAgentDialog = ({ open, onOpenChange, onAgentCreated }: Regi
               onChange={(e) => setEndpoint(e.target.value)}
               className="glass border-border/50"
             />
+          </div>
+
+          <div className="space-y-2">
+            <Label>Agent Hotkey</Label>
+            <Tabs value={hotkeyMethod} onValueChange={(v) => setHotkeyMethod(v as "wallet" | "paste")}>
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="wallet">Connect Wallet</TabsTrigger>
+                <TabsTrigger value="paste">Paste Public Key</TabsTrigger>
+              </TabsList>
+              
+              <TabsContent value="wallet" className="space-y-3">
+                <p className="text-xs text-muted-foreground">
+                  Connect the wallet that will act as the agent's hotkey
+                </p>
+                <div className="flex items-center gap-3">
+                  <WalletMultiButton 
+                    className="bg-gradient-to-r from-primary to-secondary text-primary-foreground font-semibold glow-hover"
+                    style={{ height: '40px' }}
+                  />
+                </div>
+                {walletPublicKey && (
+                  <div className="glass p-3 rounded-lg border border-border/50">
+                    <p className="text-xs text-muted-foreground mb-1">Connected Hotkey:</p>
+                    <p className="font-mono text-xs break-all">{walletPublicKey.toBase58()}</p>
+                  </div>
+                )}
+              </TabsContent>
+              
+              <TabsContent value="paste" className="space-y-3">
+                <Input
+                  placeholder="Paste agent public key address..."
+                  value={pastedHotkey}
+                  onChange={(e) => setPastedHotkey(e.target.value)}
+                  className="glass border-border/50 font-mono text-xs"
+                />
+                <p className="text-xs text-muted-foreground">
+                  Enter the Solana public key for your agent's hotkey wallet
+                </p>
+              </TabsContent>
+            </Tabs>
           </div>
           
           <div className="space-y-2">

@@ -3,19 +3,55 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Copy, Trash2 } from "lucide-react";
-import { useState } from "react";
-import { getApiKeys, saveApiKey, revokeApiKey, getAgents, generateApiKey } from "@/lib/storage";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useWalletData } from "@/hooks/useWalletData";
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 export default function SDK() {
+  const { walletAddress, isReady } = useWalletData();
   const [selectedAgent, setSelectedAgent] = useState("");
   const [keyName, setKeyName] = useState("");
-  const agents = getAgents();
-  const apiKeys = getApiKeys();
+  const [agents, setAgents] = useState<any[]>([]);
+  const [apiKeys, setApiKeys] = useState<any[]>([]);
 
-  const handleGenerateKey = () => {
-    if (!selectedAgent) {
+  useEffect(() => {
+    if (isReady && walletAddress) {
+      loadData();
+    }
+  }, [isReady, walletAddress]);
+
+  const loadData = async () => {
+    if (!walletAddress) return;
+
+    const { data: agentsData } = await supabase
+      .from('agents')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    const { data: keysData } = await supabase
+      .from('api_keys')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    setAgents(agentsData || []);
+    setApiKeys(keysData || []);
+  };
+
+  const generateApiKey = () => {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let key = 'apk_';
+    for (let i = 0; i < 32; i++) {
+      key += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return key;
+  };
+
+  const handleGenerateKey = async () => {
+    if (!selectedAgent || !walletAddress) {
       toast.error("Please select an agent");
       return;
     }
@@ -29,22 +65,67 @@ export default function SDK() {
     if (!agent) return;
 
     const newKey = {
-      id: Date.now().toString(),
+      id: `key_${Date.now()}`,
+      wallet_address: walletAddress,
       key: generateApiKey(),
       name: keyName,
-      agentId: agent.id,
-      agentName: agent.name,
-      agentHotkey: agent.hotkey,
-      createdAt: new Date().toISOString(),
-      requestCount: 0,
-      isActive: true,
+      agent_id: agent.id,
+      agent_name: agent.name,
+      agent_hotkey: agent.hotkey,
+      created_at: new Date().toISOString(),
+      request_count: 0,
+      is_active: true,
     };
 
-    saveApiKey(newKey);
+    const { error } = await supabase.from('api_keys').insert([newKey]);
+
+    if (error) {
+      toast.error("Failed to generate API key");
+      return;
+    }
+
     toast.success("API key generated successfully");
     setKeyName("");
     setSelectedAgent("");
+    loadData();
   };
+
+  const handleRevokeKey = async (keyId: string) => {
+    const { error } = await supabase
+      .from('api_keys')
+      .update({ is_active: false })
+      .eq('id', keyId);
+
+    if (error) {
+      toast.error("Failed to revoke key");
+      return;
+    }
+
+    toast.success("API key revoked");
+    loadData();
+  };
+
+  const codeExample = `import { AgentPaySDK } from "agentpay-sdk";
+
+const sdk = new AgentPaySDK({
+  apiKey: "YOUR_API_KEY",
+  network: "mainnet-beta"
+});
+
+// Pay an agent
+await sdk.payAgent({
+  agentHotkey: "AGENT_HOTKEY",
+  amount: 10.5,
+  memo: "Payment for services"
+});
+
+// Request payment from agent
+await sdk.requestPayment({
+  agentId: "agent_123",
+  recipient: "RECIPIENT_ADDRESS",
+  amount: 5.0,
+  purpose: "Service fee"
+});`;
 
   return (
     <div className="min-h-screen">
@@ -54,6 +135,23 @@ export default function SDK() {
           <div className="mb-8">
             <h1 className="text-4xl font-bold mb-2">SDK & API Keys</h1>
             <p className="text-muted-foreground">Manage API keys for agent integration</p>
+          </div>
+
+          <div className="grid gap-6 mb-8">
+            <Card className="glass p-6 rounded-2xl border-border/50">
+              <h3 className="text-xl font-semibold mb-4">Quick Start</h3>
+              <SyntaxHighlighter 
+                language="typescript" 
+                style={vscDarkPlus}
+                customStyle={{
+                  borderRadius: '0.5rem',
+                  padding: '1.5rem',
+                  fontSize: '0.875rem'
+                }}
+              >
+                {codeExample}
+              </SyntaxHighlighter>
+            </Card>
           </div>
 
           <div className="grid gap-6 lg:grid-cols-2">
@@ -66,12 +164,13 @@ export default function SDK() {
                     placeholder="Key Name"
                     value={keyName}
                     onChange={(e) => setKeyName(e.target.value)}
+                    className="glass border-border/50"
                   />
                 </div>
                 <div>
                   <label className="text-sm font-medium mb-2 block">Select Agent</label>
                   <Select value={selectedAgent} onValueChange={setSelectedAgent}>
-                    <SelectTrigger>
+                    <SelectTrigger className="glass border-border/50">
                       <SelectValue placeholder="Select an agent" />
                     </SelectTrigger>
                     <SelectContent>
@@ -81,57 +180,48 @@ export default function SDK() {
                     </SelectContent>
                   </Select>
                 </div>
-                <Button onClick={handleGenerateKey} className="w-full">Generate Key</Button>
+                <Button 
+                  onClick={handleGenerateKey} 
+                  className="w-full bg-gradient-to-r from-primary to-secondary text-primary-foreground font-semibold glow-hover"
+                  disabled={!walletAddress}
+                >
+                  Generate Key
+                </Button>
               </div>
             </Card>
 
             <Card className="glass p-6 rounded-2xl border-border/50">
-              <h3 className="text-xl font-semibold mb-4">Download SDK</h3>
-              <div className="space-y-4 mb-6">
-                <div className="p-4 border border-primary/20 rounded-lg bg-primary/5">
-                  <h4 className="font-semibold mb-2">📦 NPM Package</h4>
-                  <pre className="bg-black/50 p-3 rounded text-sm mb-2">
-                    <code>npm install agentpay-sdk</code>
-                  </pre>
-                  <Button variant="outline" size="sm" onClick={() => {
-                    window.open('https://www.npmjs.com/package/agentpay-sdk', '_blank');
-                  }}>
-                    View on NPM
-                  </Button>
-                        <Button variant="outline" size="sm" onClick={() => {
-                    window.open('https://github.com/agentpay/sdk', '_blank');
-                  }}>
-                    View on GitHub
-                  </Button>
-                </div>
-           
-              </div>
-
-              <h3 className="text-xl font-semibold mb-4 mt-8">Your API Keys</h3>
-              <div className="space-y-3">
-                {apiKeys.map(key => (
-                  <div key={key.id} className="flex items-center justify-between p-3 border rounded-lg">
-                    <div className="flex-1">
-                      <p className="font-semibold text-sm">{key.name}</p>
-                      <p className="font-mono text-xs text-muted-foreground">{key.key.slice(0, 20)}...</p>
-                      <p className="text-xs text-muted-foreground">{key.agentName}</p>
+              <h3 className="text-xl font-semibold mb-4">Your API Keys</h3>
+              <div className="space-y-3 max-h-[400px] overflow-y-auto">
+                {apiKeys.length === 0 ? (
+                  <p className="text-muted-foreground text-sm">No API keys generated yet</p>
+                ) : (
+                  apiKeys.map(key => (
+                    <div key={key.id} className="flex items-center justify-between p-3 glass border border-border/50 rounded-lg">
+                      <div className="flex-1">
+                        <p className="font-semibold text-sm">{key.name}</p>
+                        <p className="font-mono text-xs text-muted-foreground">{key.key.slice(0, 20)}...</p>
+                        <p className="text-xs text-muted-foreground">{key.agent_name}</p>
+                      </div>
+                      <div className="flex gap-2">
+                        <Button size="icon" variant="ghost" onClick={() => {
+                          navigator.clipboard.writeText(key.key);
+                          toast.success("API key copied");
+                        }}>
+                          <Copy className="h-4 w-4" />
+                        </Button>
+                        <Button 
+                          size="icon" 
+                          variant="ghost" 
+                          onClick={() => handleRevokeKey(key.id)}
+                          disabled={!key.is_active}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
                     </div>
-                    <div className="flex gap-2">
-                      <Button size="icon" variant="ghost" onClick={() => {
-                        navigator.clipboard.writeText(key.key);
-                        toast.success("API key copied");
-                      }}>
-                        <Copy className="h-4 w-4" />
-                      </Button>
-                      <Button size="icon" variant="ghost" onClick={() => {
-                        revokeApiKey(key.id);
-                        toast.success("API key revoked");
-                      }}>
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </div>
-                ))}
+                  ))
+                )}
               </div>
             </Card>
           </div>
