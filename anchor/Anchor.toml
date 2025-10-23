@@ -8,7 +8,6 @@ skip-lint = false
 [programs.localnet]
 anchor = "2hpe9fZeZvPbuFukKFqaVUq2YfDeLZymZbq7YGGkpxhE"
 
-
 [registry]
 url = "https://api.apr.dev"
 
