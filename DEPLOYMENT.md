@@ -1,173 +1,156 @@
-# AgentPay Deployment Guide
+# AgentPay System - Deployment Guide
 
-This guide will help you deploy the AgentPay smart contract to Solana Devnet and connect it with the frontend application.
+## Overview
+This document provides instructions for deploying and running the AgentPay system, which enables secure AI agent payments on Solana.
 
 ## Prerequisites
+- Node.js v18+
+- Rust and Cargo
+- Anchor CLI
+- Solana CLI
+- Docker (for containerized deployment)
 
-- Solana CLI installed and configured
-- Anchor Framework v0.29.0+ installed
-- Node.js v18+ and npm/yarn
-- A Solana wallet with devnet SOL (use `solana airdrop`)
+## Environment Setup
 
-## Step 1: Configure Solana CLI
-
+1. **Install dependencies:**
 ```bash
-# Set to devnet
-solana config set --url https://api.devnet.solana.com
+# Install Anchor CLI
+cargo install --git https://github.com/coral-xyz/anchor anchor-cli --locked
 
-# Create or use existing wallet
-solana-keygen new --outfile ~/.config/solana/id.json
-
-# Get devnet SOL
-solana airdrop 2
+# Install Node dependencies
+npm install
 ```
 
-## Step 2: Build the Anchor Program
+2. **Configure Solana CLI:**
+```bash
+# Set up your Solana wallet
+solana config set --url devnet
+
+# Generate a new keypair (for testing)
+solana-keygen new --outfile ~/.config/solana/id.json
+```
+
+## Deployment Steps
+
+### 1. Deploy the Anchor Program
 
 ```bash
-# Navigate to anchor directory
+# Navigate to the anchor directory
 cd anchor
 
 # Build the program
 anchor build
 
-# Get the program ID
-solana address -k target/deploy/agent_pay-keypair.json
+# Deploy to devnet
+anchor deploy --provider.cluster devnet
 ```
 
-## Step 3: Update Program ID
+### 2. Set up Environment Variables
 
-Copy the program ID from step 2 and update it in:
+Create a `.env` file in the root directory:
+```env
+# Solana Configuration
+SOLANA_CLUSTER=devnet
+SOLANA_WALLET_PATH=~/.config/solana/id.json
 
-1. `anchor/Anchor.toml`:
-```toml
-[programs.devnet]
-agent_pay = "YOUR_PROGRAM_ID_HERE"
+# AgentPay Program ID
+AGENT_PAY_PROGRAM_ID=4oaMRmsu2jKBapScs2McmgUjxaeH6eV9LHP2JktLfFXJ
+
+# USDC Mint Address (Devnet)
+USDC_MINT=EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v
+
+# Backend API Configuration
+BACKEND_PORT=3000
+MONGODB_URI=mongodb://localhost:27017/agentpay
 ```
 
-2. `anchor/programs/agent-pay/src/lib.rs`:
-```rust
-declare_id!("YOUR_PROGRAM_ID_HERE");
-```
-
-3. `src/lib/solana.ts`:
-```typescript
-export const AGENT_PAY_PROGRAM_ID = new PublicKey('YOUR_PROGRAM_ID_HERE');
-```
-
-## Step 4: Rebuild After ID Update
+### 3. Run the Frontend Application
 
 ```bash
-# Rebuild with the correct program ID
-anchor build
-```
-
-## Step 5: Deploy to Devnet
-
-```bash
-# Deploy the program
-anchor deploy
-
-# Verify deployment
-solana program show YOUR_PROGRAM_ID
-```
-
-## Step 6: Initialize the Registry
-
-```bash
-# Run the initialization script
-npm run anchor:initialize
-
-# Or manually with ts-node
-ts-node scripts/initialize-registry.ts
-```
-
-## Step 7: Test the Deployment
-
-```bash
-# Run tests against devnet
-anchor test --skip-local-validator
-```
-
-## Step 8: Start the Frontend
-
-```bash
-# Navigate to project root
-cd ..
-
-# Install dependencies
+# Install frontend dependencies
 npm install
 
 # Start the development server
 npm run dev
 ```
 
-## Step 9: Connect Your Wallet
+### 4. Backend Services
 
-1. Open the application in your browser (usually http://localhost:8080)
-2. Click "Connect Wallet" in the top right
-3. Select your Solana wallet (Phantom, Solflare, etc.)
-4. Approve the connection
+For production deployment, you'll need to set up:
+- MongoDB for data persistence
+- Transaction listener for blockchain sync
+- API endpoints for agent management
+- Cron jobs for periodic sync
 
-## Step 10: Register Your First Agent
+## Program Structure
 
-1. Go to "My Agents" page
-2. Click "Register Agent"
-3. Fill in:
-   - Agent Name
-   - Hotkey Address (another Solana wallet address)
-   - Daily Limit (in USDC)
-4. Sign the transaction
+### On-Chain Program (Anchor)
+- `src/instructions/initialize_agent.rs` - Initialize agent accounts
+- `src/instructions/update_agent_details.rs` - Update agent information
+- `src/instructions/process_transaction.rs` - Process payments through agents
+- `src/state/agent_account.rs` - Agent account structure
+- `src/state/transaction_record.rs` - Transaction record structure
 
-## Verification
+### Frontend (React)
+- Wallet integration with Phantom, Solflare, Backpack
+- Agent registration and management UI
+- Dashboard with analytics
+- Transaction history
 
-After deployment, verify everything is working:
+### Backend (Node.js/Express)
+- MongoDB integration
+- Transaction listener service
+- API endpoints for agent management
+- Payment verification logic
 
+## Security Considerations
+
+1. **Signature Verification**: All on-chain operations require proper signature verification
+2. **Daily Spend Limits**: Implemented to prevent unauthorized spending
+3. **Coldkey Verification**: Critical operations require coldkey signatures
+4. **Rate Limiting**: API endpoints implement rate limiting to prevent abuse
+
+## Testing
+
+Run tests with:
 ```bash
-# Check program is deployed
-solana program show YOUR_PROGRAM_ID
+# Run Anchor tests
+anchor test
 
-# Check registry is initialized
-anchor account registry YOUR_REGISTRY_PDA
-
-# Check frontend is connected
-# Visit http://localhost:8080 and connect your wallet
+# Run frontend tests
+npm test
 ```
+
+## Monitoring
+
+The system includes:
+- Transaction history tracking
+- Daily spending limit monitoring
+- Payment approval workflow
+- Blockchain sync monitoring
 
 ## Troubleshooting
 
-### Program Not Deployed
-- Ensure you have enough SOL: `solana balance`
-- Check your keypair path in `anchor/Anchor.toml`
+### Common Issues:
+1. **Program ID Mismatch**: Ensure the program ID in your frontend matches the deployed program
+2. **Wallet Connection**: Verify your wallet is properly connected and has sufficient SOL
+3. **MongoDB Connection**: Ensure MongoDB is running and accessible
+4. **Transaction Failures**: Check for insufficient funds or invalid signatures
 
-### Transaction Failed
-- Verify you're connected to devnet
-- Check you have USDC devnet tokens
-- Ensure wallet is connected properly
+### Debugging:
+```bash
+# Check program logs
+solana logs <PROGRAM_ID>
 
-### Frontend Not Connecting
-- Check console for errors
-- Verify AGENT_PAY_PROGRAM_ID matches deployed program
-- Ensure wallet adapter is configured for devnet
+# Verify account state
+solana account <AGENT_ACCOUNT_ADDRESS>
+```
 
-## Next Steps
+## Production Deployment
 
-- **Production Deployment**: Deploy to mainnet-beta
-- **USDC Setup**: Use mainnet USDC address
-- **Security Audit**: Get program audited before mainnet
-- **Monitoring**: Set up transaction monitoring
-- **Documentation**: Share SDK with developers
-
-## Resources
-
-- [Solana Cookbook](https://solanacookbook.com/)
-- [Anchor Documentation](https://www.anchor-lang.com/)
-- [Solana Web3.js](https://solana-labs.github.io/solana-web3.js/)
-- [AgentPay Documentation](./README.md)
-
-## Support
-
-For issues or questions:
-- Check GitHub Issues
-- Join our Discord
-- Read the documentation at /docs
+For production deployment:
+1. Deploy to mainnet
+2. Set up proper monitoring and alerting
+3. Implement backup and recovery procedures
+4. Configure SSL/TLS for API endpoints
+5. Set up CI/CD pipeline

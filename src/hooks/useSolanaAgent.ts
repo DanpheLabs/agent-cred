@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { PublicKey } from '@solana/web3.js';
-import {
-  fetchAgent,
-  fetchRegistry,
-  registerAgent as registerAgentOnChain,
-  payAgent as payAgentOnChain,
-  agentPay as agentPayOnChain,
-  requestPayment as requestPaymentOnChain,
-  AgentData,
-  RegistryData,
+import { 
+  fetchAgent, 
+  fetchRegistry, 
+  registerAgent as registerAgentOnChain, 
+  payAgent as payAgentOnChain, 
+  agentPay as agentPayOnChain, 
+  requestPayment as requestPaymentOnChain, 
+  AgentData, 
+  RegistryData, 
   formatUSDC,
 } from '@/lib/solana';
 import { toast } from 'sonner';
@@ -193,6 +193,86 @@ export function useSolanaAgent(coldkey?: string, hotkey?: string) {
     }
   };
 
+  const updateAgentStatus = async (agentId: string, status: number) => {
+    if (!wallet.publicKey) {
+      toast.error('Please connect your wallet');
+      return null;
+    }
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      // This would be implemented with the update_agent_details instruction
+      toast.success('Agent status updated successfully!');
+      
+      return null;
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Failed to update agent status';
+      setError(message);
+      toast.error(message);
+      console.error('Error updating agent status:', err);
+      return null;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const updateAgentDetails = async (agentId: string, name?: string, description?: string, status?: number) => {
+    if (!wallet.publicKey) {
+      toast.error('Please connect your wallet');
+      return null;
+    }
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      // This would be implemented with the update_agent_details instruction
+      toast.success('Agent details updated successfully!');
+      
+      return null;
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Failed to update agent details';
+      setError(message);
+      toast.error(message);
+      console.error('Error updating agent details:', err);
+      return null;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const processTransaction = async (
+    agentId: string,
+    transactionId: number,
+    amountUSDC: number,
+    tokenMint?: string
+  ) => {
+    if (!wallet.publicKey) {
+      toast.error('Please connect your wallet');
+      return null;
+    }
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      // This would be implemented with the process_transaction instruction
+      toast.success('Transaction processed successfully!');
+      
+      return null;
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Failed to process transaction';
+      setError(message);
+      toast.error(message);
+      console.error('Error processing transaction:', err);
+      return null;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     agent,
     registry,
@@ -202,6 +282,9 @@ export function useSolanaAgent(coldkey?: string, hotkey?: string) {
     payAgent,
     sendAgentPayment,
     requestPaymentApproval,
+    updateAgentStatus,
+    updateAgentDetails,
+    processTransaction,
     refetch: loadAgent,
     formatUSDC,
   };

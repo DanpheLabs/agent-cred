@@ -4,7 +4,7 @@ import { TOKEN_PROGRAM_ID, getAssociatedTokenAddress } from '@solana/spl-token';
 import { WalletContextState } from '@solana/wallet-adapter-react';
 
 // AgentPay Program ID on Devnet
-export const AGENT_PAY_PROGRAM_ID = new PublicKey('AgentPay11111111111111111111111111111111111');
+export const AGENT_PAY_PROGRAM_ID = new PublicKey('4oaMRmsu2jKBapScs2McmgUjxaeH6eV9LHP2JktLfFXJ');
 
 // USDC Mint on Devnet
 export const USDC_MINT = new PublicKey('EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v');
