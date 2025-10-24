@@ -3,115 +3,39 @@ import {
   PublicKey, 
   SystemProgram, 
   Transaction,
-  sendAndConfirmTransaction 
 } from '@solana/web3.js';
-import { AnchorProvider, BN, Idl, Program } from '@coral-xyz/anchor';
+import { AnchorProvider, BN, Program } from '@coral-xyz/anchor';
 import { TOKEN_PROGRAM_ID, getAssociatedTokenAddress } from '@solana/spl-token';
 import { WalletContextState } from '@solana/wallet-adapter-react';
-import { createAnchorProgram } from './anchor-program';
+import { IDL, AGENT_PAY_PROGRAM_ID, AgentPayProgram } from './anchor';
+import { saveTransaction } from './database';
 
-export const AGENT_PAY_PROGRAM_ID = new PublicKey('2hpe9fZeZvPbuFukKFqaVUq2YfDeLZymZbq7YGGkpxhE');
-// AgentPay IDL
-const IDL: Idl = {
-  version: "0.1.0",
-  name: "agent_pay",
-  instructions: [
-    {
-      name: "registerAgent",
-      accounts: [
-        {
-          name: "agent",
-          isMut: true,
-          isSigner: false
-        },
-        {
-          name: "registry",
-          isMut: true,
-          isSigner: false
-        },
-        {
-          name: "coldkey",
-          isMut: true,
-          isSigner: true
-        },
-        {
-          name: "systemProgram",
-          isMut: false,
-          isSigner: false
-        }
-      ],
-      args: [
-        {
-          name: "hotkey",
-          type: {
-            defined: "PublicKey"
-          }
-        },
-        {
-          name: "dailyLimit",
-          type: "u64"
-        }
-      ]
-    }
-  ],
-  accounts: [
-    {
-      name: "agent",
-      type: {
-        kind: "struct",
-        fields: [
-          {
-            name: "coldkey",
-            type: "publicKey"
-          },
-          {
-            name: "hotkey",
-            type: "publicKey"
-          },
-          {
-            name: "dailyLimit",
-            type: "u64"
-          },
-          {
-            name: "dailySpent",
-            type: "u64"
-          },
-          {
-            name: "lastResetTimestamp",
-            type: "i64"
-          },
-          {
-            name: "isActive",
-            type: "bool"
-          },
-          {
-            name: "totalReceived",
-            type: "u64"
-          },
-          {
-            name: "totalSent",
-            type: "u64"
-          },
-          {
-            name: "bump",
-            type: "u8"
-          }
-        ]
-      }
-    }
-  ],
-  metadata: {
-    address: AGENT_PAY_PROGRAM_ID.toBase58()
-  }
-};
-
-// AgentPay Program ID on Devnet
+export { AGENT_PAY_PROGRAM_ID };
 
 // USDC Mint on Devnet
-export const USDC_MINT = new PublicKey('EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v');
+export const USDC_MINT = new PublicKey('Gh9ZwEmdLJ8DscKNTkTqPbNwLNNBjuSzaG9Vp2KGtKJr');
 
 // Connection to Solana Devnet
 export const connection = new Connection('https://api.devnet.solana.com', 'confirmed');
+
+// Helper to create program instance
+const getProgram = (connection: Connection, wallet: WalletContextState): AgentPayProgram | null => {
+  if (!wallet.publicKey || !wallet.signTransaction) {
+    return null;
+  }
+
+  const provider = new AnchorProvider(
+    connection,
+    {
+      publicKey: wallet.publicKey,
+      signTransaction: wallet.signTransaction,
+      signAllTransactions: wallet.signAllTransactions!,
+    },
+    { commitment: 'confirmed' }
+  );
+
+  return new Program(IDL, provider);
+};
 
 // Derive Registry PDA
 export function getRegistryPDA(): [PublicKey, number] {
@@ -265,19 +189,8 @@ export async function registerAgent(
     throw new Error('Wallet not connected');
   }
 
-  // Create Anchor provider
-  const provider = new AnchorProvider(
-    connection,
-    {
-      publicKey: wallet.publicKey,
-      signTransaction: wallet.signTransaction,
-      signAllTransactions: wallet.signAllTransactions!,
-    },
-    { commitment: 'confirmed' }
-  );
-
-  // Create program interface
-  const program = new Program(IDL as Idl, AGENT_PAY_PROGRAM_ID, provider);
+  const program = getProgram(connection, wallet);
+  if (!program) throw new Error('Failed to create program instance');
 
   // Get PDA addresses
   const [registryPDA] = getRegistryPDA();
@@ -299,6 +212,20 @@ export async function registerAgent(
 
     // Wait for confirmation
     await connection.confirmTransaction(tx);
+    
+    // Save to database
+    await saveTransaction({
+      wallet_address: wallet.publicKey.toBase58(),
+      type: 'register_agent',
+      amount: dailyLimit,
+      status: 'completed',
+      transaction_hash: tx,
+      metadata: {
+        hotkey: hotkey.toBase58(),
+        daily_limit: dailyLimit
+      }
+    });
+    
     return tx;
   } catch (error: any) {
     console.error('Error registering agent:', error);
@@ -360,6 +287,19 @@ export async function payAgent(
   const signature = await connection.sendRawTransaction(signed.serialize());
   await connection.confirmTransaction(signature);
 
+  // Save to database
+  await saveTransaction({
+    wallet_address: wallet.publicKey.toBase58(),
+    type: 'payment',
+    amount,
+    status: 'completed',
+    transaction_hash: signature,
+    metadata: {
+      coldkey: coldkey.toBase58(),
+      hotkey: hotkey.toBase58()
+    }
+  });
+
   return signature;
 }
 
@@ -374,6 +314,9 @@ export async function agentPay(
     throw new Error('Wallet not connected');
   }
 
+  const program = getProgram(connection, wallet);
+  if (!program) throw new Error('Failed to create program instance');
+
   const [agentPDA] = getAgentPDA(coldkey, wallet.publicKey);
   
   const amountBN = parseUSDC(amount);
@@ -381,38 +324,42 @@ export async function agentPay(
   const coldkeyTokenAccount = await getAssociatedTokenAddress(USDC_MINT, coldkey);
   const recipientTokenAccount = await getAssociatedTokenAddress(USDC_MINT, recipient);
 
-  const instruction = new Transaction();
-  
-  // Build agent_pay instruction
-  const keys = [
-    { pubkey: agentPDA, isSigner: false, isWritable: true },
-    { pubkey: wallet.publicKey, isSigner: true, isWritable: false },
-    { pubkey: recipient, isSigner: false, isWritable: false },
-    { pubkey: coldkeyTokenAccount, isSigner: false, isWritable: true },
-    { pubkey: recipientTokenAccount, isSigner: false, isWritable: true },
-    { pubkey: TOKEN_PROGRAM_ID, isSigner: false, isWritable: false },
-  ];
+  try {
+    const tx = await program.methods
+      .agentPay(amountBN)
+      .accounts({
+        agent: agentPDA,
+        hotkey: wallet.publicKey,
+        recipient,
+        coldkeyTokenAccount,
+        recipientTokenAccount,
+        tokenProgram: TOKEN_PROGRAM_ID,
+      })
+      .rpc();
 
-  // Instruction data: [discriminator (8 bytes), amount (8 bytes)]
-  const data = Buffer.alloc(16);
-  const discriminator = Buffer.from([0x4f, 0x8e, 0x2d, 0x3c, 0x1a, 0x6b, 0x9f, 0x7e]);
-  discriminator.copy(data, 0);
-  data.writeBigUInt64LE(BigInt(amountBN.toString()), 8);
+    await connection.confirmTransaction(tx);
 
-  instruction.add({
-    keys,
-    programId: AGENT_PAY_PROGRAM_ID,
-    data,
-  });
+    // Save to database
+    await saveTransaction({
+      wallet_address: wallet.publicKey.toBase58(),
+      type: 'agent_payment',
+      amount,
+      status: 'completed',
+      transaction_hash: tx,
+      metadata: {
+        coldkey: coldkey.toBase58(),
+        recipient: recipient.toBase58()
+      }
+    });
 
-  instruction.feePayer = wallet.publicKey;
-  instruction.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
-
-  const signed = await wallet.signTransaction(instruction);
-  const signature = await connection.sendRawTransaction(signed.serialize());
-  await connection.confirmTransaction(signature);
-
-  return signature;
+    return tx;
+  } catch (error: any) {
+    console.error('Error in agentPay:', error);
+    if (error.logs) {
+      console.error('Program logs:', error.logs);
+    }
+    throw error;
+  }
 }
 
 // Request Payment
@@ -465,6 +412,20 @@ export async function requestPayment(
   const signed = await wallet.signTransaction(instruction);
   const signature = await connection.sendRawTransaction(signed.serialize());
   await connection.confirmTransaction(signature);
+
+  // Save to database
+  await saveTransaction({
+    wallet_address: wallet.publicKey.toBase58(),
+    type: 'payment_request',
+    amount,
+    status: 'pending',
+    transaction_hash: signature,
+    metadata: {
+      coldkey: coldkey.toBase58(),
+      recipient: recipient.toBase58(),
+      purpose
+    }
+  });
 
   return signature;
 }
