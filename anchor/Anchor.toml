@@ -5,7 +5,7 @@ package_manager = "yarn"
 resolution = true
 skip-lint = false
 
-[programs.localnet]
+[programs.devnet]
 anchor = "2hpe9fZeZvPbuFukKFqaVUq2YfDeLZymZbq7YGGkpxhE"
 
 [registry]
