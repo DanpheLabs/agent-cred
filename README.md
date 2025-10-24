@@ -330,12 +330,12 @@ VITE_AGENT_PAY_PROGRAM_ID=2hpe9fZeZvPbuFukKFqaVUq2YfDeLZymZbq7YGGkpxhE
 VITE_USDC_MINT=EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v
 ```
 
-For production (mainnet):
+<!-- For production (mainnet):
 
 ```env
 VITE_SOLANA_NETWORK=mainnet-beta
 VITE_AGENT_PAY_PROGRAM_ID=<YOUR_MAINNET_PROGRAM_ID>
-VITE_USDC_MINT=EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v
+VITE_USDC_MINT=EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v -->
 ```
 
 ## 📦 Deployment

@@ -190,6 +190,7 @@ export async function registerAgent(
   }
 
   const program = getProgram(connection, wallet);
+
   if (!program) throw new Error('Failed to create program instance');
 
   // Get PDA addresses
@@ -225,7 +226,7 @@ export async function registerAgent(
         daily_limit: dailyLimit
       }
     });
-    
+    console.log('Agent registered with transaction:', tx);
     return tx;
   } catch (error: any) {
     console.error('Error registering agent:', error);
