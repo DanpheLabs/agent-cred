@@ -200,7 +200,7 @@ export async function registerAgent(
 
   try {
     // Use Anchor to send the register_agent instruction
-    const tx = await program.methods
+    const tx = await (program as any).methods
       .registerAgent(hotkey, dailyLimitBN)
       .accounts({
         agent: agentPDA,
@@ -325,7 +325,7 @@ export async function agentPay(
   const recipientTokenAccount = await getAssociatedTokenAddress(USDC_MINT, recipient);
 
   try {
-    const tx = await program.methods
+    const tx = await (program as any).methods
       .agentPay(amountBN)
       .accounts({
         agent: agentPDA,
