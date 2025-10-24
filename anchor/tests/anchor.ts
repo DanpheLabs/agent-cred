@@ -6,7 +6,7 @@ describe("agent_pay", () => {
   // Configure the client to use the local cluster.
   anchor.setProvider(anchor.AnchorProvider.env());
 
-  const program = anchor.workspace.anchor as Program<AgentPay>;
+  const program = anchor.workspace.agent_pay as Program<AgentPay>;
 
   it("Is initialized!", async () => {
     // Add your test here.
