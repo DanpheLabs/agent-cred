@@ -3,7 +3,7 @@
 version = 4
 
 [[package]]
-name = "AgentPay"
+name = "agent_pay"
 version = "0.1.0"
 dependencies = [
  "anchor-lang",
