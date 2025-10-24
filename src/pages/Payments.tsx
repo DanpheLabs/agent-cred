@@ -36,7 +36,7 @@ import { Connection, PublicKey } from '@solana/web3.js';
 // Initialize SDK
 const sdk = new AgentPaySDK({ 
   network: 'devnet',
-  programId: 'AgentPay11111111111111111111111111111111111'
+  programId: '2hpe9fZeZvPbuFukKFqaVUq2YfDeLZymZbq7YGGkpxhE'
 });
 
 // Connect wallet
@@ -63,7 +63,7 @@ import { AgentPaySDK } from 'agentpay-sdk';
 
 const sdk = new AgentPaySDK({ 
   network: 'devnet',
-  programId: 'AgentPay11111111111111111111111111111111111'
+  programId: '2hpe9fZeZvPbuFukKFqaVUq2YfDeLZymZbq7YGGkpxhE'
 });
 
 // Agent sends payment (requires hotkey wallet)
@@ -87,7 +87,7 @@ import { AgentPaySDK } from 'agentpay-sdk';
 
 const sdk = new AgentPaySDK({ 
   network: 'devnet',
-  programId: 'AgentPay11111111111111111111111111111111111'
+  programId: '2hpe9fZeZvPbuFukKFqaVUq2YfDeLZymZbq7YGGkpxhE'
 });
 
 // Submit payment request for coldkey approval
