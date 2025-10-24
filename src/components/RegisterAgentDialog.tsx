@@ -8,7 +8,8 @@ import { toast } from "sonner";
 import { useWallet } from '@solana/wallet-adapter-react';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import { supabase } from "@/integrations/supabase/client";
-import { generateMockAddress } from "@/lib/storage";
+import { useSolanaAgent } from "@/hooks/useSolanaAgent";
+import { PublicKey } from "@solana/web3.js";
 
 interface RegisterAgentDialogProps {
   open: boolean;
@@ -18,12 +19,14 @@ interface RegisterAgentDialogProps {
 
 export const RegisterAgentDialog = ({ open, onOpenChange, onAgentCreated }: RegisterAgentDialogProps) => {
   const { publicKey: walletPublicKey } = useWallet();
+  const { registerAgent, loading: registerLoading } = useSolanaAgent();
   const [name, setName] = useState("");
   const [endpoint, setEndpoint] = useState("");
   const [dailyLimit, setDailyLimit] = useState("");
   const [hotkeyMethod, setHotkeyMethod] = useState<"wallet" | "paste">("wallet");
   const [pastedHotkey, setPastedHotkey] = useState("");
   const [hotkeyWallet, setHotkeyWallet] = useState<string | null>(null);
+  const [isRegistering, setIsRegistering] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -48,47 +51,64 @@ export const RegisterAgentDialog = ({ open, onOpenChange, onAgentCreated }: Regi
       hotkey = pastedHotkey;
     }
 
-    const newAgent = {
-      id: `agent_${Date.now()}`,
-      wallet_address: walletPublicKey.toBase58(),
-      name,
-      endpoint,
-      hotkey,
-      coldkey: walletPublicKey.toBase58(),
-      daily_limit: parseFloat(dailyLimit),
-      daily_spent: 0,
-      last_reset_date: new Date().toISOString(),
-      balance: 0,
-      total_received: 0,
-      total_sent: 0,
-      status: 'active',
-      created_at: new Date().toISOString(),
-    };
+    setIsRegistering(true);
+    try {
+      // First register on-chain
+      const signature = await registerAgent(hotkey, parseFloat(dailyLimit));
+      if (!signature) {
+        toast.error("Failed to register agent on-chain");
+        return;
+      }
 
-    // Set wallet context for RLS
-    await supabase.rpc('set_wallet_context', {
-      wallet_addr: walletPublicKey.toBase58()
-    });
+      // Then save in database
+      const newAgent = {
+        id: `agent_${Date.now()}`,
+        wallet_address: walletPublicKey.toBase58(),
+        name,
+        endpoint,
+        hotkey,
+        coldkey: walletPublicKey.toBase58(),
+        daily_limit: parseFloat(dailyLimit),
+        daily_spent: 0,
+        last_reset_date: new Date().toISOString(),
+        balance: 0,
+        total_received: 0,
+        total_sent: 0,
+        status: 'active',
+        created_at: new Date().toISOString(),
+        tx_signature: signature,
+      };
 
-    const { error } = await supabase
-      .from('agents')
-      .insert([newAgent]);
+      // Set wallet context for RLS
+      await supabase.rpc('set_wallet_context', {
+        wallet_addr: walletPublicKey.toBase58()
+      });
 
-    if (error) {
-      console.error('Error saving agent:', error);
+      const { error } = await supabase
+        .from('agents')
+        .insert([newAgent]);
+
+      if (error) {
+        console.error('Error saving agent:', error);
+        toast.error("Agent registered on-chain but failed to save in database");
+        return;
+      }
+
+      toast.success("Agent registered successfully!");
+      
+      setName("");
+      setEndpoint("");
+      setDailyLimit("");
+      setPastedHotkey("");
+      setHotkeyWallet(null);
+      onOpenChange(false);
+      onAgentCreated();
+    } catch (error) {
+      console.error('Error registering agent:', error);
       toast.error("Failed to register agent");
-      return;
+    } finally {
+      setIsRegistering(false);
     }
-
-    toast.success("Agent registered successfully!");
-    
-    setName("");
-    setEndpoint("");
-    setDailyLimit("");
-    setPastedHotkey("");
-    setHotkeyWallet(null);
-    onOpenChange(false);
-    onAgentCreated();
   };
 
   return (
@@ -192,8 +212,9 @@ export const RegisterAgentDialog = ({ open, onOpenChange, onAgentCreated }: Regi
             <Button
               type="submit"
               className="flex-1 bg-gradient-to-r from-primary to-secondary text-primary-foreground font-semibold glow-hover"
+              disabled={isRegistering || registerLoading}
             >
-              Register Agent
+              {isRegistering ? "Registering..." : "Register Agent"}
             </Button>
           </div>
         </form>

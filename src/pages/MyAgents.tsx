@@ -33,11 +33,29 @@ export default function MyAgents() {
     loadAgents();
   }, []);
   
-  const handleDeleteAgent = (agentId: string) => {
-    if (confirm("Are you sure you want to delete this agent?")) {
+  const { updateAgentStatus } = useSolanaAgent();
+
+  const handleDeleteAgent = async (agentId: string) => {
+    if (!confirm("Are you sure you want to delete this agent?")) {
+      return;
+    }
+
+    try {
+      // Deactivate agent on-chain
+      const result = await updateAgentStatus(agentId, 0); // 0 = inactive
+      
+      if (!result) {
+        toast.error("Failed to deactivate agent on-chain");
+        return;
+      }
+
+      // Delete from local storage
       deleteAgent(agentId);
-      toast.success("Agent deleted successfully");
+      toast.success("Agent deactivated and removed successfully");
       loadAgents();
+    } catch (error) {
+      console.error('Error deleting agent:', error);
+      toast.error("Failed to delete agent");
     }
   };
   
@@ -47,7 +65,7 @@ export default function MyAgents() {
       <main className="pt-24 px-6 pb-20">
         <div className="container mx-auto max-w-7xl">
           {/* Contract Info Cards */}
-          {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <Card className="glass p-6 rounded-2xl border-border/50">
               <div className="flex items-start gap-3">
                 <div className="p-2 rounded-lg bg-primary/10">
@@ -68,6 +86,7 @@ export default function MyAgents() {
                 <div className="flex-1">
                   <p className="text-sm text-muted-foreground mb-1">AgentPay Contract</p>
                   <p className="font-mono text-xs break-all">{AGENT_PAY_PROGRAM_ID.toBase58().slice(0, 8)}...{AGENT_PAY_PROGRAM_ID.toBase58().slice(-8)}</p>
+                  <p className="text-xs text-muted-foreground mt-1">Total Volume: {registry?.totalVolume ? (Number(registry.totalVolume) / 1e6).toFixed(2) : 0} USDC</p>
                 </div>
               </div>
             </Card>
@@ -80,10 +99,11 @@ export default function MyAgents() {
                 <div className="flex-1">
                   <p className="text-sm text-muted-foreground mb-1">USDC Token</p>
                   <p className="font-mono text-xs break-all">{USDC_MINT.toBase58().slice(0, 8)}...{USDC_MINT.toBase58().slice(-8)}</p>
+                  <p className="text-xs text-muted-foreground mt-1">Agents Registered: {registry?.agentCount?.toString() || 0}</p>
                 </div>
               </div>
             </Card>
-          </div> */}
+          </div>
 
           <div className="flex items-center justify-between mb-8">
             <div>

@@ -1,10 +1,111 @@
-import { Connection, PublicKey, Transaction, SystemProgram } from '@solana/web3.js';
-import { AnchorProvider, Program, Idl, BN } from '@coral-xyz/anchor';
+import { 
+  Connection, 
+  PublicKey, 
+  SystemProgram, 
+  Transaction,
+  sendAndConfirmTransaction 
+} from '@solana/web3.js';
+import { AnchorProvider, BN, Idl, Program } from '@coral-xyz/anchor';
 import { TOKEN_PROGRAM_ID, getAssociatedTokenAddress } from '@solana/spl-token';
 import { WalletContextState } from '@solana/wallet-adapter-react';
+import { createAnchorProgram } from './anchor-program';
+
+export const AGENT_PAY_PROGRAM_ID = new PublicKey('2hpe9fZeZvPbuFukKFqaVUq2YfDeLZymZbq7YGGkpxhE');
+// AgentPay IDL
+const IDL: Idl = {
+  version: "0.1.0",
+  name: "agent_pay",
+  instructions: [
+    {
+      name: "registerAgent",
+      accounts: [
+        {
+          name: "agent",
+          isMut: true,
+          isSigner: false
+        },
+        {
+          name: "registry",
+          isMut: true,
+          isSigner: false
+        },
+        {
+          name: "coldkey",
+          isMut: true,
+          isSigner: true
+        },
+        {
+          name: "systemProgram",
+          isMut: false,
+          isSigner: false
+        }
+      ],
+      args: [
+        {
+          name: "hotkey",
+          type: {
+            defined: "PublicKey"
+          }
+        },
+        {
+          name: "dailyLimit",
+          type: "u64"
+        }
+      ]
+    }
+  ],
+  accounts: [
+    {
+      name: "agent",
+      type: {
+        kind: "struct",
+        fields: [
+          {
+            name: "coldkey",
+            type: "publicKey"
+          },
+          {
+            name: "hotkey",
+            type: "publicKey"
+          },
+          {
+            name: "dailyLimit",
+            type: "u64"
+          },
+          {
+            name: "dailySpent",
+            type: "u64"
+          },
+          {
+            name: "lastResetTimestamp",
+            type: "i64"
+          },
+          {
+            name: "isActive",
+            type: "bool"
+          },
+          {
+            name: "totalReceived",
+            type: "u64"
+          },
+          {
+            name: "totalSent",
+            type: "u64"
+          },
+          {
+            name: "bump",
+            type: "u8"
+          }
+        ]
+      }
+    }
+  ],
+  metadata: {
+    address: AGENT_PAY_PROGRAM_ID.toBase58()
+  }
+};
 
 // AgentPay Program ID on Devnet
-export const AGENT_PAY_PROGRAM_ID = new PublicKey('4oaMRmsu2jKBapScs2McmgUjxaeH6eV9LHP2JktLfFXJ');
 
 // USDC Mint on Devnet
 export const USDC_MINT = new PublicKey('EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v');
@@ -164,43 +265,49 @@ export async function registerAgent(
     throw new Error('Wallet not connected');
   }
 
+  // Create Anchor provider
+  const provider = new AnchorProvider(
+    connection,
+    {
+      publicKey: wallet.publicKey,
+      signTransaction: wallet.signTransaction,
+      signAllTransactions: wallet.signAllTransactions!,
+    },
+    { commitment: 'confirmed' }
+  );
+
+  // Create program interface
+  const program = new Program(IDL as Idl, AGENT_PAY_PROGRAM_ID, provider);
+
+  // Get PDA addresses
   const [registryPDA] = getRegistryPDA();
   const [agentPDA] = getAgentPDA(wallet.publicKey, hotkey);
   
   const dailyLimitBN = parseUSDC(dailyLimit);
 
-  const instruction = new Transaction();
-  
-  // Build register_agent instruction
-  const keys = [
-    { pubkey: agentPDA, isSigner: false, isWritable: true },
-    { pubkey: registryPDA, isSigner: false, isWritable: true },
-    { pubkey: wallet.publicKey, isSigner: true, isWritable: true },
-    { pubkey: SystemProgram.programId, isSigner: false, isWritable: false },
-  ];
+  try {
+    // Use Anchor to send the register_agent instruction
+    const tx = await program.methods
+      .registerAgent(hotkey, dailyLimitBN)
+      .accounts({
+        agent: agentPDA,
+        registry: registryPDA,
+        coldkey: wallet.publicKey,
+        systemProgram: SystemProgram.programId,
+      })
+      .rpc();
 
-  // Instruction data: [instruction discriminator (8 bytes), hotkey (32 bytes), daily_limit (8 bytes)]
-  const data = Buffer.alloc(8 + 32 + 8);
-  // Register agent instruction discriminator (computed from "register_agent")
-  const discriminator = Buffer.from([0x93, 0x3c, 0x2e, 0x1b, 0x7c, 0x5a, 0x9f, 0x3d]);
-  discriminator.copy(data, 0);
-  hotkey.toBuffer().copy(data, 8);
-  data.writeBigUInt64LE(BigInt(dailyLimitBN.toString()), 40);
-
-  instruction.add({
-    keys,
-    programId: AGENT_PAY_PROGRAM_ID,
-    data,
-  });
-
-  instruction.feePayer = wallet.publicKey;
-  instruction.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
-
-  const signed = await wallet.signTransaction(instruction);
-  const signature = await connection.sendRawTransaction(signed.serialize());
-  await connection.confirmTransaction(signature);
-
-  return signature;
+    // Wait for confirmation
+    await connection.confirmTransaction(tx);
+    return tx;
+  } catch (error: any) {
+    console.error('Error registering agent:', error);
+    // Enhance error logging
+    if (error.logs) {
+      console.error('Program logs:', error.logs);
+    }
+    throw error;
+  }
 }
 
 // Pay Agent

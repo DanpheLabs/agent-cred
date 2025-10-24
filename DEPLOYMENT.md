@@ -54,7 +54,7 @@ SOLANA_CLUSTER=devnet
 SOLANA_WALLET_PATH=~/.config/solana/id.json
 
 # AgentPay Program ID
-AGENT_PAY_PROGRAM_ID=4oaMRmsu2jKBapScs2McmgUjxaeH6eV9LHP2JktLfFXJ
+AGENT_PAY_PROGRAM_ID=2hpe9fZeZvPbuFukKFqaVUq2YfDeLZymZbq7YGGkpxhE
 
 # USDC Mint Address (Devnet)
 USDC_MINT=EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v
