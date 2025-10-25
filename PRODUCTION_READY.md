@@ -20,7 +20,7 @@ This document confirms that AgentPay is production-ready with full on-chain inte
 - ✅ 523 lines of production-ready Rust code
 - ✅ Full test suite in `anchor/tests/agent-pay.test.ts`
 - ✅ Deployment scripts in `anchor/scripts/`
-- ✅ Program ID: `wPHFYiphgexNsCvx63vcD5WTvJdYkk9fcP3DaszedqA`
+- ✅ Program ID: `54ZZfUHiT4AM3nvnipZzJWDumVdXTmdMQuSb4Yc2TzUg`
 
 ## ✅ Frontend Integration
 

@@ -326,7 +326,7 @@ Create `.env.local` for local development:
 
 ```env
 VITE_SOLANA_NETWORK=devnet
-VITE_AGENT_PAY_PROGRAM_ID=wPHFYiphgexNsCvx63vcD5WTvJdYkk9fcP3DaszedqA
+VITE_AGENT_PAY_PROGRAM_ID=54ZZfUHiT4AM3nvnipZzJWDumVdXTmdMQuSb4Yc2TzUg
 VITE_USDC_MINT=EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v
 ```
 

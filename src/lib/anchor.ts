@@ -9,7 +9,7 @@ if (typeof window !== 'undefined') {
 }
 
 // Program ID
-export const AGENT_PAY_PROGRAM_ID = new PublicKey('wPHFYiphgexNsCvx63vcD5WTvJdYkk9fcP3DaszedqA');
+export const AGENT_PAY_PROGRAM_ID = new PublicKey('54ZZfUHiT4AM3nvnipZzJWDumVdXTmdMQuSb4Yc2TzUg');
 
 // IDL Definition - simple any type to avoid TypeScript conflicts with Anchor's complex types
 export const IDL: any = {
