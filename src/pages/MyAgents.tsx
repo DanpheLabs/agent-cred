@@ -7,31 +7,50 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Plus, RefreshCw, Network, Wallet } from "lucide-react";
 import { useWallet } from '@solana/wallet-adapter-react';
-import { getAgents, deleteAgent, Agent } from "@/lib/storage";
+import { Agent } from "@/lib/storage";
 import { useSolanaAgent } from "@/hooks/useSolanaAgent";
 import { AGENT_PAY_PROGRAM_ID, USDC_MINT } from "@/lib/solana";
 import { toast } from "sonner";
+import { getAgentsFromDB } from "@/lib/database";
+import { setWalletContext } from "@/lib/supabase";
+import { supabase } from "@/integrations/supabase/client";
 
 export default function MyAgents() {
-  const { connected } = useWallet();
+  const { connected, publicKey } = useWallet();
   const { registry } = useSolanaAgent();
   const [agents, setAgents] = useState<Agent[]>([]);
   const [registerDialogOpen, setRegisterDialogOpen] = useState(false);
   const [settingsDialogOpen, setSettingsDialogOpen] = useState(false);
   const [selectedAgent, setSelectedAgent] = useState<Agent | null>(null);
+  const [loading, setLoading] = useState(false);
   
   const handleSelectAgent = (agent: Agent) => {
     setSelectedAgent(agent);
     setSettingsDialogOpen(true);
   };
   
-  const loadAgents = () => {
-    setAgents(getAgents());
+  const loadAgents = async () => {
+    if (!publicKey) {
+      setAgents([]);
+      return;
+    }
+
+    setLoading(true);
+    try {
+      await setWalletContext(publicKey.toBase58());
+      const dbAgents = await getAgentsFromDB(publicKey.toBase58());
+      setAgents(dbAgents);
+    } catch (error) {
+      console.error('Error loading agents:', error);
+      toast.error("Failed to load agents");
+    } finally {
+      setLoading(false);
+    }
   };
   
   useEffect(() => {
     loadAgents();
-  }, []);
+  }, [publicKey]);
   
   const { updateAgentStatus } = useSolanaAgent();
 
@@ -40,18 +59,26 @@ export default function MyAgents() {
       return;
     }
 
+    if (!publicKey) {
+      toast.error("Wallet not connected");
+      return;
+    }
+
     try {
-      // Deactivate agent on-chain
-      const result = await updateAgentStatus(agentId, 0); // 0 = inactive
-      
-      if (!result) {
-        toast.error("Failed to deactivate agent on-chain");
+      // Delete from database
+      await setWalletContext(publicKey.toBase58());
+      const { error } = await supabase
+        .from('agents')
+        .delete()
+        .eq('id', agentId);
+
+      if (error) {
+        console.error('Error deleting agent:', error);
+        toast.error("Failed to delete agent");
         return;
       }
 
-      // Delete from local storage
-      deleteAgent(agentId);
-      toast.success("Agent deactivated and removed successfully");
+      toast.success("Agent deleted successfully");
       loadAgents();
     } catch (error) {
       console.error('Error deleting agent:', error);
@@ -134,6 +161,10 @@ export default function MyAgents() {
             <div className="glass p-12 rounded-2xl border-border/50 text-center">
               <h3 className="text-xl font-semibold mb-2">Connect Your Wallet</h3>
               <p className="text-muted-foreground">Please connect your Solana wallet to manage your agents</p>
+            </div>
+          ) : loading ? (
+            <div className="glass p-12 rounded-2xl border-border/50 text-center">
+              <p className="text-muted-foreground">Loading agents...</p>
             </div>
           ) : (
             <AgentList 

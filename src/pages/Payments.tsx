@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Navbar } from "@/components/Navbar";
 import { useWallet } from '@solana/wallet-adapter-react';
 import { Card } from "@/components/ui/card";
@@ -8,15 +8,58 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowRight, Clock, CheckCircle2 } from "lucide-react";
-import { getAgents, saveTransaction, savePaymentRequest, getPendingRequests, updatePaymentRequest, generateMockAddress } from "@/lib/storage";
+import { Agent } from "@/lib/storage";
 import { toast } from "sonner";
+import { getAgentsFromDB } from "@/lib/database";
+import { setWalletContext } from "@/lib/supabase";
+import { supabase } from "@/integrations/supabase/client";
 
 export default function Payments() {
   const { connected, publicKey } = useWallet();
-  const agents = getAgents().filter(a => a.status === 'active');
+  const [agents, setAgents] = useState<Agent[]>([]);
+  const [pendingRequests, setPendingRequests] = useState<any[]>([]);
   const [showSdkCode, setShowSdkCode] = useState(false);
   const [currentSdkCode, setCurrentSdkCode] = useState("");
-  const pendingRequests = getPendingRequests();
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (publicKey && connected) {
+      loadData();
+    } else {
+      setAgents([]);
+      setPendingRequests([]);
+    }
+  }, [publicKey, connected]);
+
+  const loadData = async () => {
+    if (!publicKey) return;
+    
+    setLoading(true);
+    try {
+      await setWalletContext(publicKey.toBase58());
+      
+      // Load agents
+      const dbAgents = await getAgentsFromDB(publicKey.toBase58());
+      setAgents(dbAgents.filter(a => a.status === 'active'));
+
+      // Load pending payment requests
+      const { data: requests, error } = await supabase
+        .from('payment_requests')
+        .select('*')
+        .eq('wallet_address', publicKey.toBase58())
+        .eq('status', 'pending')
+        .order('requested_at', { ascending: false });
+
+      if (!error && requests) {
+        setPendingRequests(requests);
+      }
+    } catch (error) {
+      console.error('Error loading data:', error);
+      toast.error("Failed to load data");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const [selectedAgent, setSelectedAgent] = useState("");
   const [payAmount, setPayAmount] = useState("");
@@ -106,8 +149,8 @@ console.log('Status:', request.status); // 'pending'
     return code;
   };
 
-  const handlePayAgent = () => {
-    if (!selectedAgent || !payAmount) {
+  const handlePayAgent = async () => {
+    if (!selectedAgent || !payAmount || !publicKey) {
       toast.error("Please select an agent and enter amount");
       return;
     }
@@ -118,32 +161,57 @@ console.log('Status:', request.status); // 'pending'
     if (!agent) return;
 
     const amount = parseFloat(payAmount);
-    const transaction = {
-      id: Date.now().toString(),
-      type: "user_to_agent" as const,
-      from: publicKey?.toBase58() || "User",
-      to: agent.coldkey,
-      amount,
-      description: `Payment to ${agent.name}`,
-      timestamp: new Date().toISOString(),
-      status: "completed" as const,
-      agentId: agent.id,
-    };
+    
+    try {
+      await setWalletContext(publicKey.toBase58());
 
-    saveTransaction(transaction);
-    
-    // Update agent balance
-    agent.totalReceived += amount;
-    agent.balance += amount;
-    
-    toast.success(`Paid ${amount} USDC to ${agent.name}`);
-    setPayAmount("");
-    setSelectedAgent("");
+      // Save transaction to database
+      const { error: txError } = await supabase
+        .from('transactions')
+        .insert([{
+          id: `tx_${Date.now()}`,
+          wallet_address: publicKey.toBase58(),
+          from_address: publicKey.toBase58(),
+          to_address: agent.coldkey,
+          type: "user_to_agent",
+          amount,
+          status: "completed",
+          description: `Payment to ${agent.name}`,
+          agent_id: agent.id,
+        }]);
+
+      if (txError) {
+        console.error('Error saving transaction:', txError);
+        toast.error("Failed to save transaction");
+        return;
+      }
+
+      // Update agent balance
+      const { error: agentError } = await supabase
+        .from('agents')
+        .update({
+          balance: agent.balance + amount,
+          total_received: agent.totalReceived + amount,
+        })
+        .eq('id', agent.id);
+
+      if (agentError) {
+        console.error('Error updating agent:', agentError);
+      }
+
+      toast.success(`Paid ${amount} USDC to ${agent.name}`);
+      setPayAmount("");
+      setSelectedAgent("");
+      loadData();
+    } catch (error) {
+      console.error('Error processing payment:', error);
+      toast.error("Failed to process payment");
+    }
   };
 
   // Agent → Recipient (Instant if within limit)
-  const handleAgentPayment = () => {
-    if (!selectedAgent || !agentPayRecipient || !agentPayAmount) {
+  const handleAgentPayment = async () => {
+    if (!selectedAgent || !agentPayRecipient || !agentPayAmount || !publicKey) {
       toast.error("Please fill all fields");
       return;
     }
@@ -161,33 +229,57 @@ console.log('Status:', request.status); // 'pending'
       return;
     }
 
-    const transaction = {
-      id: Date.now().toString(),
-      type: "agent_to_recipient" as const,
-      from: agent.hotkey,
-      to: agentPayRecipient,
-      amount,
-      description: `Agent payment from ${agent.name}`,
-      timestamp: new Date().toISOString(),
-      status: "completed" as const,
-      agentId: agent.id,
-    };
+    try {
+      await setWalletContext(publicKey.toBase58());
 
-    saveTransaction(transaction);
+      // Save transaction
+      const { error: txError } = await supabase
+        .from('transactions')
+        .insert([{
+          id: `tx_${Date.now()}`,
+          wallet_address: publicKey.toBase58(),
+          from_address: agent.hotkey,
+          to_address: agentPayRecipient,
+          type: "agent_to_recipient",
+          amount,
+          status: "completed",
+          description: `Agent payment from ${agent.name}`,
+          agent_id: agent.id,
+        }]);
 
-    // Update agent
-    agent.dailySpent += amount;
-    agent.totalSent += amount;
-    agent.balance -= amount;
+      if (txError) {
+        console.error('Error saving transaction:', txError);
+        toast.error("Failed to save transaction");
+        return;
+      }
 
-    toast.success(`Sent ${amount} USDC to recipient`);
-    setAgentPayRecipient("");
-    setAgentPayAmount("");
+      // Update agent
+      const { error: agentError } = await supabase
+        .from('agents')
+        .update({
+          daily_spent: agent.dailySpent + amount,
+          total_sent: agent.totalSent + amount,
+          balance: agent.balance - amount,
+        })
+        .eq('id', agent.id);
+
+      if (agentError) {
+        console.error('Error updating agent:', agentError);
+      }
+
+      toast.success(`Sent ${amount} USDC to recipient`);
+      setAgentPayRecipient("");
+      setAgentPayAmount("");
+      loadData();
+    } catch (error) {
+      console.error('Error processing payment:', error);
+      toast.error("Failed to process payment");
+    }
   };
 
   // Agent → Request Payment
-  const handleRequestPayment = () => {
-    if (!selectedAgent || !requestRecipient || !requestAmount || !requestPurpose) {
+  const handleRequestPayment = async () => {
+    if (!selectedAgent || !requestRecipient || !requestAmount || !requestPurpose || !publicKey) {
       toast.error("Please fill all fields");
       return;
     }
@@ -198,55 +290,121 @@ console.log('Status:', request.status); // 'pending'
     if (!agent) return;
 
     const amount = parseFloat(requestAmount);
-    const request = {
-      id: Date.now().toString(),
-      agentId: agent.id,
-      agentName: agent.name,
-      hotkey: agent.hotkey,
-      coldkey: agent.coldkey,
-      recipient: requestRecipient,
-      amount,
-      purpose: requestPurpose,
-      status: "pending" as const,
-      requestedAt: new Date().toISOString(),
-    };
 
-    savePaymentRequest(request);
+    try {
+      await setWalletContext(publicKey.toBase58());
 
-    toast.success("Payment request submitted for approval");
-    setRequestRecipient("");
-    setRequestAmount("");
-    setRequestPurpose("");
+      const { error } = await supabase
+        .from('payment_requests')
+        .insert([{
+          id: `req_${Date.now()}`,
+          wallet_address: publicKey.toBase58(),
+          agent_id: agent.id,
+          agent_name: agent.name,
+          hotkey: agent.hotkey,
+          coldkey: agent.coldkey,
+          recipient: requestRecipient,
+          amount,
+          purpose: requestPurpose,
+          status: "pending",
+        }]);
+
+      if (error) {
+        console.error('Error saving payment request:', error);
+        toast.error("Failed to save payment request");
+        return;
+      }
+
+      toast.success("Payment request submitted for approval");
+      setRequestRecipient("");
+      setRequestAmount("");
+      setRequestPurpose("");
+      loadData();
+    } catch (error) {
+      console.error('Error submitting request:', error);
+      toast.error("Failed to submit request");
+    }
   };
 
   // Approve/Reject request
-  const handleApproveRequest = (requestId: string) => {
+  const handleApproveRequest = async (requestId: string) => {
+    if (!publicKey) return;
+
     const request = pendingRequests.find(r => r.id === requestId);
     if (!request) return;
 
-    updatePaymentRequest(requestId, "approved");
+    try {
+      await setWalletContext(publicKey.toBase58());
 
-    const transaction = {
-      id: Date.now().toString(),
-      type: "agent_to_recipient" as const,
-      from: request.hotkey,
-      to: request.recipient,
-      amount: request.amount,
-      description: request.purpose,
-      timestamp: new Date().toISOString(),
-      status: "completed" as const,
-      agentId: request.agentId,
-      requestId,
-    };
+      // Update request status
+      const { error: reqError } = await supabase
+        .from('payment_requests')
+        .update({ 
+          status: "approved",
+          processed_at: new Date().toISOString(),
+        })
+        .eq('id', requestId);
 
-    saveTransaction(transaction);
+      if (reqError) {
+        console.error('Error updating request:', reqError);
+        toast.error("Failed to approve request");
+        return;
+      }
 
-    toast.success("Payment request approved");
+      // Create transaction
+      const { error: txError } = await supabase
+        .from('transactions')
+        .insert([{
+          id: `tx_${Date.now()}`,
+          wallet_address: publicKey.toBase58(),
+          from_address: request.hotkey,
+          to_address: request.recipient,
+          type: "agent_to_recipient",
+          amount: request.amount,
+          status: "completed",
+          description: request.purpose,
+          agent_id: request.agent_id,
+          request_id: requestId,
+        }]);
+
+      if (txError) {
+        console.error('Error saving transaction:', txError);
+      }
+
+      toast.success("Payment request approved");
+      loadData();
+    } catch (error) {
+      console.error('Error approving request:', error);
+      toast.error("Failed to approve request");
+    }
   };
 
-  const handleRejectRequest = (requestId: string) => {
-    updatePaymentRequest(requestId, "rejected");
-    toast.info("Payment request rejected");
+  const handleRejectRequest = async (requestId: string) => {
+    if (!publicKey) return;
+
+    try {
+      await setWalletContext(publicKey.toBase58());
+
+      const { error } = await supabase
+        .from('payment_requests')
+        .update({ 
+          status: "rejected",
+          processed_at: new Date().toISOString(),
+        })
+        .eq('id', requestId);
+
+      if (error) {
+        console.error('Error rejecting request:', error);
+        toast.error("Failed to reject request");
+        return;
+      }
+
+      toast.info("Payment request rejected");
+      loadData();
+    } catch (error) {
+      console.error('Error rejecting request:', error);
+      toast.error("Failed to reject request");
+    }
   };
 
   return (

@@ -1,4 +1,5 @@
 import { supabase } from '@/integrations/supabase/client';
+import { Agent } from '@/lib/storage';
 
 export interface TransactionRecord {
   wallet_address: string;
@@ -27,6 +28,25 @@ export interface AgentRecord {
   total_sent: number;
   status: string;
   created_at: string;
+}
+
+// Convert database agent record to Agent type
+export function mapAgentRecordToAgent(record: AgentRecord): Agent {
+  return {
+    id: record.id,
+    name: record.name,
+    hotkey: record.hotkey,
+    coldkey: record.coldkey,
+    balance: Number(record.balance),
+    dailyLimit: Number(record.daily_limit),
+    dailySpent: Number(record.daily_spent),
+    lastResetDate: record.last_reset_date,
+    endpoint: record.endpoint,
+    status: record.status as "active" | "inactive",
+    totalReceived: Number(record.total_received),
+    totalSent: Number(record.total_sent),
+    createdAt: record.created_at,
+  };
 }
 
 export async function saveTransaction(txData: {
@@ -87,7 +107,7 @@ export async function getTransactionsFromDB(walletAddress: string, limit = 100) 
   }
 }
 
-export async function getAgentsFromDB(walletAddress: string) {
+export async function getAgentsFromDB(walletAddress: string): Promise<Agent[]> {
   try {
     const { data, error } = await supabase
       .from('agents')
@@ -100,7 +120,7 @@ export async function getAgentsFromDB(walletAddress: string) {
       return [];
     }
 
-    return data || [];
+    return (data || []).map(mapAgentRecordToAgent);
   } catch (err) {
     console.error('Exception fetching agents:', err);
     return [];
