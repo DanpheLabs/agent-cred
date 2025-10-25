@@ -137,22 +137,7 @@ await sdk.requestPayment({
             <p className="text-muted-foreground">Manage API keys for agent integration</p>
           </div>
 
-          <div className="grid gap-6 mb-8">
-            <Card className="glass p-6 rounded-2xl border-border/50">
-              <h3 className="text-xl font-semibold mb-4">Quick Start</h3>
-              <SyntaxHighlighter 
-                language="typescript" 
-                style={vscDarkPlus}
-                customStyle={{
-                  borderRadius: '0.5rem',
-                  padding: '1.5rem',
-                  fontSize: '0.875rem'
-                }}
-              >
-                {codeExample}
-              </SyntaxHighlighter>
-            </Card>
-          </div>
+
 
           <div className="grid gap-6 lg:grid-cols-2">
             <Card className="glass p-6 rounded-2xl border-border/50">
