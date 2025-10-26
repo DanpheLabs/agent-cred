@@ -35,49 +35,49 @@ export const Navbar = () => {
         <div className="hidden md:flex items-center gap-8">
           <Link 
             to="/dashboard" 
-            className={`text-sm font-medium transition-colors ${isActive('/dashboard') ? 'text-primary font-normal' : 'text-muted-foreground hover:text-foreground'}`}
+            className={`text-sm font-medium transition-colors ${isActive('/dashboard') ? 'text-purple-400 font-normal' : 'text-muted-foreground hover:text-foreground'}`}
           >
             Dashboard
           </Link>
           <Link 
             to="/agents" 
-            className={`text-sm font-medium transition-colors ${isActive('/agents') ? 'text-primary font-normal' : 'text-muted-foreground hover:text-foreground'}`}
+            className={`text-sm font-medium transition-colors ${isActive('/agents') ? 'text-purple-400 font-normal' : 'text-muted-foreground hover:text-foreground'}`}
           >
             My Agents
           </Link>
           {/* <Link 
             to="/analytics" 
-            className={`text-sm font-medium transition-colors ${isActive('/analytics') ? 'text-primary font-normal' : 'text-muted-foreground hover:text-foreground'}`}
+            className={`text-sm font-medium transition-colors ${isActive('/analytics') ? 'text-purple-400 font-normal' : 'text-muted-foreground hover:text-foreground'}`}
           >
             Transactions
           </Link> */}
           <Link 
             to="/payments" 
-            className={`text-sm font-medium transition-colors ${isActive('/payments') ? 'text-primary font-normal' : 'text-muted-foreground hover:text-foreground'}`}
+            className={`text-sm font-medium transition-colors ${isActive('/payments') ? 'text-purple-400 font-normal' : 'text-muted-foreground hover:text-foreground'}`}
           >
             Playground
           </Link>
           {/* <Link 
             to="/use-cases" 
-            className={`text-sm font-medium transition-colors ${isActive('/use-cases') ? 'text-primary font-normal' : 'text-muted-foreground hover:text-foreground'}`}
+            className={`text-sm font-medium transition-colors ${isActive('/use-cases') ? 'text-purple-400 font-normal' : 'text-muted-foreground hover:text-foreground'}`}
           >
             Use Cases
           </Link> */}
           <Link 
             to="/sdk" 
-            className={`text-sm font-medium transition-colors ${isActive('/sdk') ? 'text-primary font-normal' : 'text-muted-foreground hover:text-foreground'}`}
+            className={`text-sm font-medium transition-colors ${isActive('/sdk') ? 'text-purple-400 font-normal' : 'text-muted-foreground hover:text-foreground'}`}
           >
             API
           </Link>
           <Link 
             to="/docs" 
-            className={`text-sm font-medium transition-colors ${isActive('/docs') ? 'text-primary font-normal' : 'text-muted-foreground hover:text-foreground'}`}
+            className={`text-sm font-medium transition-colors ${isActive('/docs') ? 'text-purple-400 font-normal' : 'text-muted-foreground hover:text-foreground'}`}
           >
             Docs
           </Link>
         </div>
 
-        <WalletMultiButton className="bg-gradient-to-r from-primary to-secondary text-primary-foreground font-normal text-lg glow-hover group" />
+        <WalletMultiButton className="bg-gradient-to-r from-primary to-purple-400 text-purple-400-foreground font-normal text-lg glow-hover group" />
       </div>
     </nav>
   );

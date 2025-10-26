@@ -55,7 +55,7 @@ export const Dashboard = () => {
             <Button 
               onClick={() => setRegisterDialogOpen(true)}
               disabled={!connected}
-              className="bg-gradient-to-r from-primary to-secondary text-primary-foreground font-normal glow-hover"
+              className="bg-gradient-to-r from-primary to-purple-400 text-primary-foreground font-normal glow-hover"
             >
               <Plus className="mr-2 h-4 w-4" />
               Register Agent

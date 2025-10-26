@@ -58,7 +58,7 @@ export const Hero = () => {
 
           <div className="flex flex-col items-center">
             <div className="flex items-center gap-2">
-              <DollarSign className="h-5 w-5 text-secondary" />
+              <DollarSign className="h-5 w-5 text-purple-400" />
               <p className="text-2xl font-normal">{stats.volume}</p>
             </div>
             <p className="text-xs text-muted-foreground mt-1">Total Volume</p>
@@ -111,7 +111,7 @@ export const Hero = () => {
             <div className="flex gap-4 justify-center">
               <a 
                 href="/sdk" 
-                className="px-6 py-3 rounded-lg bg-gradient-to-r from-primary to-secondary text-primary-foreground font-normal glow-hover inline-block"
+                className="px-6 py-3 rounded-lg bg-gradient-to-r from-primary to-purple-400 text-primary-foreground font-normal glow-hover inline-block"
               >
                 View SDK
               </a>

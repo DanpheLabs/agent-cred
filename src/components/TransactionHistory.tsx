@@ -32,17 +32,17 @@ export const TransactionHistory = () => {
             {isReceived ? (
               <ArrowDownRight className="h-5 w-5 text-primary" />
             ) : (
-              <ArrowUpRight className="h-5 w-5 text-secondary" />
+              <ArrowUpRight className="h-5 w-5 text-purple-400" />
             )}
           </div>
           <div>
-            <p className="font-medium">{tx.description}</p>
+            <p className="font-light">{tx.description}</p>
             <p className="text-sm text-muted-foreground">{formatTimestamp(tx.timestamp)}</p>
           </div>
         </div>
         <div className="flex items-center gap-4">
           <div className="text-right">
-            <p className={`font-normal ${isReceived ? 'text-primary' : 'text-secondary'}`}>
+            <p className={`font-normal ${isReceived ? 'text-primary' : 'text-purple-400'}`}>
               {isReceived ? '+' : '-'}{tx.amount.toFixed(2)} USDC
             </p>
             <p className="text-xs text-muted-foreground capitalize">{tx.status}</p>

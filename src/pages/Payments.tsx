@@ -155,7 +155,7 @@ console.log('Status:', request.status); // 'pending'
       return;
     }
     setCurrentSdkCode(generatePayAgentCode());
-    setShowSdkCode(true);
+    // setShowSdkCode(true);
 
     const agent = agents.find(a => a.id === selectedAgent);
     if (!agent) return;
@@ -216,7 +216,7 @@ console.log('Status:', request.status); // 'pending'
       return;
     }
     setCurrentSdkCode(generateAgentCredCode());
-    setShowSdkCode(true);
+    // setShowSdkCode(true);
 
     const agent = agents.find(a => a.id === selectedAgent);
     if (!agent) return;
@@ -284,7 +284,7 @@ console.log('Status:', request.status); // 'pending'
       return;
     }
     setCurrentSdkCode(generateRequestPaymentCode());
-    setShowSdkCode(true);
+    // setShowSdkCode(true);
 
     const agent = agents.find(a => a.id === selectedAgent);
     if (!agent) return;
@@ -426,7 +426,7 @@ console.log('Status:', request.status); // 'pending'
             <div className="space-y-6">
               <div className="flex justify-end">
                 <Button 
-                  variant="outline" 
+ 
                   onClick={() => setShowSdkCode(!showSdkCode)}
                 >
                   {showSdkCode ? "Hide" : "Show"} SDK Code
@@ -435,9 +435,9 @@ console.log('Status:', request.status); // 'pending'
 
               <div className={`grid gap-6 ${showSdkCode ? 'lg:grid-cols-2' : 'lg:grid-cols-1'}`}>
                 <div>
-                  <Tabs defaultValue="pay-agent" className="space-y-6">
-              <TabsList className="grid w-full grid-cols-3">
-                <TabsTrigger value="pay-agent">Agent → Your Agent</TabsTrigger>
+                  <Tabs defaultValue="pay-agent"  className="space-y-6">
+              <TabsList className="grid w-full bg-graident-to-r from-primary to-purple-500 border border-primary grid-cols-3">
+                <TabsTrigger value="pay-agent" className="">Agent → Your Agent</TabsTrigger>
                 <TabsTrigger value="agent-pay">Your Agent → Agent</TabsTrigger>
                 <TabsTrigger value="approvals">
                   Approvals {pendingRequests.length > 0 && `(${pendingRequests.length})`}
@@ -478,7 +478,7 @@ console.log('Status:', request.status); // 'pending'
                       />
                     </div>
 
-                    <Button onClick={handlePayAgent} className="w-full">
+                    <Button onClick={handlePayAgent} className="flex items-center justify-center">
                       <ArrowRight className="mr-2 h-4 w-4" />
                       Send Payment
                     </Button>
@@ -588,7 +588,7 @@ console.log('Status:', request.status); // 'pending'
                         />
                       </div>
 
-                      <Button onClick={handleRequestPayment} className="w-full" variant="outline">
+                      <Button onClick={handleRequestPayment} className="w-full">
                         <Clock className="mr-2 h-4 w-4" />
                         Submit Request
                       </Button>
@@ -658,8 +658,8 @@ console.log('Status:', request.status); // 'pending'
                 </div>
 
                 {showSdkCode && (
-                  <Card className="glass p-6 rounded-2xl border-border/50 h-fit sticky top-24">
-                    <h3 className="text-xl font-normal mb-4">SDK Code Example</h3>
+                  <Card className="glass p-6 rounded-2xl border-border/50 h-fit sticky top-16">
+                    <h3 className="text-xl font-normal mb-4"> Corresponding SDK Code Example</h3>
                     <p className="text-sm text-muted-foreground mb-4">
                       Use this code in your application to integrate AgentCred
                     </p>

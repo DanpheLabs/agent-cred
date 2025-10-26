@@ -6,9 +6,9 @@ export default function DocsArchitecture() {
   return (
     <div className="min-h-screen">
       <Navbar />
-      <main className="pt-24 px-6 pb-20">
+      <main className="pt-8 px-6 pb-20">
         <div className="container mx-auto max-w-7xl">
-          <h1 className="text-4xl font-normal mb-8">Architecture</h1>
+          {/* <h1 className="text-4xl font-normal mb-8">Architecture</h1> */}
           
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
             <div className="lg:col-span-1">
@@ -17,14 +17,14 @@ export default function DocsArchitecture() {
             
             <div className="lg:col-span-3 space-y-6">
               <Card className="glass p-8 rounded-2xl border-border/50">
-                <h2 className="text-3xl font-normal mb-4">System Architecture</h2>
-                <p className="text-lg text-muted-foreground mb-6">
+                <h2 className="text-xl font-normal mb-4">System Architecture</h2>
+                <p className="text-sm text-muted-foreground mb-6">
                   AgentCred is built on a secure hotkey/coldkey architecture on Solana
                 </p>
                 
                 <div className="space-y-6">
                   <section>
-                    <h3 className="text-2xl font-normal mb-3">Core Components</h3>
+                    <h3 className="text-lg font-normal mb-3">Core Components</h3>
                     
                     <div className="grid gap-4 mb-6">
                       <div className="p-4 border border-primary/20 rounded-lg bg-primary/5">
@@ -42,7 +42,7 @@ export default function DocsArchitecture() {
                       </div>
 
                       <div className="p-4 border border-secondary/20 rounded-lg bg-secondary/5">
-                        <h4 className="font-normal mb-2 text-secondary">🔥 Hotkey Wallet</h4>
+                        <h4 className="font-normal mb-2 text-purple-400">🔥 Hotkey Wallet</h4>
                         <p className="text-sm text-muted-foreground mb-2">
                           The operational wallet with limited spending power
                         </p>
@@ -72,7 +72,7 @@ export default function DocsArchitecture() {
                   </section>
 
                   <section>
-                    <h3 className="text-2xl font-normal mb-3">Payment Flows</h3>
+                    <h3 className="text-lg font-normal mb-3">Payment Flows</h3>
                     
                     <div className="space-y-4">
                       <div className="p-6 bg-black/30 rounded-lg border border-primary/20">
@@ -96,7 +96,7 @@ export default function DocsArchitecture() {
                       </div>
 
                       <div className="p-6 bg-black/30 rounded-lg border border-secondary/20">
-                        <h4 className="font-normal mb-3 text-secondary">Flow 2: Agent → Recipient (Auto)</h4>
+                        <h4 className="font-normal mb-3 text-purple-400">Flow 2: Agent → Recipient (Auto)</h4>
                         <pre className="text-sm text-muted-foreground overflow-x-auto">
 {`┌─────────┐         Request        ┌──────────┐
 │ Hotkey  │ ───────────────────▶   │ Coldkey  │
@@ -144,7 +144,7 @@ export default function DocsArchitecture() {
                   </section>
 
                   <section>
-                    <h3 className="text-2xl font-normal mb-3">Security Model</h3>
+                    <h3 className="text-lg font-normal mb-3">Security Model</h3>
                     <div className="grid gap-4">
                       <div className="p-4 border border-border/50 rounded-lg">
                         <h4 className="font-normal mb-2">🔒 Multi-Layer Protection</h4>
@@ -182,7 +182,7 @@ export default function DocsArchitecture() {
                   </section>
 
                   <section>
-                    <h3 className="text-2xl font-normal mb-3">Technology Stack</h3>
+                    <h3 className="text-lg font-normal mb-3">Technology Stack</h3>
                     <div className="grid md:grid-cols-2 gap-4">
                       <div className="p-4 border border-border/50 rounded-lg">
                         <h4 className="font-normal mb-3">Blockchain Layer</h4>

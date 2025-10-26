@@ -34,15 +34,15 @@ await sdk.payAgent({
             
             <div className="lg:col-span-3">
               <Card className="glass p-8 rounded-2xl border-border/50">
-                <h2 className="text-3xl font-normal mb-4">Welcome to AgentCred</h2>
-                <p className="text-lg text-muted-foreground mb-6">
+                <h2 className="text-xl font-normal mb-4">Welcome to AgentCred</h2>
+                <p className="text-sm text-muted-foreground mb-6">
                   Complete documentation for integrating autonomous agent payments in your application.
                 </p>
                 
                 <div className="space-y-6">
                   <section>
-                    <h3 className="text-2xl font-normal mb-3">What is AgentCred?</h3>
-                    <p className="text-muted-foreground leading-relaxed">
+                    <h3 className="text-xl font-normal mb-3">What is AgentCred?</h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed">
                       AgentCred is a payment infrastructure built specifically for AI agents on Solana. 
                       It enables autonomous payments with built-in security through the hotkey/coldkey architecture, 
                       real-time balance monitoring, and gasless transaction support.
@@ -50,7 +50,7 @@ await sdk.payAgent({
                   </section>
 
                   <section>
-                    <h3 className="text-2xl font-normal mb-3">Key Features</h3>
+                    <h3 className="text-xl font-normal mb-3">Key Features</h3>
                     <div className="grid gap-4">
                       <div className="p-4 glass border border-primary/20 rounded-lg">
                         <h4 className="font-normal mb-2">🔐 Dual-Key Security</h4>
@@ -74,7 +74,7 @@ await sdk.payAgent({
                   </section>
 
                   <section>
-                    <h3 className="text-2xl font-normal mb-3">Quick Start</h3>
+                    <h3 className="text-xl font-normal mb-3">Quick Start</h3>
                     <SyntaxHighlighter 
                       language="typescript" 
                       style={vscDarkPlus}
@@ -89,8 +89,8 @@ await sdk.payAgent({
                   </section>
 
                   <section>
-                    <h3 className="text-2xl font-normal mb-3">Core Concepts</h3>
-                    <ul className="space-y-2 text-muted-foreground">
+                    <h3 className="text-xl font-normal mb-3">Core Concepts</h3>
+                    <ul className="space-y-2 text-muted-foreground  text-sm">
                       <li className="flex items-start gap-2">
                         <span className="text-primary">•</span>
                         <span><strong>Hotkey:</strong> The operational wallet used by the AI agent for day-to-day transactions</span>

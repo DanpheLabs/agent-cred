@@ -167,7 +167,7 @@ await sdk.requestPayment({
                 </div>
                 <Button 
                   onClick={handleGenerateKey} 
-                  className="w-full bg-gradient-to-r from-primary to-secondary text-primary-foreground font-normal glow-hover"
+                  className="w-full bg-gradient-to-r from-primary to-purple-400 text-primary-foreground font-normal glow-hover"
                   disabled={!walletAddress}
                 >
                   Generate Key

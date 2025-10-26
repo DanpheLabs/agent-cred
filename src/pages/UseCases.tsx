@@ -82,7 +82,7 @@ export default function UseCases() {
             {useCases.map((useCase, index) => (
               <Card key={index} className="glass p-6 rounded-2xl border-border/50 hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10">
                 <div className="flex items-start gap-4 mb-4">
-                  <div className="p-3 rounded-xl bg-gradient-to-br from-primary/20 to-secondary/20 text-primary">
+                  <div className="p-3 rounded-xl bg-gradient-to-br from-primary/20 to-purple-400/20 text-primary">
                     {useCase.icon}
                   </div>
                   <div className="flex-1">
@@ -118,7 +118,7 @@ export default function UseCases() {
             <div className="flex gap-4 justify-center">
               <a 
                 href="/sdk" 
-                className="px-6 py-3 rounded-lg bg-gradient-to-r from-primary to-secondary text-primary-foreground font-normal glow-hover inline-block"
+                className="px-6 py-3 rounded-lg bg-gradient-to-r from-primary to-purple-400 text-primary-foreground font-normal glow-hover inline-block"
               >
                 View SDK
               </a>

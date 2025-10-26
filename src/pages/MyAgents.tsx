@@ -108,7 +108,7 @@ export default function MyAgents() {
             <Card className="glass p-6 rounded-2xl border-border/50">
               <div className="flex items-start gap-3">
                 <div className="p-2 rounded-lg bg-secondary/10">
-                  <Wallet className="h-5 w-5 text-secondary" />
+                  <Wallet className="h-5 w-5 text-purple-400" />
                 </div>
                 <div className="flex-1">
                   <p className="text-sm text-muted-foreground mb-1">AgentCred Contract</p>
@@ -149,7 +149,7 @@ export default function MyAgents() {
               <Button 
                 onClick={() => setRegisterDialogOpen(true)}
                 disabled={!connected}
-                className="bg-gradient-to-r from-primary to-secondary text-primary-foreground font-normal glow-hover"
+                className="bg-gradient-to-r from-primary to-purple-400 text-primary-foreground font-normal glow-hover"
               >
                 <Plus className="mr-2 h-4 w-4" />
                 Register Agent
