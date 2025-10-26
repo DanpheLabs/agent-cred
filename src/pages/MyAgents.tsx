@@ -138,14 +138,7 @@ export default function MyAgents() {
               <p className="text-muted-foreground">Manage your AI agent endpoints and wallets</p>
             </div>
             <div className="flex gap-3">
-              <Button 
-                variant="outline"
-                onClick={loadAgents}
-                className="glass border-border/50 hover:border-primary/50"
-              >
-                <RefreshCw className="mr-2 h-4 w-4" />
-                Refresh
-              </Button>
+           
               <Button 
                 onClick={() => setRegisterDialogOpen(true)}
                 disabled={!connected}
