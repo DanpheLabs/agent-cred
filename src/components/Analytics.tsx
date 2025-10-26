@@ -46,9 +46,9 @@ export const Analytics = () => {
           <Card key={index} className="glass p-6 rounded-2xl border-border/50 glow-hover">
             <div className="flex items-start justify-between mb-4">
               <div className="p-2 rounded-lg glass">
-                <Icon className={`h-5 w-5 ${isPositive ? 'text-primary' : 'text-secondary'}`} />
+                <Icon className={`h-5 w-5 ${isPositive ? 'text-white' : 'text-white'}`} />
               </div>
-              <span className={`text-sm font-medium ${isPositive ? 'text-primary' : 'text-secondary'}`}>
+              <span className={`text-sm font-medium ${isPositive ? 'text-white' : 'text-white'}`}>
                 {metric.change}
               </span>
             </div>

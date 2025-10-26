@@ -98,7 +98,7 @@ All colors MUST be HSL.
 @layer utilities {
   .glass {
     background: hsl(var(--glass-bg));
-    backdrop-filter: blur(20px) saturate(180%);
+    /* backdrop-filter: blur(20px) saturate(180%); */
     border: 1px solid transparent;
     background-clip: padding-box;
     position: relative;

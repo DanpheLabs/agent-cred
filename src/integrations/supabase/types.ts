@@ -29,6 +29,7 @@ export type Database = {
           status: string | null
           total_received: number | null
           total_sent: number | null
+          tx_signature: string | null
           wallet_address: string
         }
         Insert: {
@@ -45,6 +46,7 @@ export type Database = {
           status?: string | null
           total_received?: number | null
           total_sent?: number | null
+          tx_signature?: string | null
           wallet_address: string
         }
         Update: {
@@ -61,6 +63,7 @@ export type Database = {
           status?: string | null
           total_received?: number | null
           total_sent?: number | null
+          tx_signature?: string | null
           wallet_address?: string
         }
         Relationships: []
@@ -120,6 +123,7 @@ export type Database = {
           recipient: string
           requested_at: string | null
           status: string | null
+          tx_signature: string | null
           wallet_address: string
         }
         Insert: {
@@ -134,6 +138,7 @@ export type Database = {
           recipient: string
           requested_at?: string | null
           status?: string | null
+          tx_signature?: string | null
           wallet_address: string
         }
         Update: {
@@ -148,6 +153,7 @@ export type Database = {
           recipient?: string
           requested_at?: string | null
           status?: string | null
+          tx_signature?: string | null
           wallet_address?: string
         }
         Relationships: []
@@ -163,6 +169,7 @@ export type Database = {
           status: string | null
           timestamp: string | null
           to_address: string
+          tx_signature: string | null
           type: string
           wallet_address: string
         }
@@ -176,6 +183,7 @@ export type Database = {
           status?: string | null
           timestamp?: string | null
           to_address: string
+          tx_signature?: string | null
           type: string
           wallet_address: string
         }
@@ -189,6 +197,7 @@ export type Database = {
           status?: string | null
           timestamp?: string | null
           to_address?: string
+          tx_signature?: string | null
           type?: string
           wallet_address?: string
         }
