@@ -216,7 +216,7 @@ app.listen(3000);`}</code></pre>
                     <p className="text-sm text-muted-foreground mb-3">
                       How clients should handle 402 responses
                     </p>
-                    <pre className="text-sm bg-black/50 p-4 rounded-lg overflow-x-auto"><code>{`import { AgentCredSDK } from 'agentpay-sdk';
+                    <pre className="text-sm bg-black/50 p-4 rounded-lg overflow-x-auto"><code>{`import { AgentCredSDK } from 'agentcred-sdk';
 
 const sdk = new AgentCredSDK({ 
   apiKey: 'YOUR_API_KEY',

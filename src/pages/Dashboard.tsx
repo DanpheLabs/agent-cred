@@ -49,7 +49,7 @@ export default function Dashboard() {
         <div className="container mx-auto max-w-7xl">
           {/* <div className="mb-8">
             <h1 className="text-4xl font-normal mb-2">Dashboard</h1>
-            <p className="text-muted-foreground">Overview of your AI agent payment system</p>
+            <p className="text-muted-foreground">Overview of your AI agent credment system</p>
           </div> */}
           
           {!connected ? (

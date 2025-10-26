@@ -305,7 +305,7 @@ export async function payAgent(
 }
 
 // Agent Send Payment
-export async function agentPay(
+export async function agentcred(
   wallet: WalletContextState,
   coldkey: PublicKey,
   recipient: PublicKey,
@@ -327,7 +327,7 @@ export async function agentPay(
 
   try {
     const tx = await (program as any).methods
-      .agentPay(amountBN)
+      .agentcred(amountBN)
       .accounts({
         agent: agentPDA,
         hotkey: wallet.publicKey,
@@ -355,7 +355,7 @@ export async function agentPay(
 
     return tx;
   } catch (error: any) {
-    console.error('Error in agentPay:', error);
+    console.error('Error in agentcred:', error);
     if (error.logs) {
       console.error('Program logs:', error.logs);
     }

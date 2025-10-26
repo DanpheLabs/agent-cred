@@ -63,8 +63,8 @@ export default function Payments() {
 
   const [selectedAgent, setSelectedAgent] = useState("");
   const [payAmount, setPayAmount] = useState("");
-  const [agentPayRecipient, setAgentCredRecipient] = useState("");
-  const [agentPayAmount, setAgentCredAmount] = useState("");
+  const [agentcredRecipient, setAgentCredRecipient] = useState("");
+  const [agentcredAmount, setAgentCredAmount] = useState("");
   const [requestRecipient, setRequestRecipient] = useState("");
   const [requestAmount, setRequestAmount] = useState("");
   const [requestPurpose, setRequestPurpose] = useState("");
@@ -73,7 +73,7 @@ export default function Payments() {
   const generatePayAgentCode = () => {
     const agent = selectedAgent ? agents.find(a => a.id === selectedAgent) : null;
     const code = `// Pay an Agent - User to Agent USDC Payment
-import { AgentCredSDK } from 'agentpay-sdk';
+import { AgentCredSDK } from 'agentcred-sdk';
 import { Connection, PublicKey } from '@solana/web3.js';
 
 // Initialize SDK
@@ -102,7 +102,7 @@ console.log('Explorer:', \`https://explorer.solana.com/tx/\${result.signature}?c
   const generateAgentCredCode = () => {
     const agent = selectedAgent ? agents.find(a => a.id === selectedAgent) : null;
     const code = `// Agent Instant Payment - Within Daily Limit
-import { AgentCredSDK } from 'agentpay-sdk';
+import { AgentCredSDK } from 'agentcred-sdk';
 
 const sdk = new AgentCredSDK({ 
   network: 'devnet',
@@ -110,10 +110,10 @@ const sdk = new AgentCredSDK({
 });
 
 // Agent sends payment (requires hotkey wallet)
-const result = await sdk.agentPay({
+const result = await sdk.agentcred({
   coldkey: '${agent?.coldkey || 'AGENT_COLDKEY_ADDRESS'}',
-  recipient: '${agentPayRecipient || 'RECIPIENT_ADDRESS'}',
-  amount: ${agentPayAmount || '5'}, // USDC amount
+  recipient: '${agentcredRecipient || 'RECIPIENT_ADDRESS'}',
+  amount: ${agentcredAmount || '5'}, // USDC amount
 });
 
 // Check daily limit status
@@ -126,7 +126,7 @@ console.log('Payment signature:', result.signature);`;
   const generateRequestPaymentCode = () => {
     const agent = selectedAgent ? agents.find(a => a.id === selectedAgent) : null;
     const code = `// Request Payment Approval - Exceeds Daily Limit
-import { AgentCredSDK } from 'agentpay-sdk';
+import { AgentCredSDK } from 'agentcred-sdk';
 
 const sdk = new AgentCredSDK({ 
   network: 'devnet',
@@ -211,7 +211,7 @@ console.log('Status:', request.status); // 'pending'
 
   // Agent → Recipient (Instant if within limit)
   const handleAgentCredment = async () => {
-    if (!selectedAgent || !agentPayRecipient || !agentPayAmount || !publicKey) {
+    if (!selectedAgent || !agentcredRecipient || !agentcredAmount || !publicKey) {
       toast.error("Please fill all fields");
       return;
     }
@@ -221,7 +221,7 @@ console.log('Status:', request.status); // 'pending'
     const agent = agents.find(a => a.id === selectedAgent);
     if (!agent) return;
 
-    const amount = parseFloat(agentPayAmount);
+    const amount = parseFloat(agentcredAmount);
 
     // Check daily limit
     if (agent.dailySpent + amount > agent.dailyLimit) {
@@ -239,11 +239,11 @@ console.log('Status:', request.status); // 'pending'
           id: `tx_${Date.now()}`,
           wallet_address: publicKey.toBase58(),
           from_address: agent.hotkey,
-          to_address: agentPayRecipient,
+          to_address: agentcredRecipient,
           type: "agent_to_recipient",
           amount,
           status: "completed",
-          description: `Agent payment from ${agent.name}`,
+          description: `Agent credment from ${agent.name}`,
           agent_id: agent.id,
         }]);
 
@@ -414,7 +414,7 @@ console.log('Status:', request.status); // 'pending'
         <div className="container mx-auto max-w-7xl">
           {/* <div className="mb-8">
             <h1 className="text-4xl font-normal mb-2">AgentCred Playground</h1>
-            <p className="text-muted-foreground">Send payments to agents or manage agent payouts</p>
+            <p className="text-muted-foreground">Send payments to agents or manage agent credouts</p>
           </div> */}
 
           {!connected ? (
@@ -438,7 +438,7 @@ console.log('Status:', request.status); // 'pending'
                   <Tabs defaultValue="pay-agent"  className="space-y-6">
               <TabsList className="grid w-full bg-graident-to-r from-primary to-purple-500 border border-primary grid-cols-3">
                 <TabsTrigger value="pay-agent" className="">Agent → Your Agent</TabsTrigger>
-                <TabsTrigger value="agent-pay">Your Agent → Agent</TabsTrigger>
+                <TabsTrigger value="agent-cred">Your Agent → Agent</TabsTrigger>
                 <TabsTrigger value="approvals">
                   Approvals {pendingRequests.length > 0 && `(${pendingRequests.length})`}
                 </TabsTrigger>
@@ -486,7 +486,7 @@ console.log('Status:', request.status); // 'pending'
                 </Card>
               </TabsContent>
 
-              <TabsContent value="agent-pay">
+              <TabsContent value="agent-cred">
                 <div className="grid gap-6 md:grid-cols-2">
                   <Card className="glass p-6 rounded-2xl border-border/50">
                     <h3 className="text-xl font-normal mb-4">Instant Payment</h3>
@@ -515,7 +515,7 @@ console.log('Status:', request.status); // 'pending'
                         <label className="text-sm font-medium mb-2 block">Recipient Address</label>
                         <Input
                           placeholder="Solana address"
-                          value={agentPayRecipient}
+                          value={agentcredRecipient}
                           onChange={(e) => setAgentCredRecipient(e.target.value)}
                         />
                       </div>
@@ -525,7 +525,7 @@ console.log('Status:', request.status); // 'pending'
                         <Input
                           type="number"
                           placeholder="0.00"
-                          value={agentPayAmount}
+                          value={agentcredAmount}
                           onChange={(e) => setAgentCredAmount(e.target.value)}
                         />
                       </div>
@@ -668,7 +668,7 @@ console.log('Status:', request.status); // 'pending'
                     </pre>
                     <div className="mt-4 p-3 bg-primary/10 rounded-lg border border-primary/20">
                       <p className="text-xs text-muted-foreground">
-                        💡 Install SDK: <code className="text-primary">npm install agentpay-sdk</code>
+                        💡 Install SDK: <code className="text-primary">npm install agentcred-sdk</code>
                       </p>
                     </div>
                   </Card>

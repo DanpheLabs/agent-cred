@@ -105,7 +105,7 @@ export default function SDK() {
     loadData();
   };
 
-  const codeExample = `import { AgentCredSDK } from "agentpay-sdk";
+  const codeExample = `import { AgentCredSDK } from "agentcred-sdk";
 
 const sdk = new AgentCredSDK({
   apiKey: "YOUR_API_KEY",

@@ -154,7 +154,7 @@ app.post('/webhook/payment', async (req, res) => {
                     <h3 className="text-lg font-normal mb-3">Client Integration</h3>
                     <pre className="text-sm bg-black/50 p-4 rounded-lg overflow-x-auto">
                       <code className="text-sm">{`// Client-side SDK
-import { AgentCredSDK } from 'agentpay-sdk';
+import { AgentCredSDK } from 'agentcred-sdk';
 
 const sdk = new AgentCredSDK({ apiKey: API_KEY });
 

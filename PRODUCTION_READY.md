@@ -16,9 +16,9 @@ This document confirms that AgentCred is production-ready with full on-chain int
 - ✅ Security checks and error handling
 
 ### Smart Contract Code
-- ✅ Located in `anchor/programs/agent-pay/src/lib.rs`
+- ✅ Located in `anchor/programs/agent-cred/src/lib.rs`
 - ✅ 523 lines of production-ready Rust code
-- ✅ Full test suite in `anchor/tests/agent-pay.test.ts`
+- ✅ Full test suite in `anchor/tests/agent-cred.test.ts`
 - ✅ Deployment scripts in `anchor/scripts/`
 - ✅ Program ID: `54ZZfUHiT4AM3nvnipZzJWDumVdXTmdMQuSb4Yc2TzUg`
 
@@ -28,7 +28,7 @@ This document confirms that AgentCred is production-ready with full on-chain int
 - ✅ `src/lib/solana.ts` - Complete transaction building
   - Register agents on-chain
   - Send payments to agents
-  - Agent payment transactions
+  - Agent credment transactions
   - Payment request transactions
   - Fetch agent and registry data
   - USDC token handling
@@ -71,7 +71,7 @@ This document confirms that AgentCred is production-ready with full on-chain int
   - Tab-specific SDK code examples
   - Direct payment UI
   - Request payment UI
-  - Agent payment UI
+  - Agent credment UI
   
 - ✅ **Analytics** (`src/pages/AnalyticsPage.tsx`)
   - Real-time on-chain metrics
@@ -161,7 +161,7 @@ This document confirms that AgentCred is production-ready with full on-chain int
 
 ### Payment Flows
 1. ✅ **Direct Payment**: User → Agent (immediate)
-2. ✅ **Agent Payment**: Agent → Recipient (within limit)
+2. ✅ **Agent Credment**: Agent → Recipient (within limit)
 3. ✅ **Request Payment**: Agent → Request → Coldkey Approval → Recipient
 
 ## 🎯 Production Deployment Checklist

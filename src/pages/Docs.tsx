@@ -5,9 +5,9 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 export default function Docs() {
-  const quickStartCode = `npm install agentpay-sdk
+  const quickStartCode = `npm install agentcred-sdk
 
-import { AgentCredSDK } from "agentpay-sdk";
+import { AgentCredSDK } from "agentcred-sdk";
 
 const sdk = new AgentCredSDK({
   apiKey: "YOUR_API_KEY",
@@ -36,7 +36,7 @@ await sdk.payAgent({
               <Card className="glass p-8 rounded-2xl border-border/50">
                 <h2 className="text-xl font-normal mb-4">Welcome to AgentCred</h2>
                 <p className="text-sm text-muted-foreground mb-6">
-                  Complete documentation for integrating autonomous agent payments in your application.
+                  Complete documentation for integrating autonomous agent credments in your application.
                 </p>
                 
                 <div className="space-y-6">

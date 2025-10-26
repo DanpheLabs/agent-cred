@@ -6,7 +6,7 @@ import {
   fetchRegistry, 
   registerAgent as registerAgentOnChain, 
   payAgent as payAgentOnChain, 
-  agentPay as agentPayOnChain, 
+  agentcred as agentcredOnChain, 
   requestPayment as requestPaymentOnChain, 
   AgentData, 
   RegistryData, 
@@ -137,17 +137,17 @@ export function useSolanaAgent(coldkey?: string, hotkey?: string) {
     try {
       const coldkeyPubkey = new PublicKey(coldkeyAddress);
       const recipientPubkey = new PublicKey(recipientAddress);
-      const signature = await agentPayOnChain(wallet, coldkeyPubkey, recipientPubkey, amountUSDC);
+      const signature = await agentcredOnChain(wallet, coldkeyPubkey, recipientPubkey, amountUSDC);
       
-      toast.success(`Agent payment of ${amountUSDC} USDC sent successfully!`);
+      toast.success(`Agent credment of ${amountUSDC} USDC sent successfully!`);
       await loadAgent();
       
       return signature;
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Failed to send agent payment';
+      const message = err instanceof Error ? err.message : 'Failed to send agent credment';
       setError(message);
       toast.error(message);
-      console.error('Error sending agent payment:', err);
+      console.error('Error sending agent credment:', err);
       return null;
     } finally {
       setLoading(false);

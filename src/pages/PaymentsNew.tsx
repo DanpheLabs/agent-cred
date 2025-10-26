@@ -7,7 +7,7 @@ import { Code2, Layout } from "lucide-react";
 export default function PaymentsNew() {
   const { connected } = useWallet();
 
-  const sdkCode = `import { AgentCredSDK } from "agentpay-sdk";
+  const sdkCode = `import { AgentCredSDK } from "agentcred-sdk";
 
 // Initialize SDK
 const sdk = new AgentCredSDK({
@@ -56,13 +56,13 @@ sdk.on('balanceChange', (data) => {
   const uiCode = `import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { AgentCredSDK } from 'agentpay-sdk';
+import { AgentCredSDK } from 'agentcred-sdk';
 
 export default function PaymentForm() {
   const [amount, setAmount] = useState('');
   const [loading, setLoading] = useState(false);
   const sdk = new AgentCredSDK({ 
-    apiKey: process.env.AGENTPAY_KEY 
+    apiKey: process.env.agentcred_KEY 
   });
 
   const handlePayment = async () => {
@@ -143,14 +143,14 @@ export default function PaymentForm() {
                     <div className="p-4 border border-primary/20 rounded-lg bg-primary/5">
                       <h4 className="font-normal mb-2">Installation</h4>
                       <pre className="bg-black/50 p-3 rounded text-sm">
-                        <code>npm install agentpay-sdk</code>
+                        <code>npm install agentcred-sdk</code>
                       </pre>
                     </div>
 
                     <div className="p-4 border border-secondary/20 rounded-lg bg-secondary/5">
                       <h4 className="font-normal mb-2">Environment Setup</h4>
                       <pre className="bg-black/50 p-3 rounded text-sm">
-                        <code>AGENTPAY_API_KEY=your_api_key_here{'\n'}AGENTPAY_NETWORK=mainnet-beta</code>
+                        <code>agentcred_API_KEY=your_api_key_here{'\n'}agentcred_NETWORK=mainnet-beta</code>
                       </pre>
                     </div>
                   </div>

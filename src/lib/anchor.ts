@@ -21,7 +21,7 @@ export const IDL: any = {
   },
   instructions: [
     {
-      name: "agentPay",
+      name: "agentcred",
       discriminator: [191, 210, 112, 56, 82, 215, 140, 233],
       accounts: [
         { name: "agent", writable: true },

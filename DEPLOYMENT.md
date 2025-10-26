@@ -1,7 +1,7 @@
 # AgentCred System - Deployment Guide
 
 ## Overview
-This document provides instructions for deploying and running the AgentCred system, which enables secure AI agent payments on Solana.
+This document provides instructions for deploying and running the AgentCred system, which enables secure AI agent credments on Solana.
 
 ## Prerequisites
 - Node.js v18+
@@ -61,7 +61,7 @@ USDC_MINT=EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v
 
 # Backend API Configuration
 BACKEND_PORT=3000
-MONGODB_URI=mongodb://localhost:27017/agentpay
+MONGODB_URI=mongodb://localhost:27017/agentcred
 ```
 
 ### 3. Run the Frontend Application

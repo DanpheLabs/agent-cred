@@ -1,4 +1,4 @@
-# AgentCred - AI Agent Payment Infrastructure on Solana
+# AgentCred - AI Agent Credment Infrastructure on Solana
 
 A complete payment system for AI agents on Solana blockchain with hotkey/coldkey architecture, gasless transactions, and real-time monitoring.
 
@@ -18,12 +18,12 @@ A complete payment system for AI agents on Solana blockchain with hotkey/coldkey
 ## 📦 Project Structure
 
 ```
-agentpay/
+agentcred/
 ├── anchor/                    # Solana smart contracts
-│   ├── programs/agent-pay/   # Main AgentCred program (Rust)
+│   ├── programs/agent-cred/   # Main AgentCred program (Rust)
 │   │   └── src/lib.rs        # Smart contract logic
 │   ├── tests/                 # Contract tests
-│   │   └── agent-pay.test.ts # Comprehensive test suite
+│   │   └── agent-cred.test.ts # Comprehensive test suite
 │   └── scripts/               # Deployment scripts
 │       ├── deploy.sh         # Devnet deployment
 │       └── initialize-registry.ts
@@ -52,7 +52,7 @@ agentpay/
 ```bash
 # Clone the repository
 git clone <YOUR_GIT_URL>
-cd agentpay
+cd agentcred
 
 # Install dependencies
 npm install
@@ -130,7 +130,7 @@ npm run anchor:test
 # ✅ Registry initialization
 # ✅ Agent registration
 # ✅ Daily limit updates
-# ✅ User → Agent payments
+# ✅ User → Agent credments
 # ✅ Agent → Recipient payments (instant)
 # ✅ Payment requests and approvals
 # ✅ Agent deactivation
@@ -195,13 +195,13 @@ The `/payments` page provides an interactive playground:
 ### Installation
 
 ```bash
-npm install agentpay-sdk @solana/web3.js
+npm install agentcred-sdk @solana/web3.js
 ```
 
 ### Initialize SDK
 
 ```typescript
-import { AgentCredSDK } from 'agentpay-sdk';
+import { AgentCredSDK } from 'agentcred-sdk';
 import { Connection, Keypair } from '@solana/web3.js';
 
 const connection = new Connection('https://api.devnet.solana.com');
@@ -243,7 +243,7 @@ console.log('Explorer:', result.explorerUrl);
 
 ```typescript
 // Agent spends within daily limit (no approval needed)
-const result = await sdk.agentPay({
+const result = await sdk.agentcred({
   hotkey: hotkeyKeypair,          // Agent's operational key
   coldkey: coldkeyPublicKey,      // Agent's asset owner
   recipient: recipientPublicKey,  // Payment destination
@@ -278,7 +278,7 @@ app.post('/webhook/payment', async (req, res) => {
   // Verify webhook signature
   const isValid = sdk.verifyWebhookSignature(
     req.body, 
-    req.headers['x-agentpay-signature'],
+    req.headers['x-agentcred-signature'],
     process.env.WEBHOOK_SECRET
   );
   
@@ -394,17 +394,17 @@ MIT License - see LICENSE file for details
 
 ## 🔗 Resources
 
-- **Documentation**: [AgentCred Docs](https://agentpay.dev/docs)
-- **SDK Package**: [NPM Registry](https://npmjs.com/package/agentpay-sdk)
+- **Documentation**: [AgentCred Docs](https://agentcred.dev/docs)
+- **SDK Package**: [NPM Registry](https://npmjs.com/package/agentcred-sdk)
 - **Solana Explorer**: [View Transactions](https://explorer.solana.com)
 - **Anchor Docs**: [anchor-lang.com](https://anchor-lang.com)
 
 ## 💬 Support & Community
 
 - **Discord**: Join our community (coming soon)
-- **Twitter**: [@agentpay](https://twitter.com/agentpay) (coming soon)
-- **Issues**: [GitHub Issues](https://github.com/agentpay/issues)
-- **Email**: support@agentpay.dev
+- **Twitter**: [@agentcred](https://twitter.com/agentcred) (coming soon)
+- **Issues**: [GitHub Issues](https://github.com/agentcred/issues)
+- **Email**: support@agentcred.dev
 
 ## 🙏 Acknowledgments
 

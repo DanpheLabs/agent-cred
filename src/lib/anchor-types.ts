@@ -46,7 +46,7 @@ export type AgentCredIDL = {
   name: "agent_pay";
   instructions: [
     {
-      name: "agentPay";
+      name: "agentcred";
       docs: ["Agent initiates payment (within daily limit)"];
       discriminator: [191, 210, 112, 56, 82, 215, 140, 233];
       accounts: [

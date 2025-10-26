@@ -19,7 +19,7 @@ export default function DocsMonitoring() {
               <Card className="glass p-8 rounded-2xl border-border/50">
                 <h2 className="text-xl font-normal mb-4">Real-time Transaction Monitoring</h2>
                 <p className="text-sm text-sm text-muted-foreground mb-6">
-                  AgentCred runs a light client that monitors the Solana blockchain for agent payments 
+                  AgentCred runs a light client that monitors the Solana blockchain for agent credments 
                   and delivers instant notifications.
                 </p>
                 
@@ -105,7 +105,7 @@ export default function DocsMonitoring() {
     "change": 10.5
   },
   "verified": true,
-  "agentpay_signature": "..."
+  "agentcred_signature": "..."
 }`}</code>
                     </pre>
                   </section>
@@ -177,7 +177,7 @@ app.use(express.json());
 const processedTxs = new Set();
 
 app.post('/webhook/payment', async (req, res) => {
-  const signature = req.headers['x-agentpay-signature'];
+  const signature = req.headers['x-agentcred-signature'];
   const payload = req.body;
   
   // 1. Verify signature

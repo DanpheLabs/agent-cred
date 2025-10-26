@@ -21,7 +21,7 @@ export default function DocsSDK() {
                 <div className="space-y-6">
                   <section>
                     <h3 className="text-lg font-normal mb-3">Installation</h3>
-                    <pre className="text-sm bg-black/50 p-4 rounded-lg mb-2"><code>npm install agentpay-sdk @solana/web3.js</code></pre>
+                    <pre className="text-sm bg-black/50 p-4 rounded-lg mb-2"><code>npm install agentcred-sdk @solana/web3.js</code></pre>
                     <p className="text-sm text-muted-foreground">
                       The SDK requires @solana/web3.js as a peer dependency
                     </p>
@@ -29,7 +29,7 @@ export default function DocsSDK() {
 
                   <section>
                     <h3 className="text-lg font-normal mb-3">Initialization</h3>
-                    <pre className="text-sm bg-black/50 p-4 rounded-lg overflow-x-auto"><code>{`import { AgentCredSDK } from 'agentpay-sdk';
+                    <pre className="text-sm bg-black/50 p-4 rounded-lg overflow-x-auto"><code>{`import { AgentCredSDK } from 'agentcred-sdk';
 import { Connection } from '@solana/web3.js';
 
 // Option 1: With API key (for production)
@@ -145,11 +145,11 @@ console.log(result);
                       </div>
 
                       <div className="p-4 border border-secondary/20 rounded-lg bg-secondary/5">
-                        <h4 className="font-normal mb-2">agentPay()</h4>
+                        <h4 className="font-normal mb-2">agentcred()</h4>
                         <p className="text-sm text-muted-foreground mb-3">
                           Agent sends payment within daily limit (instant)
                         </p>
-                        <pre className="bg-black/50 p-3 rounded text-sm overflow-x-auto mb-2"><code>{`const result = await sdk.agentPay({
+                        <pre className="bg-black/50 p-3 rounded text-sm overflow-x-auto mb-2"><code>{`const result = await sdk.agentcred({
   hotkey: hotkeyKeypair,          // Agent's hotkey (must sign)
   coldkey: coldkeyPublicKey,      // Agent's coldkey
   recipient: recipientPublicKey,   // Payment recipient
@@ -212,7 +212,7 @@ console.log('Request ID:', requestId);`}</code></pre>
                         </p>
                         <pre className="bg-black/50 p-3 rounded text-sm overflow-x-auto"><code>{`const isValid = sdk.verifyWebhookSignature(
   req.body,                        // Webhook payload
-  req.headers['x-agentpay-signature'], // Signature header
+  req.headers['x-agentcred-signature'], // Signature header
   process.env.WEBHOOK_SECRET       // Your webhook secret
 );
 
@@ -259,7 +259,7 @@ console.log(lamports); // 50000000`}</code></pre>
                   <section>
                     <h3 className="text-lg font-normal mb-3">Error Handling</h3>
                     <pre className="text-sm bg-black/50 p-4 rounded-lg overflow-x-auto"><code>{`try {
-  await sdk.agentPay({
+  await sdk.agentcred({
     hotkey: hotkeyKeypair,
     coldkey: coldkeyPublicKey,
     recipient: recipientPublicKey,
@@ -290,7 +290,7 @@ console.log(lamports); // 50000000`}</code></pre>
   PaymentResult,
   PaymentRequest,
   SDKConfig
-} from 'agentpay-sdk';
+} from 'agentcred-sdk';
 
 // All methods have full type inference and autocomplete`}</code></pre>
                   </section>

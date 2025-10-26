@@ -27,9 +27,9 @@ export default function DocsGettingStarted() {
 
                   <section>
                     <h3 className="text-xl font-normal mb-3">1. Install SDK</h3>
-                    <pre className="bg-black/50 p-4 rounded-lg text-sm mb-4"><code >npm install agentpay-sdk @solana/web3.js</code></pre>
+                    <pre className="bg-black/50 p-4 rounded-lg text-sm mb-4"><code >npm install agentcred-sdk @solana/web3.js</code></pre>
                     <p className="text-sm text-sm text-muted-foreground">
-                      Or with yarn: <code>yarn add agentpay-sdk @solana/web3.js</code>
+                      Or with yarn: <code>yarn add agentcred-sdk @solana/web3.js</code>
                     </p>
                   </section>
 
@@ -81,7 +81,7 @@ console.log('Hotkey:', hotkey.publicKey.toString());
                     <p className="text-sm text-muted-foreground mb-3">
                       Register your agent on-chain with coldkey/hotkey pair and set daily spending limit
                     </p>
-                    <pre className="bg-black/50 p-4 rounded-lg text-sm overflow-x-auto mb-2"><code>{`import { AgentCredSDK } from 'agentpay-sdk';
+                    <pre className="bg-black/50 p-4 rounded-lg text-sm overflow-x-auto mb-2"><code>{`import { AgentCredSDK } from 'agentcred-sdk';
 import { Connection, Keypair } from '@solana/web3.js';
 
 const connection = new Connection('https://api.devnet.solana.com');
@@ -120,7 +120,7 @@ console.log('Transaction:', signature);`}</code></pre>
                     <p className="text-sm text-muted-foreground mb-3">
                       Integrate payment acceptance in your agent application
                     </p>
-                    <pre className="bg-black/50 p-4 rounded-lg text-sm overflow-x-auto mb-4"><code>{`import { AgentCredSDK } from 'agentpay-sdk';
+                    <pre className="bg-black/50 p-4 rounded-lg text-sm overflow-x-auto mb-4"><code>{`import { AgentCredSDK } from 'agentcred-sdk';
 
 const sdk = new AgentCredSDK({ 
   apiKey: 'your_api_key_here',
@@ -148,12 +148,12 @@ app.post('/webhook/payment', async (req, res) => {
                   </section>
 
                   <section>
-                    <h3 className="text-xl font-normal mb-3">7. Make Agent Payments</h3>
+                    <h3 className="text-xl font-normal mb-3">7. Make Agent Credments</h3>
                     <p className="text-sm text-muted-foreground mb-3">
                       Your agent can send payments to other addresses
                     </p>
                     <pre className="bg-black/50 p-4 rounded-lg text-sm overflow-x-auto"><code>{`// Instant payment (within daily limit)
-const result = await sdk.agentPay({
+const result = await sdk.agentcred({
   hotkey: hotkeyKeypair,
   coldkey: coldkeyPublicKey,
   recipient: recipientAddress,

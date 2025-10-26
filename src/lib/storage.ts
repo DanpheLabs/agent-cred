@@ -63,11 +63,11 @@ export interface ApiKey {
 }
 
 const STORAGE_KEYS = {
-  AGENTS: 'agentpay_agents',
-  TRANSACTIONS: 'agentpay_transactions',
-  WALLET: 'agentpay_wallet',
-  PAYMENT_REQUESTS: 'agentpay_payment_requests',
-  API_KEYS: 'agentpay_api_keys',
+  AGENTS: 'agentcred_agents',
+  TRANSACTIONS: 'agentcred_transactions',
+  WALLET: 'agentcred_wallet',
+  PAYMENT_REQUESTS: 'agentcred_payment_requests',
+  API_KEYS: 'agentcred_api_keys',
 };
 
 // Agent operations
