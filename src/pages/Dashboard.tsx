@@ -53,7 +53,7 @@ export default function Dashboard() {
           </div> */}
           
           {!connected ? (
-            <div className="glass p-12 rounded-2xl border-border/50 text-center">
+            <div className="glass p-12  border-border/50 text-center">
               <h3 className="text-xl font-normal mb-2">Connect Your Wallet</h3>
               <p className="text-muted-foreground">Please connect your Solana wallet to view your dashboard</p>
             </div>
@@ -78,7 +78,7 @@ export default function Dashboard() {
               </div>
 
               <Analytics />
-      <Card className="glass p-6 rounded-2xl border-border/50">
+      <Card className="glass p-6  border-border/50">
                 <h3 className="text-xl font-normal mb-4 flex items-center gap-2">
                   <Database className="h-5 w-5 text-primary" />
                   Contract Information

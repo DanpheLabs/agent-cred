@@ -12,7 +12,7 @@ export default function DocsHTTP402() {
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
             <div className="lg:col-span-1"><DocsSidebar /></div>
             <div className="lg:col-span-3">
-              <Card className="glass p-8 rounded-2xl border-border/50">
+              <Card className="glass p-8  border-border/50">
                 <h2 className="text-xl font-normal mb-4">HTTP 402: Payment Required Protocol</h2>
                 <p className="text-sm text-sm text-muted-foreground mb-6">
                   Standardized protocol for requesting payments before service delivery
@@ -25,7 +25,7 @@ export default function DocsHTTP402() {
                       HTTP 402 ("Payment Required") is a reserved status code that was originally intended for digital payment systems. 
                       AgentCred leverages this status code as a standardized way for AI agents to request payments before delivering services.
                     </p>
-                    <div className="p-4 bg-primary/10 rounded-lg border border-primary/20">
+                    <div className="p-4 bg-primary/10  border border-primary/20">
                       <p className="text-sm text-sm text-muted-foreground">
                         <strong>Why HTTP 402?</strong><br/>
                         • Industry-standard protocol for payment requests<br/>
@@ -39,7 +39,7 @@ export default function DocsHTTP402() {
 
                   <section>
                     <h3 className="text-2xl font-normal mb-3">Request-Response Flow</h3>
-                    <div className="p-6 bg-black/30 rounded-lg border border-primary/20 mb-4">
+                    <div className="p-6 bg-black/30  border border-primary/20 mb-4">
                       <pre className="text-sm text-sm text-muted-foreground overflow-x-auto">{`┌──────────┐                           ┌───────────┐
 │  Client  │                           │   Agent   │
 └────┬─────┘                           └─────┬─────┘
@@ -73,7 +73,7 @@ export default function DocsHTTP402() {
                     <p className="text-sm text-muted-foreground mb-3">
                       When a payment is required, the agent responds with HTTP 402 and this JSON structure:
                     </p>
-                    <pre className="text-sm bg-black/50 p-4 rounded-lg overflow-x-auto mb-4"><code>{`HTTP/1.1 402 Payment Required
+                    <pre className="text-sm bg-black/50 p-4  overflow-x-auto mb-4"><code>{`HTTP/1.1 402 Payment Required
 Content-Type: application/json
 
 {
@@ -93,22 +93,22 @@ Content-Type: application/json
 }`}</code></pre>
                     
                     <div className="grid gap-3 text-sm">
-                      <div className="p-3 border border-border/50 rounded-lg">
+                      <div className="p-3 border border-border/50 ">
                         <code className="text-primary">recipient</code> - Solana address to send payment (agent's hotkey)
                       </div>
-                      <div className="p-3 border border-border/50 rounded-lg">
+                      <div className="p-3 border border-border/50 ">
                         <code className="text-primary">amount</code> - Payment amount in specified currency
                       </div>
-                      <div className="p-3 border border-border/50 rounded-lg">
+                      <div className="p-3 border border-border/50 ">
                         <code className="text-primary">currency</code> - Payment token (USDC, SOL, etc.)
                       </div>
-                      <div className="p-3 border border-border/50 rounded-lg">
+                      <div className="p-3 border border-border/50 ">
                         <code className="text-primary">service_id</code> - Unique identifier for this service request
                       </div>
-                      <div className="p-3 border border-border/50 rounded-lg">
+                      <div className="p-3 border border-border/50 ">
                         <code className="text-primary">expires_at</code> - Unix timestamp when payment offer expires
                       </div>
-                      <div className="p-3 border border-border/50 rounded-lg">
+                      <div className="p-3 border border-border/50 ">
                         <code className="text-primary">payment_url</code> - Solana Pay URL for easy wallet integration
                       </div>
                     </div>
@@ -119,7 +119,7 @@ Content-Type: application/json
                     <p className="text-sm text-muted-foreground mb-3">
                       Server-side implementation for handling payment requests
                     </p>
-                    <pre className="text-sm bg-black/50 p-4 rounded-lg overflow-x-auto mb-4"><code>{`import express from 'express';
+                    <pre className="text-sm bg-black/50 p-4  overflow-x-auto mb-4"><code>{`import express from 'express';
 import { v4 as uuidv4 } from 'uuid';
 
 const app = express();
@@ -216,7 +216,7 @@ app.listen(3000);`}</code></pre>
                     <p className="text-sm text-muted-foreground mb-3">
                       How clients should handle 402 responses
                     </p>
-                    <pre className="text-sm bg-black/50 p-4 rounded-lg overflow-x-auto"><code>{`import { AgentCredSDK } from 'agentcred-sdk';
+                    <pre className="text-sm bg-black/50 p-4  overflow-x-auto"><code>{`import { AgentCredSDK } from 'agentcred-sdk';
 
 const sdk = new AgentCredSDK({ 
   apiKey: 'YOUR_API_KEY',
@@ -288,7 +288,7 @@ console.log('Result:', result);`}</code></pre>
                   <section>
                     <h3 className="text-2xl font-normal mb-3">Security Best Practices</h3>
                     <div className="grid gap-4">
-                      <div className="p-4 border border-primary/20 rounded-lg bg-primary/5">
+                      <div className="p-4 border border-primary/20  bg-primary/5">
                         <h4 className="font-normal mb-2">🔐 Service ID Validation</h4>
                         <p className="text-sm text-sm text-muted-foreground">
                           Always use unique, non-guessable service IDs (UUIDs) to prevent replay attacks.
@@ -296,7 +296,7 @@ console.log('Result:', result);`}</code></pre>
                         </p>
                       </div>
 
-                      <div className="p-4 border border-secondary/20 rounded-lg bg-secondary/5">
+                      <div className="p-4 border border-secondary/20  bg-secondary/5">
                         <h4 className="font-normal mb-2">✅ Payment Verification</h4>
                         <p className="text-sm text-sm text-muted-foreground">
                           Verify payment signatures on-chain or through AgentCred webhook signatures.
@@ -304,7 +304,7 @@ console.log('Result:', result);`}</code></pre>
                         </p>
                       </div>
 
-                      <div className="p-4 border border-accent/20 rounded-lg bg-accent/5">
+                      <div className="p-4 border border-accent/20  bg-accent/5">
                         <h4 className="font-normal mb-2">⏱️ Expiration Times</h4>
                         <p className="text-sm text-sm text-muted-foreground">
                           Set reasonable expiration times for payment requests. Clean up expired
@@ -312,7 +312,7 @@ console.log('Result:', result);`}</code></pre>
                         </p>
                       </div>
 
-                      <div className="p-4 border border-border/50 rounded-lg">
+                      <div className="p-4 border border-border/50 ">
                         <h4 className="font-normal mb-2">🔄 Idempotency</h4>
                         <p className="text-sm text-sm text-muted-foreground">
                           Use transaction signatures as idempotency keys. Process each payment only once
@@ -327,11 +327,11 @@ console.log('Result:', result);`}</code></pre>
                     <p className="text-sm text-muted-foreground mb-3">
                       The <code>payment_url</code> field uses the Solana Pay standard for easy wallet integration:
                     </p>
-                    <pre className="text-sm bg-black/50 p-4 rounded-lg overflow-x-auto mb-3"><code>{`solana:Gx7UqNGqa57qJoABL17VHJSJpKuNp6wG...?amount=10.5&memo=srv_123`}</code></pre>
+                    <pre className="text-sm bg-black/50 p-4  overflow-x-auto mb-3"><code>{`solana:Gx7UqNGqa57qJoABL17VHJSJpKuNp6wG...?amount=10.5&memo=srv_123`}</code></pre>
                     <p className="text-sm text-sm text-muted-foreground mb-3">
                       This URL can be used to generate QR codes for mobile wallet payments or deep-link into wallet apps.
                     </p>
-                    <pre className="text-sm bg-black/50 p-4 rounded-lg overflow-x-auto"><code>{`import { encodeURL } from '@solana/pay';
+                    <pre className="text-sm bg-black/50 p-4  overflow-x-auto"><code>{`import { encodeURL } from '@solana/pay';
 import { PublicKey } from '@solana/web3.js';
 import QRCode from 'qrcode';
 

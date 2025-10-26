@@ -14,7 +14,7 @@ export const DocsSidebar = () => {
   ];
 
   return (
-    <Card className="glass p-4 rounded-2xl border-border/50 sticky top-0 h-fit">
+    <Card className="glass p-4  border-border/50 sticky top-0 h-fit">
       <h3 className="font-normal mb-4 px-2">Documentation</h3>
       <nav className="space-y-1">
         {navItems.map((item) => {
@@ -25,7 +25,7 @@ export const DocsSidebar = () => {
               to={item.path}
               end
               className={({ isActive }) =>
-                `flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${
+                `flex items-center gap-3 px-3 py-2  transition-colors ${
                   isActive
                     ? "bg-primary/20 text-primary font-medium"
                     : "hover:bg-muted/50 text-muted-foreground"

@@ -19,7 +19,7 @@ export const AgentList = ({ agents, onDeleteAgent, onSelectAgent }: AgentListPro
 
   if (agents.length === 0) {
     return (
-      <Card className="glass p-12 rounded-2xl border-border/50 text-center">
+      <Card className="glass p-12  border-border/50 text-center">
         <p className="text-muted-foreground text-lg">No agents registered yet</p>
         <p className="text-sm text-muted-foreground mt-2">Click "Register Agent" to create your first AI agent</p>
       </Card>
@@ -29,7 +29,7 @@ export const AgentList = ({ agents, onDeleteAgent, onSelectAgent }: AgentListPro
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {agents.map((agent) => (
-        <Card key={agent.id} className="glass p-6 rounded-2xl border-border/50 glow-hover">
+        <Card key={agent.id} className="glass p-6  border-border/50 glow-hover">
           <div className="flex items-start justify-between mb-4">
             <div className="grid grid-cols-2 gap-2">
               <h3 className="font-normal text-lg mb-1">{agent.name}</h3>

@@ -140,7 +140,7 @@ await sdk.requestPayment({
 
 
           <div className="grid gap-6 lg:grid-cols-2">
-            <Card className="glass p-6 rounded-2xl border-border/50">
+            <Card className="glass p-6  border-border/50">
               <h3 className="text-xl font-normal mb-4">Generate API Key</h3>
               <div className="space-y-4">
                 <div>
@@ -167,7 +167,7 @@ await sdk.requestPayment({
                 </div>
                 <Button 
                   onClick={handleGenerateKey} 
-                  className="w-full bg-gradient-to-r from-primary to-purple-400 text-primary-foreground font-normal glow-hover"
+                  className="w-full bg-gradient-to-r from-primary to-green-400 text-primary-foreground font-normal glow-hover"
                   disabled={!walletAddress}
                 >
                   Generate Key
@@ -175,14 +175,14 @@ await sdk.requestPayment({
               </div>
             </Card>
 
-            <Card className="glass p-6 rounded-2xl border-border/50">
+            <Card className="glass p-6  border-border/50">
               <h3 className="text-xl font-normal mb-4">Your API Keys</h3>
               <div className="space-y-3 max-h-[400px] overflow-y-auto">
                 {apiKeys.length === 0 ? (
                   <p className="text-muted-foreground text-sm">No API keys generated yet</p>
                 ) : (
                   apiKeys.map(key => (
-                    <div key={key.id} className="flex items-center justify-between p-3 glass border border-border/50 rounded-lg">
+                    <div key={key.id} className="flex items-center justify-between p-3 glass border border-border/50 ">
                       <div className="flex-1">
                         <p className="font-normal text-sm">{key.name}</p>
                         <p className="font-mono text-xs text-muted-foreground">{key.key.slice(0, 20)}...</p>

@@ -19,7 +19,7 @@ export const WalletCard = ({ title, address, balance, variant = "owner" }: Walle
   };
   
   return (
-    <Card className="glass p-6 rounded-2xl border-border/50 glow-hover">
+    <Card className="glass p-6  border-border/50 glow-hover">
       <div className="flex items-start justify-between mb-4">
         <div>
           <p className="text-sm text-muted-foreground mb-1">{title}</p>
@@ -44,7 +44,7 @@ export const WalletCard = ({ title, address, balance, variant = "owner" }: Walle
             </Button>
           </div>
         </div>
-        <div className={`w-3 h-3 rounded-full ${isOwner ? 'bg-primary' : 'bg-secondary'} animate-pulse-glow`} />
+        <div className={`w-3 h-3  ${isOwner ? 'bg-primary' : 'bg-secondary'} animate-pulse-glow`} />
       </div>
       
       <div className="mt-6">

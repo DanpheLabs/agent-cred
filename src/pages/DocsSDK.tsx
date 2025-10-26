@@ -12,7 +12,7 @@ export default function DocsSDK() {
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
             <div className="lg:col-span-1"><DocsSidebar /></div>
             <div className="lg:col-span-3">
-              <Card className="glass p-8 rounded-2xl border-border/50">
+              <Card className="glass p-8  border-border/50">
                 <h2 className="text-xl font-normal mb-4">Complete SDK Documentation</h2>
                 <p className=" text-sm text-muted-foreground mb-6">
                   Comprehensive TypeScript SDK for Solana blockchain integration
@@ -21,7 +21,7 @@ export default function DocsSDK() {
                 <div className="space-y-6">
                   <section>
                     <h3 className="text-lg font-normal mb-3">Installation</h3>
-                    <pre className="text-sm bg-black/50 p-4 rounded-lg mb-2"><code>npm install agentcred-sdk @solana/web3.js</code></pre>
+                    <pre className="text-sm bg-black/50 p-4  mb-2"><code>npm install agentcred-sdk @solana/web3.js</code></pre>
                     <p className="text-sm text-muted-foreground">
                       The SDK requires @solana/web3.js as a peer dependency
                     </p>
@@ -29,7 +29,7 @@ export default function DocsSDK() {
 
                   <section>
                     <h3 className="text-lg font-normal mb-3">Initialization</h3>
-                    <pre className="text-sm bg-black/50 p-4 rounded-lg overflow-x-auto"><code>{`import { AgentCredSDK } from 'agentcred-sdk';
+                    <pre className="text-sm bg-black/50 p-4  overflow-x-auto"><code>{`import { AgentCredSDK } from 'agentcred-sdk';
 import { Connection } from '@solana/web3.js';
 
 // Option 1: With API key (for production)
@@ -50,12 +50,12 @@ const sdk = new AgentCredSDK({
                     <h3 className="text-lg font-normal mb-3">Agent Management</h3>
                     
                     <div className="space-y-4">
-                      <div className="p-4 border border-primary/20 rounded-lg bg-primary/5">
+                      <div className="p-4 border border-primary/20  bg-primary/5">
                         <h4 className="font-normal mb-2">registerAgent()</h4>
                         <p className="text-sm text-muted-foreground mb-3">
                           Register a new agent with hotkey/coldkey pair
                         </p>
-                        <pre className="bg-black/50 p-3 rounded text-sm overflow-x-auto mb-2"><code>{`const signature = await sdk.registerAgent({
+                        <pre className="bg-black/50 p-3 text-sm overflow-x-auto mb-2"><code>{`const signature = await sdk.registerAgent({
   coldkey: coldkeyKeypair,        // Keypair
   hotkey: hotkeyPublicKey,        // PublicKey
   dailyLimit: 1000                // USDC amount
@@ -72,12 +72,12 @@ const sdk = new AgentCredSDK({
                         </div>
                       </div>
 
-                      <div className="p-4 border border-primary/20 rounded-lg bg-primary/5">
+                      <div className="p-4 border border-primary/20  bg-primary/5">
                         <h4 className="font-normal mb-2">getAgent()</h4>
                         <p className="text-sm text-muted-foreground mb-3">
                           Fetch agent data from blockchain
                         </p>
-                        <pre className="bg-black/50 p-3 rounded text-sm overflow-x-auto mb-2"><code>{`const agent = await sdk.getAgent({
+                        <pre className="bg-black/50 p-3 text-sm overflow-x-auto mb-2"><code>{`const agent = await sdk.getAgent({
   coldkey: coldkeyPublicKey,
   hotkey: hotkeyPublicKey
 });
@@ -94,24 +94,24 @@ console.log(agent);
 // }`}</code></pre>
                       </div>
 
-                      <div className="p-4 border border-primary/20 rounded-lg bg-primary/5">
+                      <div className="p-4 border border-primary/20  bg-primary/5">
                         <h4 className="font-normal mb-2">updateAgentLimit()</h4>
                         <p className="text-sm text-muted-foreground mb-3">
                           Update daily spending limit (coldkey only)
                         </p>
-                        <pre className="bg-black/50 p-3 rounded text-sm overflow-x-auto"><code>{`const signature = await sdk.updateAgentLimit({
+                        <pre className="bg-black/50 p-3 text-sm overflow-x-auto"><code>{`const signature = await sdk.updateAgentLimit({
   coldkey: coldkeyKeypair,
   hotkey: hotkeyPublicKey,
   newLimit: 2000 // New daily limit in USDC
 });`}</code></pre>
                       </div>
 
-                      <div className="p-4 border border-primary/20 rounded-lg bg-primary/5">
+                      <div className="p-4 border border-primary/20  bg-primary/5">
                         <h4 className="font-normal mb-2">deactivateAgent()</h4>
                         <p className="text-sm text-muted-foreground mb-3">
                           Disable agent from making/receiving payments
                         </p>
-                        <pre className="bg-black/50 p-3 rounded text-sm overflow-x-auto"><code>{`const signature = await sdk.deactivateAgent({
+                        <pre className="bg-black/50 p-3 text-sm overflow-x-auto"><code>{`const signature = await sdk.deactivateAgent({
   coldkey: coldkeyKeypair,
   hotkey: hotkeyPublicKey
 });`}</code></pre>
@@ -123,12 +123,12 @@ console.log(agent);
                     <h3 className="text-lg font-normal mb-3">Payment Methods</h3>
                     
                     <div className="space-y-4">
-                      <div className="p-4 border border-secondary/20 rounded-lg bg-secondary/5">
+                      <div className="p-4 border border-secondary/20  bg-secondary/5">
                         <h4 className="font-normal mb-2">payAgent()</h4>
                         <p className="text-sm text-muted-foreground mb-3">
                           Send USDC payment from user to agent's coldkey
                         </p>
-                        <pre className="bg-black/50 p-3 rounded text-sm overflow-x-auto mb-2"><code>{`const result = await sdk.payAgent({
+                        <pre className="bg-black/50 p-3 text-sm overflow-x-auto mb-2"><code>{`const result = await sdk.payAgent({
   user: userKeypair,              // Paying user
   agentHotkey: hotkeyPublicKey,   // Agent to pay
   amount: 50,                     // USDC amount
@@ -144,12 +144,12 @@ console.log(result);
 // }`}</code></pre>
                       </div>
 
-                      <div className="p-4 border border-secondary/20 rounded-lg bg-secondary/5">
+                      <div className="p-4 border border-secondary/20  bg-secondary/5">
                         <h4 className="font-normal mb-2">agentcred()</h4>
                         <p className="text-sm text-muted-foreground mb-3">
                           Agent sends payment within daily limit (instant)
                         </p>
-                        <pre className="bg-black/50 p-3 rounded text-sm overflow-x-auto mb-2"><code>{`const result = await sdk.agentcred({
+                        <pre className="bg-black/50 p-3 text-sm overflow-x-auto mb-2"><code>{`const result = await sdk.agentcred({
   hotkey: hotkeyKeypair,          // Agent's hotkey (must sign)
   coldkey: coldkeyPublicKey,      // Agent's coldkey
   recipient: recipientPublicKey,   // Payment recipient
@@ -159,12 +159,12 @@ console.log(result);
 // Throws error if exceeds daily limit`}</code></pre>
                       </div>
 
-                      <div className="p-4 border border-secondary/20 rounded-lg bg-secondary/5">
+                      <div className="p-4 border border-secondary/20  bg-secondary/5">
                         <h4 className="font-normal mb-2">requestPayment()</h4>
                         <p className="text-sm text-muted-foreground mb-3">
                           Create payment request for coldkey approval
                         </p>
-                        <pre className="bg-black/50 p-3 rounded text-sm overflow-x-auto mb-2"><code>{`const requestId = await sdk.requestPayment({
+                        <pre className="bg-black/50 p-3 text-sm overflow-x-auto mb-2"><code>{`const requestId = await sdk.requestPayment({
   hotkey: hotkeyKeypair,
   coldkey: coldkeyPublicKey,
   recipient: recipientPublicKey,
@@ -175,12 +175,12 @@ console.log(result);
 console.log('Request ID:', requestId);`}</code></pre>
                       </div>
 
-                      <div className="p-4 border border-secondary/20 rounded-lg bg-secondary/5">
+                      <div className="p-4 border border-secondary/20  bg-secondary/5">
                         <h4 className="font-normal mb-2">approvePayment()</h4>
                         <p className="text-sm text-muted-foreground mb-3">
                           Coldkey approves pending payment request
                         </p>
-                        <pre className="bg-black/50 p-3 rounded text-sm overflow-x-auto mb-2"><code>{`const signature = await sdk.approvePayment({
+                        <pre className="bg-black/50 p-3 text-sm overflow-x-auto mb-2"><code>{`const signature = await sdk.approvePayment({
   coldkey: coldkeyKeypair,
   requestId: paymentRequestPublicKey
 });
@@ -188,12 +188,12 @@ console.log('Request ID:', requestId);`}</code></pre>
 // USDC transferred to recipient`}</code></pre>
                       </div>
 
-                      <div className="p-4 border border-secondary/20 rounded-lg bg-secondary/5">
+                      <div className="p-4 border border-secondary/20  bg-secondary/5">
                         <h4 className="font-normal mb-2">rejectPayment()</h4>
                         <p className="text-sm text-muted-foreground mb-3">
                           Coldkey rejects pending payment request
                         </p>
-                        <pre className="bg-black/50 p-3 rounded text-sm overflow-x-auto"><code>{`const signature = await sdk.rejectPayment({
+                        <pre className="bg-black/50 p-3 text-sm overflow-x-auto"><code>{`const signature = await sdk.rejectPayment({
   coldkey: coldkeyKeypair,
   requestId: paymentRequestPublicKey
 });`}</code></pre>
@@ -205,12 +205,12 @@ console.log('Request ID:', requestId);`}</code></pre>
                     <h3 className="text-lg font-normal mb-3">Utility Methods</h3>
                     
                     <div className="space-y-4">
-                      <div className="p-4 border border-accent/20 rounded-lg bg-accent/5">
+                      <div className="p-4 border border-accent/20  bg-accent/5">
                         <h4 className="font-normal mb-2">verifyWebhookSignature()</h4>
                         <p className="text-sm text-muted-foreground mb-3">
                           Verify webhook payload authenticity
                         </p>
-                        <pre className="bg-black/50 p-3 rounded text-sm overflow-x-auto"><code>{`const isValid = sdk.verifyWebhookSignature(
+                        <pre className="bg-black/50 p-3 text-sm overflow-x-auto"><code>{`const isValid = sdk.verifyWebhookSignature(
   req.body,                        // Webhook payload
   req.headers['x-agentcred-signature'], // Signature header
   process.env.WEBHOOK_SECRET       // Your webhook secret
@@ -221,12 +221,12 @@ if (!isValid) {
 }`}</code></pre>
                       </div>
 
-                      <div className="p-4 border border-accent/20 rounded-lg bg-accent/5">
+                      <div className="p-4 border border-accent/20  bg-accent/5">
                         <h4 className="font-normal mb-2">getRegistry()</h4>
                         <p className="text-sm text-muted-foreground mb-3">
                           Fetch global registry statistics
                         </p>
-                        <pre className="bg-black/50 p-3 rounded text-sm overflow-x-auto"><code>{`const registry = await sdk.getRegistry();
+                        <pre className="bg-black/50 p-3 text-sm overflow-x-auto"><code>{`const registry = await sdk.getRegistry();
 
 console.log(registry);
 // {
@@ -236,21 +236,21 @@ console.log(registry);
 // }`}</code></pre>
                       </div>
 
-                      <div className="p-4 border border-accent/20 rounded-lg bg-accent/5">
+                      <div className="p-4 border border-accent/20  bg-accent/5">
                         <h4 className="font-normal mb-2">formatUSDC()</h4>
                         <p className="text-sm text-muted-foreground mb-3">
                           Convert lamports to human-readable USDC
                         </p>
-                        <pre className="bg-black/50 p-3 rounded text-sm overflow-x-auto"><code>{`const formatted = sdk.formatUSDC(50000000);
+                        <pre className="bg-black/50 p-3 text-sm overflow-x-auto"><code>{`const formatted = sdk.formatUSDC(50000000);
 console.log(formatted); // "50.00 USDC"`}</code></pre>
                       </div>
 
-                      <div className="p-4 border border-accent/20 rounded-lg bg-accent/5">
+                      <div className="p-4 border border-accent/20  bg-accent/5">
                         <h4 className="font-normal mb-2">parseUSDC()</h4>
                         <p className="text-sm text-muted-foreground mb-3">
                           Convert USDC amount to lamports
                         </p>
-                        <pre className="bg-black/50 p-3 rounded text-sm overflow-x-auto"><code>{`const lamports = sdk.parseUSDC(50);
+                        <pre className="bg-black/50 p-3 text-sm overflow-x-auto"><code>{`const lamports = sdk.parseUSDC(50);
 console.log(lamports); // 50000000`}</code></pre>
                       </div>
                     </div>
@@ -258,7 +258,7 @@ console.log(lamports); // 50000000`}</code></pre>
 
                   <section>
                     <h3 className="text-lg font-normal mb-3">Error Handling</h3>
-                    <pre className="text-sm bg-black/50 p-4 rounded-lg overflow-x-auto"><code>{`try {
+                    <pre className="text-sm bg-black/50 p-4  overflow-x-auto"><code>{`try {
   await sdk.agentcred({
     hotkey: hotkeyKeypair,
     coldkey: coldkeyPublicKey,
@@ -279,12 +279,12 @@ console.log(lamports); // 50000000`}</code></pre>
 }`}</code></pre>
                   </section>
 
-                  <section className="p-6 bg-primary/10 rounded-lg border border-primary/20">
+                  <section className="p-6 bg-primary/10  border border-primary/20">
                     <h3 className="text-lg font-normal mb-3">TypeScript Types</h3>
                     <p className="text-sm text-muted-foreground mb-3">
                       The SDK is fully typed with TypeScript
                     </p>
-                    <pre className="text-sm bg-black/50 p-4 rounded-lg overflow-x-auto text-xs"><code>{`import type {
+                    <pre className="text-sm bg-black/50 p-4  overflow-x-auto text-xs"><code>{`import type {
   AgentData,
   RegistryData,
   PaymentResult,

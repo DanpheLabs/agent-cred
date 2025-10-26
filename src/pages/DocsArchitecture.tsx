@@ -16,7 +16,7 @@ export default function DocsArchitecture() {
             </div>
             
             <div className="lg:col-span-3 space-y-6">
-              <Card className="glass p-8 rounded-2xl border-border/50">
+              <Card className="glass p-8  border-border/50">
                 <h2 className="text-xl font-normal mb-4">System Architecture</h2>
                 <p className="text-sm text-muted-foreground mb-6">
                   AgentCred is built on a secure hotkey/coldkey architecture on Solana
@@ -27,7 +27,7 @@ export default function DocsArchitecture() {
                     <h3 className="text-lg font-normal mb-3">Core Components</h3>
                     
                     <div className="grid gap-4 mb-6">
-                      <div className="p-4 border border-primary/20 rounded-lg bg-primary/5">
+                      <div className="p-4 border border-primary/20  bg-primary/5">
                         <h4 className="font-normal mb-2 text-primary">🔑 Coldkey Wallet</h4>
                         <p className="text-sm text-muted-foreground mb-2">
                           The primary asset owner wallet with full control over funds
@@ -41,8 +41,8 @@ export default function DocsArchitecture() {
                         </ul>
                       </div>
 
-                      <div className="p-4 border border-secondary/20 rounded-lg bg-secondary/5">
-                        <h4 className="font-normal mb-2 text-purple-400">🔥 Hotkey Wallet</h4>
+                      <div className="p-4 border border-secondary/20  bg-secondary/5">
+                        <h4 className="font-normal mb-2 text-green-400">🔥 Hotkey Wallet</h4>
                         <p className="text-sm text-muted-foreground mb-2">
                           The operational wallet with limited spending power
                         </p>
@@ -55,7 +55,7 @@ export default function DocsArchitecture() {
                         </ul>
                       </div>
 
-                      <div className="p-4 border border-accent/20 rounded-lg bg-accent/5">
+                      <div className="p-4 border border-accent/20  bg-accent/5">
                         <h4 className="font-normal mb-2 text-accent">📋 On-Chain Registry</h4>
                         <p className="text-sm text-muted-foreground mb-2">
                           Solana program managing agent relationships
@@ -75,7 +75,7 @@ export default function DocsArchitecture() {
                     <h3 className="text-lg font-normal mb-3">Payment Flows</h3>
                     
                     <div className="space-y-4">
-                      <div className="p-6 bg-black/30 rounded-lg border border-primary/20">
+                      <div className="p-6 bg-black/30  border border-primary/20">
                         <h4 className="font-normal mb-3 text-primary">Flow 1: User → Agent</h4>
                         <pre className="text-sm text-muted-foreground overflow-x-auto">
 {`┌─────────┐         USDC          ┌──────────┐
@@ -95,8 +95,8 @@ export default function DocsArchitecture() {
                         </pre>
                       </div>
 
-                      <div className="p-6 bg-black/30 rounded-lg border border-secondary/20">
-                        <h4 className="font-normal mb-3 text-purple-400">Flow 2: Agent → Recipient (Auto)</h4>
+                      <div className="p-6 bg-black/30  border border-secondary/20">
+                        <h4 className="font-normal mb-3 text-green-400">Flow 2: Agent → Recipient (Auto)</h4>
                         <pre className="text-sm text-muted-foreground overflow-x-auto">
 {`┌─────────┐         Request        ┌──────────┐
 │ Hotkey  │ ───────────────────▶   │ Coldkey  │
@@ -115,7 +115,7 @@ export default function DocsArchitecture() {
                         </pre>
                       </div>
 
-                      <div className="p-6 bg-black/30 rounded-lg border border-accent/20">
+                      <div className="p-6 bg-black/30  border border-accent/20">
                         <h4 className="font-normal mb-3 text-accent">Flow 3: Agent → Recipient (Approval)</h4>
                         <pre className="text-sm text-muted-foreground overflow-x-auto">
 {`┌─────────┐      Create Request     ┌──────────────┐
@@ -146,7 +146,7 @@ export default function DocsArchitecture() {
                   <section>
                     <h3 className="text-lg font-normal mb-3">Security Model</h3>
                     <div className="grid gap-4">
-                      <div className="p-4 border border-border/50 rounded-lg">
+                      <div className="p-4 border border-border/50 ">
                         <h4 className="font-normal mb-2">🔒 Multi-Layer Protection</h4>
                         <ul className="text-sm text-muted-foreground space-y-1 ml-4">
                           <li>• Daily spending limits prevent runaway agents</li>
@@ -157,7 +157,7 @@ export default function DocsArchitecture() {
                         </ul>
                       </div>
 
-                      <div className="p-4 border border-border/50 rounded-lg">
+                      <div className="p-4 border border-border/50 ">
                         <h4 className="font-normal mb-2">⚡ Performance</h4>
                         <ul className="text-sm text-muted-foreground space-y-1 ml-4">
                           <li>• ~400ms transaction finality on Solana</li>
@@ -168,7 +168,7 @@ export default function DocsArchitecture() {
                         </ul>
                       </div>
 
-                      <div className="p-4 border border-border/50 rounded-lg">
+                      <div className="p-4 border border-border/50 ">
                         <h4 className="font-normal mb-2">📊 Observability</h4>
                         <ul className="text-sm text-muted-foreground space-y-1 ml-4">
                           <li>• Real-time transaction monitoring via light client</li>
@@ -184,7 +184,7 @@ export default function DocsArchitecture() {
                   <section>
                     <h3 className="text-lg font-normal mb-3">Technology Stack</h3>
                     <div className="grid md:grid-cols-2 gap-4">
-                      <div className="p-4 border border-border/50 rounded-lg">
+                      <div className="p-4 border border-border/50 ">
                         <h4 className="font-normal mb-3">Blockchain Layer</h4>
                         <ul className="text-sm text-muted-foreground space-y-1">
                           <li>• <strong>Solana</strong> - High-performance blockchain</li>
@@ -194,7 +194,7 @@ export default function DocsArchitecture() {
                         </ul>
                       </div>
 
-                      <div className="p-4 border border-border/50 rounded-lg">
+                      <div className="p-4 border border-border/50 ">
                         <h4 className="font-normal mb-3">Application Layer</h4>
                         <ul className="text-sm text-muted-foreground space-y-1">
                           <li>• <strong>TypeScript SDK</strong> - Client integration</li>

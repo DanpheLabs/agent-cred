@@ -115,7 +115,7 @@ export default function PaymentForm() {
           </div>
 
           {!connected ? (
-            <div className="glass p-12 rounded-2xl border-border/50 text-center">
+            <div className="glass p-12  border-border/50 text-center">
               <h3 className="text-xl font-normal mb-2">Connect Your Wallet</h3>
               <p className="text-muted-foreground">Please connect your Solana wallet to view implementation examples</p>
             </div>
@@ -133,23 +133,23 @@ export default function PaymentForm() {
               </TabsList>
 
               <TabsContent value="sdk">
-                <Card className="glass p-6 rounded-2xl border-border/50">
+                <Card className="glass p-6  border-border/50">
                   <h3 className="text-xl font-normal mb-4">SDK Code Examples</h3>
-                  <pre className="bg-black/50 p-6 rounded-lg overflow-x-auto text-sm">
+                  <pre className="bg-black/50 p-6  overflow-x-auto text-sm">
                     <code className="text-foreground">{sdkCode}</code>
                   </pre>
                   
                   <div className="mt-6 space-y-4">
-                    <div className="p-4 border border-primary/20 rounded-lg bg-primary/5">
+                    <div className="p-4 border border-primary/20  bg-primary/5">
                       <h4 className="font-normal mb-2">Installation</h4>
-                      <pre className="bg-black/50 p-3 rounded text-sm">
+                      <pre className="bg-black/50 p-3 text-sm">
                         <code>npm install agentcred-sdk</code>
                       </pre>
                     </div>
 
-                    <div className="p-4 border border-secondary/20 rounded-lg bg-secondary/5">
+                    <div className="p-4 border border-secondary/20  bg-secondary/5">
                       <h4 className="font-normal mb-2">Environment Setup</h4>
-                      <pre className="bg-black/50 p-3 rounded text-sm">
+                      <pre className="bg-black/50 p-3 text-sm">
                         <code>agentcred_API_KEY=your_api_key_here{'\n'}agentcred_NETWORK=mainnet-beta</code>
                       </pre>
                     </div>
@@ -158,14 +158,14 @@ export default function PaymentForm() {
               </TabsContent>
 
               <TabsContent value="ui">
-                <Card className="glass p-6 rounded-2xl border-border/50">
+                <Card className="glass p-6  border-border/50">
                   <h3 className="text-xl font-normal mb-4">React Component Example</h3>
-                  <pre className="bg-black/50 p-6 rounded-lg overflow-x-auto text-sm">
+                  <pre className="bg-black/50 p-6  overflow-x-auto text-sm">
                     <code className="text-foreground">{uiCode}</code>
                   </pre>
 
                   <div className="mt-6 space-y-4">
-                    <div className="p-4 border border-accent/20 rounded-lg bg-accent/5">
+                    <div className="p-4 border border-accent/20  bg-accent/5">
                       <h4 className="font-normal mb-2">Key Features</h4>
                       <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
                         <li>Simple and intuitive payment form</li>
@@ -175,7 +175,7 @@ export default function PaymentForm() {
                       </ul>
                     </div>
 
-                    <div className="p-4 border border-primary/20 rounded-lg bg-primary/5">
+                    <div className="p-4 border border-primary/20  bg-primary/5">
                       <h4 className="font-normal mb-2">Best Practices</h4>
                       <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
                         <li>Always validate amounts before submission</li>

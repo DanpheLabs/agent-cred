@@ -16,7 +16,7 @@ export default function DocsMonitoring() {
             </div>
             
             <div className="lg:col-span-3">
-              <Card className="glass p-8 rounded-2xl border-border/50">
+              <Card className="glass p-8  border-border/50">
                 <h2 className="text-xl font-normal mb-4">Real-time Transaction Monitoring</h2>
                 <p className="text-sm text-sm text-muted-foreground mb-6">
                   AgentCred runs a light client that monitors the Solana blockchain for agent credments 
@@ -53,7 +53,7 @@ export default function DocsMonitoring() {
                   <section>
                     <h3 className="text-lg font-normal mb-3">How It Works</h3>
                     
-                    <div className="p-6 bg-black/30 rounded-lg border border-primary/20 mb-4">
+                    <div className="p-6 bg-black/30  border border-primary/20 mb-4">
                       <h4 className="font-normal mb-3 text-primary">Monitoring Flow</h4>
                       <pre className="text-sm text-sm text-muted-foreground overflow-x-auto">
 {`1. Agent registers with hotkey address & webhook endpoint
@@ -84,7 +84,7 @@ export default function DocsMonitoring() {
                     <p className="text-sm text-muted-foreground mb-4">
                       When a payment is detected, your agent endpoint receives:
                     </p>
-                    <pre className="text-sm bg-black/50 p-4 rounded-lg overflow-x-auto mb-4">
+                    <pre className="text-sm bg-black/50 p-4  overflow-x-auto mb-4">
                       <code className="text-sm">{`POST https://your-agent.com/webhook/payment
 
 {
@@ -113,12 +113,12 @@ export default function DocsMonitoring() {
                   <section>
                     <h3 className="text-lg font-normal mb-3">Webhook Security</h3>
                     <div className="grid gap-4">
-                      <div className="p-4 border border-primary/20 rounded-lg bg-primary/5">
+                      <div className="p-4 border border-primary/20  bg-primary/5">
                         <h4 className="font-normal mb-2">🔐 Signature Verification</h4>
                         <p className="text-sm text-sm text-muted-foreground mb-3">
                           Each webhook includes an HMAC signature for verification
                         </p>
-                        <pre className="bg-black/50 p-3 rounded text-xs overflow-x-auto">
+                        <pre className="bg-black/50 p-3 text-xs overflow-x-auto">
                           <code>{`import crypto from 'crypto';
 
 function verifyWebhook(payload, signature, secret) {
@@ -130,13 +130,13 @@ function verifyWebhook(payload, signature, secret) {
 }`}</code>
                         </pre>
                       </div>
-                      <div className="p-4 border border-secondary/20 rounded-lg bg-secondary/5">
+                      <div className="p-4 border border-secondary/20  bg-secondary/5">
                         <h4 className="font-normal mb-2">🔄 Retry Logic</h4>
                         <p className="text-sm text-sm text-muted-foreground">
                           Failed webhooks are retried with exponential backoff: 2s, 4s, 8s, 16s, 32s
                         </p>
                       </div>
-                      <div className="p-4 border border-accent/20 rounded-lg bg-accent/5">
+                      <div className="p-4 border border-accent/20  bg-accent/5">
                         <h4 className="font-normal mb-2">📝 Idempotency</h4>
                         <p className="text-sm text-sm text-muted-foreground">
                           Use transaction signature as idempotency key to prevent duplicate processing
@@ -148,15 +148,15 @@ function verifyWebhook(payload, signature, secret) {
                   <section>
                     <h3 className="text-lg font-normal mb-3">Performance Metrics</h3>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      <div className="p-4 text-center border border-border/50 rounded-lg">
+                      <div className="p-4 text-center border border-border/50 ">
                         <p className="text-3xl font-normal text-primary">~400ms</p>
                         <p className="text-sm text-sm text-muted-foreground mt-1">Solana finality</p>
                       </div>
-                      <div className="p-4 text-center border border-border/50 rounded-lg">
-                        <p className="text-3xl font-normal text-purple-400">2-3s</p>
+                      <div className="p-4 text-center border border-border/50 ">
+                        <p className="text-3xl font-normal text-green-400">2-3s</p>
                         <p className="text-sm text-sm text-muted-foreground mt-1">Notification delivery</p>
                       </div>
-                      <div className="p-4 text-center border border-border/50 rounded-lg">
+                      <div className="p-4 text-center border border-border/50 ">
                         <p className="text-3xl font-normal text-accent">99.9%</p>
                         <p className="text-sm text-sm text-muted-foreground mt-1">Uptime SLA</p>
                       </div>
@@ -165,7 +165,7 @@ function verifyWebhook(payload, signature, secret) {
 
                   <section>
                     <h3 className="text-lg font-normal mb-3">Implementation Guide</h3>
-                    <pre className="text-sm bg-black/50 p-4 rounded-lg overflow-x-auto">
+                    <pre className="text-sm bg-black/50 p-4  overflow-x-auto">
                       <code className="text-sm">{`// Express.js webhook handler
 import express from 'express';
 import { verifyWebhook } from './utils';

@@ -33,7 +33,7 @@ await sdk.payAgent({
             </div>
             
             <div className="lg:col-span-3">
-              <Card className="glass p-8 rounded-2xl border-border/50">
+              <Card className="glass p-8  border-border/50">
                 <h2 className="text-xl font-normal mb-4">Welcome to AgentCred</h2>
                 <p className="text-sm text-muted-foreground mb-6">
                   Complete documentation for integrating autonomous agent credments in your application.
@@ -52,19 +52,19 @@ await sdk.payAgent({
                   <section>
                     <h3 className="text-xl font-normal mb-3">Key Features</h3>
                     <div className="grid gap-4">
-                      <div className="p-4 glass border border-primary/20 rounded-lg">
+                      <div className="p-4 glass border border-primary/20 ">
                         <h4 className="font-normal mb-2">🔐 Dual-Key Security</h4>
                         <p className="text-sm text-muted-foreground">
                           Hotkey for autonomous operations, coldkey for owner control and approvals
                         </p>
                       </div>
-                      <div className="p-4 glass border border-secondary/20 rounded-lg">
+                      <div className="p-4 glass border border-secondary/20 ">
                         <h4 className="font-normal mb-2">⚡ Gasless Transactions</h4>
                         <p className="text-sm text-muted-foreground">
                           Using HTTP 402 protocol, agents can receive payments without gas fees
                         </p>
                       </div>
-                      <div className="p-4 glass border border-accent/20 rounded-lg">
+                      <div className="p-4 glass border border-accent/20 ">
                         <h4 className="font-normal mb-2">📡 Real-time Monitoring</h4>
                         <p className="text-sm text-muted-foreground">
                           Light client monitors on-chain transactions and notifies agents instantly

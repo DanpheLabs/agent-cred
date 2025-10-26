@@ -43,9 +43,9 @@ export const Analytics = () => {
         const isPositive = metric.trend === "up";
         
         return (
-          <Card key={index} className="glass p-6 rounded-2xl border-border/50 glow-hover">
+          <Card key={index} className="glass p-6  border-border/50 glow-hover">
             <div className="flex items-start justify-between mb-4">
-              <div className="p-2 rounded-lg glass">
+              <div className="p-2  glass">
                 <Icon className={`h-5 w-5 ${isPositive ? 'text-white' : 'text-white'}`} />
               </div>
               <span className={`text-sm font-medium ${isPositive ? 'text-white' : 'text-white'}`}>

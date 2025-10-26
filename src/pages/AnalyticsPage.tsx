@@ -22,7 +22,7 @@ export default function AnalyticsPage() {
           </div>
           
           {!connected ? (
-            <div className="glass p-12 rounded-2xl border-border/50 text-center">
+            <div className="glass p-12  border-border/50 text-center">
               <h3 className="text-xl font-normal mb-2">Connect Your Wallet</h3>
               <p className="text-muted-foreground">Please connect your Solana wallet to view analytics</p>
             </div>

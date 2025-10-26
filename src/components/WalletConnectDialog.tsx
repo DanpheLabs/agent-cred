@@ -27,7 +27,7 @@ export const WalletConnectDialog = ({
         </DialogHeader>
         
         <div className="flex flex-col items-center gap-4 py-6">
-          <WalletMultiButton className="bg-gradient-to-r from-primary to-purple-400 text-primary-foreground font-normal glow-hover" />
+          <WalletMultiButton  />
         </div>
       </DialogContent>
     </Dialog>

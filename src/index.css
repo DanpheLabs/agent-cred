@@ -7,59 +7,61 @@ All colors MUST be HSL.
 */
 
 @layer base {
-  :root {
-    --background: 0 0% 0%;
-    --foreground: 0 0% 100%;
+:root {
+  --background: 0 0% 0%; /* Pure black */
+  --foreground: 0 0% 100%; /* Pure white for text */
 
-    --card: 0 0% 5%;
-    --card-foreground: 0 0% 100%;
+  --card: 0 0% 5%; /* Very dark gray for cards */
+  --card-foreground: 0 0% 100%;
 
-    --popover: 0 0% 5%;
-    --popover-foreground: 0 0% 100%;
+  --popover: 0 0% 5%;
+  --popover-foreground: 0 0% 100%;
 
-    --primary: 203 63% 50%;
-    --primary-foreground: 0 0% 100%;
+  /* Primary green: A strong, balanced green, not too bright */
+  --primary: 145 63% 40%; /* Deeper, rich green */
+  --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 10%;
-    --secondary-foreground: 0 0% 100%;
+  --secondary: 0 0% 10%; /* Dark gray for secondary elements */
+  --secondary-foreground: 0 0% 100%;
 
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 60%;
+  --muted: 0 0% 15%; /* Slightly lighter dark gray for muted text/elements */
+  --muted-foreground: 0 0% 60%; /* Medium gray for muted text */
 
-    --accent: 203 63% 50%;
-    --accent-foreground: 0 0% 100%;
+  --accent: 145 63% 40%; /* Matching primary green for accents */
+  --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 100%;
+  --destructive: 0 84.2% 60.2%; /* Red for destructive actions (kept standard) */
+  --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 15%;
-    --input: 0 0% 10%;
-    --ring: 203 63% 50%;
+  --border: 0 0% 15%; /* Dark gray for borders */
+  --input: 0 0% 10%; /* Dark gray for input fields */
+  --ring: 145 63% 40%; /* Ring color matches primary green */
 
-    --radius: 0.75rem;
+  --radius: 0.75rem;
 
-    /* Premium glassmorphic */
-    --glass-bg: 0 0% 3% / 0.4;
-    --glass-border: linear-gradient(135deg, hsl(203 63% 50% / 0.4), hsl(271 91% 65% / 0.4));
-    
-    /* Glow colors */
-    --glow-blue: 203 63% 50%;
-    --glow-purple: 271 91% 65%;
-    --glow-cyan: 180 100% 50%;
-    
-    /* Premium gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(203 63% 50%) 0%, hsl(271 91% 65%) 100%);
-    --gradient-border: linear-gradient(135deg, hsl(203 63% 50% / 0.6), hsl(271 91% 65% / 0.6));
-    
-    --sidebar-background: 0 0% 0%;
-    --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 203 63% 50%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 10%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 0 0% 15%;
-    --sidebar-ring: 203 63% 50%;
-  }
+  /* Premium glassmorphic */
+  --glass-bg: 0 0% 3% / 0.4;
+  /* Green hacker gradient for glass border */
+  --glass-border: linear-gradient(135deg, hsl(145 63% 40% / 0.4), hsl(160 80% 30% / 0.4)); 
+  
+  /* Glow colors - shifted to various shades of green */
+  --glow-green-primary: 145 63% 40%;
+  --glow-green-secondary: 160 80% 30%; /* A slightly different, darker green */
+  --glow-green-accent: 120 70% 35%; /* Another deep green for variation */
+  
+  /* Premium gradients - now green */
+  --gradient-primary: linear-gradient(135deg, hsl(145 63% 40%) 0%, hsl(160 80% 30%) 100%);
+  --gradient-border: linear-gradient(135deg, hsl(145 63% 40% / 0.6), hsl(160 80% 30% / 0.6));
+  
+  --sidebar-background: 0 0% 0%;
+  --sidebar-foreground: 0 0% 100%;
+  --sidebar-primary: 145 63% 40%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 0 0% 10%;
+  --sidebar-accent-foreground: 0 0% 100%;
+  --sidebar-border: 0 0% 15%;
+  --sidebar-ring: 145 63% 40%;
+}
 }
 
 @layer base {
@@ -74,7 +76,7 @@ All colors MUST be HSL.
     overflow-x: hidden;
   }
   
-  body::before {
+body::before {
     content: '';
     position: fixed;
     top: -50%;
@@ -82,19 +84,32 @@ All colors MUST be HSL.
     width: 200%;
     height: 200%;
     background: 
-      radial-gradient(circle at 20% 30%, hsl(203 63% 50% / 0.08) 0%, transparent 40%),
-      radial-gradient(circle at 80% 60%, hsl(271 91% 65% / 0.06) 0%, transparent 40%),
-      radial-gradient(circle at 40% 80%, hsl(203 63% 50% / 0.05) 0%, transparent 35%);
+      /* Top-left radial gradient (Deep Primary Green) */
+      radial-gradient(circle at 0% 0%, hsl(145 63% 40% / 0.8) 0%, transparent 40%),
+      
+      /* Bottom-right radial gradient (Secondary Darker Green) */
+      radial-gradient(circle at 100% 100%, hsl(160 80% 30% / 0.822) 0%, transparent 40%),
+      
+      /* Central/Mid radial gradient (Subtle Accent Green) */
+      radial-gradient(circle at 40% 80%, hsl(120 70% 35% / 0.0) 0%, transparent 35%);
+      
     pointer-events: none;
     z-index: 0;
-  }
+}
   
   #root {
     position: relative;
     z-index: 1;
   }
 }
-
+.wallet-button {
+  background-color: #3b82f6 !important;
+  color: #fff !important;
+}
+.wallet-button:hover {
+  background-color: #2563eb !important;
+  color: #fff !important;
+}
 @layer utilities {
   .glass {
     background: hsl(var(--glass-bg));
@@ -121,8 +136,8 @@ All colors MUST be HSL.
     box-shadow: 0 0 60px hsl(var(--glow-blue) / 0.2);
   }
   
-  .glow-purple {
-    box-shadow: 0 0 60px hsl(var(--glow-purple) / 0.2);
+  .glow-green {
+    box-shadow: 0 0 60px hsl(var(--glow-green) / 0.2);
   }
   
   .glow-hover {
@@ -130,7 +145,7 @@ All colors MUST be HSL.
   }
   
   .glow-hover:hover {
-    box-shadow: 0 0 0 1px hsl(var(--glow-blue) / 0.9), 0 0 0 2px hsl(var(--glow-purple) / 0.9);
+    box-shadow: 0 0 0 1px hsl(var(--glow-blue) / 0.9), 0 0 0 2px hsl(var(--glow-green) / 0.9);
     transform: translateY(-2px);
   }
 

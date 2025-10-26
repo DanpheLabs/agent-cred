@@ -418,7 +418,7 @@ console.log('Status:', request.status); // 'pending'
           </div> */}
 
           {!connected ? (
-            <div className="glass p-12 rounded-2xl border-border/50 text-center">
+            <div className="glass p-12  border-border/50 text-center">
               <h3 className="text-xl font-normal mb-2">Connect Your Wallet</h3>
               <p className="text-muted-foreground">Please connect your Solana wallet to make payments</p>
             </div>
@@ -436,7 +436,7 @@ console.log('Status:', request.status); // 'pending'
               <div className={`grid gap-6 ${showSdkCode ? 'lg:grid-cols-2' : 'lg:grid-cols-1'}`}>
                 <div>
                   <Tabs defaultValue="pay-agent"  className="space-y-6">
-              <TabsList className="grid w-full bg-graident-to-r from-primary to-purple-500 border border-primary grid-cols-3">
+              <TabsList className="grid w-full bg-graident-to-r from-primary to-green-500 border border-primary grid-cols-3">
                 <TabsTrigger value="pay-agent" className="">Agent → Your Agent</TabsTrigger>
                 <TabsTrigger value="agent-cred">Your Agent → Agent</TabsTrigger>
                 <TabsTrigger value="approvals">
@@ -445,7 +445,7 @@ console.log('Status:', request.status); // 'pending'
               </TabsList>
 
               <TabsContent value="pay-agent">
-                <Card className="glass p-6 rounded-2xl border-border/50">
+                <Card className="glass p-6  border-border/50">
                   <h3 className="text-xl font-normal mb-4">Pay an Agent</h3>
                   <p className="text-sm text-muted-foreground mb-6">
                     Send USDC directly to an agent's coldkey wallet
@@ -488,7 +488,7 @@ console.log('Status:', request.status); // 'pending'
 
               <TabsContent value="agent-cred">
                 <div className="grid gap-6 md:grid-cols-2">
-                  <Card className="glass p-6 rounded-2xl border-border/50">
+                  <Card className="glass p-6  border-border/50">
                     <h3 className="text-xl font-normal mb-4">Instant Payment</h3>
                     <p className="text-sm text-muted-foreground mb-6">
                       Send within daily limit (no approval needed)
@@ -536,7 +536,7 @@ console.log('Status:', request.status); // 'pending'
                     </div>
                   </Card>
 
-                  <Card className="glass p-6 rounded-2xl border-border/50">
+                  <Card className="glass p-6  border-border/50">
                     <h3 className="text-xl font-normal mb-4">Request Approval</h3>
                     <p className="text-sm text-muted-foreground mb-6">
                       Submit payment for coldkey approval
@@ -598,7 +598,7 @@ console.log('Status:', request.status); // 'pending'
               </TabsContent>
 
               <TabsContent value="approvals">
-                <Card className="glass p-6 rounded-2xl border-border/50">
+                <Card className="glass p-6  border-border/50">
                   <h3 className="text-xl font-normal mb-4">Pending Approvals</h3>
                   
                   {pendingRequests.length === 0 ? (
@@ -608,7 +608,7 @@ console.log('Status:', request.status); // 'pending'
                   ) : (
                     <div className="space-y-4">
                       {pendingRequests.map(request => (
-                        <div key={request.id} className="border border-border/50 rounded-lg p-4">
+                        <div key={request.id} className="border border-border/50  p-4">
                           <div className="flex items-start justify-between mb-3">
                             <div>
                               <h4 className="font-normal">{request.agentName}</h4>
@@ -658,15 +658,15 @@ console.log('Status:', request.status); // 'pending'
                 </div>
 
                 {showSdkCode && (
-                  <Card className="glass p-6 rounded-2xl border-border/50 h-fit sticky top-16">
+                  <Card className="glass p-6  border-border/50 h-fit sticky top-16">
                     <h3 className="text-xl font-normal mb-4"> Corresponding SDK Code Example</h3>
                     <p className="text-sm text-muted-foreground mb-4">
                       Use this code in your application to integrate AgentCred
                     </p>
-                    <pre className="bg-black/50 p-4 rounded-lg overflow-x-auto text-xs">
+                    <pre className="bg-black/50 p-4  overflow-x-auto text-xs">
                       <code>{currentSdkCode || "// Select an action to see SDK code example"}</code>
                     </pre>
-                    <div className="mt-4 p-3 bg-primary/10 rounded-lg border border-primary/20">
+                    <div className="mt-4 p-3 bg-primary/10  border border-primary/20">
                       <p className="text-xs text-muted-foreground">
                         💡 Install SDK: <code className="text-primary">npm install agentcred-sdk</code>
                       </p>

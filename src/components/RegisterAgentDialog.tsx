@@ -181,7 +181,7 @@ export const RegisterAgentDialog = ({ open, onOpenChange, onAgentCreated }: Regi
             </Button>
             <Button
               type="submit"
-              className="flex-1 bg-gradient-to-r from-primary to-purple-400 text-primary-foreground font-normal glow-hover"
+              className="flex-1 bg-gradient-to-r from-primary to-green-400 text-primary-foreground font-normal glow-hover"
               disabled={isRegistering || registerLoading}
             >
               {isRegistering ? "Registering..." : "Register Agent"}

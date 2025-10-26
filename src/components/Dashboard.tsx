@@ -55,7 +55,7 @@ export const Dashboard = () => {
             <Button 
               onClick={() => setRegisterDialogOpen(true)}
               disabled={!connected}
-              className="bg-gradient-to-r from-primary to-purple-400 text-primary-foreground font-normal glow-hover"
+              className="bg-gradient-to-r from-primary to-green-400 text-primary-foreground font-normal glow-hover"
             >
               <Plus className="mr-2 h-4 w-4" />
               Register Agent
@@ -64,7 +64,7 @@ export const Dashboard = () => {
         </div>
         
         {!connected ? (
-          <div className="glass p-12 rounded-2xl border-border/50 text-center mb-12">
+          <div className="glass p-12  border-border/50 text-center mb-12">
             <h3 className="text-xl font-normal mb-2">Connect Your Wallet</h3>
             <p className="text-muted-foreground">Please connect your Solana wallet to get started</p>
           </div>

@@ -26,13 +26,13 @@ export const TransactionHistory = () => {
     const isReceived = tx.type === "user_to_agent";
     
     return (
-      <div className="flex items-center justify-between p-4 rounded-xl glass border border-border/30 hover:border-primary/30 transition-all">
+      <div className="flex items-center justify-between p-4  glass border border-border/30 hover:border-primary/30 transition-all">
         <div className="flex items-center gap-4">
-          <div className={`p-2 rounded-lg ${isReceived ? 'bg-primary/10' : 'bg-secondary/10'}`}>
+          <div className={`p-2  ${isReceived ? 'bg-primary/10' : 'bg-secondary/10'}`}>
             {isReceived ? (
               <ArrowDownRight className="h-5 w-5 text-primary" />
             ) : (
-              <ArrowUpRight className="h-5 w-5 text-purple-400" />
+              <ArrowUpRight className="h-5 w-5 text-green-400" />
             )}
           </div>
           <div>
@@ -42,7 +42,7 @@ export const TransactionHistory = () => {
         </div>
         <div className="flex items-center gap-4">
           <div className="text-right">
-            <p className={`font-normal ${isReceived ? 'text-primary' : 'text-purple-400'}`}>
+            <p className={`font-normal ${isReceived ? 'text-primary' : 'text-green-400'}`}>
               {isReceived ? '+' : '-'}{tx.amount.toFixed(2)} USDC
             </p>
             <p className="text-xs text-muted-foreground capitalize">{tx.status}</p>
@@ -57,7 +57,7 @@ export const TransactionHistory = () => {
   
   if (transactions.length === 0) {
     return (
-      <Card className="glass p-12 rounded-2xl border-border/50 text-center">
+      <Card className="glass p-12  border-border/50 text-center">
         <h3 className="text-2xl font-normal mb-2">Transaction History</h3>
         <p className="text-muted-foreground">No transactions yet</p>
       </Card>
@@ -65,7 +65,7 @@ export const TransactionHistory = () => {
   }
   
   return (
-    <Card className="glass p-6 rounded-2xl border-border/50">
+    <Card className="glass p-6  border-border/50">
       <h3 className="text-2xl font-normal mb-6">Transaction History</h3>
       
       <Tabs defaultValue="all" className="w-full">

@@ -16,7 +16,7 @@ export default function DocsGasless() {
             </div>
             
             <div className="lg:col-span-3">
-              <Card className="glass p-8 rounded-2xl border-border/50">
+              <Card className="glass p-8  border-border/50">
                 <h2 className="text-xl font-normal mb-4">How Gasless Transactions Work</h2>
                 <p className="text-sm text-sm text-muted-foreground mb-6">
                   AgentCred enables agents to receive payments without holding SOL for gas fees.
@@ -52,7 +52,7 @@ export default function DocsGasless() {
                       When a user requests a service, the flow works as follows:
                     </p>
                     
-                    <div className="p-6 bg-black/30 rounded-lg border border-primary/20 mb-4">
+                    <div className="p-6 bg-black/30  border border-primary/20 mb-4">
                       <h4 className="font-normal mb-3 text-primary">Request Flow</h4>
                       <pre className="text-sm text-sm text-muted-foreground overflow-x-auto">
 {`1. User → Agent: "I want service X"
@@ -76,19 +76,19 @@ export default function DocsGasless() {
                   <section>
                     <h3 className="text-lg font-normal mb-3">Key Benefits</h3>
                     <div className="grid gap-4">
-                      <div className="p-4 border border-primary/20 rounded-lg bg-primary/5">
+                      <div className="p-4 border border-primary/20  bg-primary/5">
                         <h4 className="font-normal mb-2">💰 No Gas Required</h4>
                         <p className="text-sm text-sm text-muted-foreground">
                           Users pay the agent directly in USDC. The agent doesn't need SOL to receive payments.
                         </p>
                       </div>
-                      <div className="p-4 border border-secondary/20 rounded-lg bg-secondary/5">
+                      <div className="p-4 border border-secondary/20  bg-secondary/5">
                         <h4 className="font-normal mb-2">⚡ Fast Settlement</h4>
                         <p className="text-sm text-sm text-muted-foreground">
                           Payments are detected within seconds, enabling near-instant service delivery.
                         </p>
                       </div>
-                      <div className="p-4 border border-accent/20 rounded-lg bg-accent/5">
+                      <div className="p-4 border border-accent/20  bg-accent/5">
                         <h4 className="font-normal mb-2">🔒 Secure Protocol</h4>
                         <p className="text-sm text-sm text-muted-foreground">
                           Service IDs prevent replay attacks. Agents only deliver after confirmed payment.
@@ -99,7 +99,7 @@ export default function DocsGasless() {
 
                   <section>
                     <h3 className="text-lg font-normal mb-3">Implementation Example</h3>
-                    <pre className="text-sm bg-black/50 p-4 rounded-lg overflow-x-auto">
+                    <pre className="text-sm bg-black/50 p-4  overflow-x-auto">
                       <code className="text-sm">{`// Agent-side implementation
 app.post('/api/service', async (req, res) => {
   const { user_id, service_type } = req.body;
@@ -152,7 +152,7 @@ app.post('/webhook/payment', async (req, res) => {
 
                   <section>
                     <h3 className="text-lg font-normal mb-3">Client Integration</h3>
-                    <pre className="text-sm bg-black/50 p-4 rounded-lg overflow-x-auto">
+                    <pre className="text-sm bg-black/50 p-4  overflow-x-auto">
                       <code className="text-sm">{`// Client-side SDK
 import { AgentCredSDK } from 'agentcred-sdk';
 
