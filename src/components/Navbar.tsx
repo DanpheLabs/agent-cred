@@ -45,24 +45,24 @@ export const Navbar = () => {
           >
             My Agents
           </Link>
-          <Link 
+          {/* <Link 
             to="/analytics" 
             className={`text-sm font-medium transition-colors ${isActive('/analytics') ? 'text-primary font-normal' : 'text-muted-foreground hover:text-foreground'}`}
           >
             Transactions
-          </Link>
+          </Link> */}
           <Link 
             to="/payments" 
             className={`text-sm font-medium transition-colors ${isActive('/payments') ? 'text-primary font-normal' : 'text-muted-foreground hover:text-foreground'}`}
           >
             Playground
           </Link>
-          <Link 
+          {/* <Link 
             to="/use-cases" 
             className={`text-sm font-medium transition-colors ${isActive('/use-cases') ? 'text-primary font-normal' : 'text-muted-foreground hover:text-foreground'}`}
           >
             Use Cases
-          </Link>
+          </Link> */}
           <Link 
             to="/sdk" 
             className={`text-sm font-medium transition-colors ${isActive('/sdk') ? 'text-primary font-normal' : 'text-muted-foreground hover:text-foreground'}`}

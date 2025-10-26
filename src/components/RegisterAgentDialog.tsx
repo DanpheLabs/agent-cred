@@ -23,7 +23,7 @@ export const RegisterAgentDialog = ({ open, onOpenChange, onAgentCreated }: Regi
   const [name, setName] = useState("");
   const [endpoint, setEndpoint] = useState("");
   const [dailyLimit, setDailyLimit] = useState("");
-  const [hotkeyMethod, setHotkeyMethod] = useState<"wallet" | "paste">("wallet");
+  const [hotkeyMethod, setHotkeyMethod] = useState<"wallet" | "paste">("paste");
   const [pastedHotkey, setPastedHotkey] = useState("");
   const [hotkeyWallet, setHotkeyWallet] = useState<string | null>(null);
   const [isRegistering, setIsRegistering] = useState(false);
@@ -143,47 +143,17 @@ export const RegisterAgentDialog = ({ open, onOpenChange, onAgentCreated }: Regi
               className="glass border-border/50"
             />
           </div>
-
           <div className="space-y-2">
-            <Label>Agent Hotkey</Label>
-            <Tabs value={hotkeyMethod} onValueChange={(v) => setHotkeyMethod(v as "wallet" | "paste")}>
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="wallet">Connect Wallet</TabsTrigger>
-                <TabsTrigger value="paste">Paste Public Key</TabsTrigger>
-              </TabsList>
-              
-              <TabsContent value="wallet" className="space-y-3">
-                <p className="text-xs text-muted-foreground">
-                  Connect the wallet that will act as the agent's hotkey
-                </p>
-                <div className="flex items-center gap-3">
-                  <WalletMultiButton 
-                    className="bg-gradient-to-r from-primary to-secondary text-primary-foreground font-normal glow-hover"
-                    style={{ height: '40px' }}
-                  />
-                </div>
-                {walletPublicKey && (
-                  <div className="glass p-3 rounded-lg border border-border/50">
-                    <p className="text-xs text-muted-foreground mb-1">Connected Hotkey:</p>
-                    <p className="font-mono text-xs break-all">{walletPublicKey.toBase58()}</p>
-                  </div>
-                )}
-              </TabsContent>
-              
-              <TabsContent value="paste" className="space-y-3">
-                <Input
-                  placeholder="Paste agent public key address..."
-                  value={pastedHotkey}
-                  onChange={(e) => setPastedHotkey(e.target.value)}
-                  className="glass border-border/50 font-mono text-xs"
-                />
-                <p className="text-xs text-muted-foreground">
-                  Enter the Solana public key for your agent's hotkey wallet
-                </p>
-              </TabsContent>
-            </Tabs>
+            <Label htmlFor="hotkey">Agent Hotkey</Label>
+            <Input
+              id="hotkey"
+              placeholder="https://api.example.com/agent"
+              value={pastedHotkey}
+              onChange={(e) => setPastedHotkey(e.target.value)}
+              className="glass border-border/50"
+            />
           </div>
-          
+
           <div className="space-y-2">
             <Label htmlFor="dailyLimit">Daily Spending Limit (USDC)</Label>
             <Input

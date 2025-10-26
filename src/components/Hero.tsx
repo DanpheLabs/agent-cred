@@ -100,6 +100,29 @@ export const Hero = () => {
             </div>
           ))}
         </div>
+        
+
+                  <div className="mt-16 glass p-8 rounded-2xl border-border/50 text-center">
+            <h2 className="text-3xl font-normal mb-4">Ready to Build?</h2>
+            <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+              AgentCred provides the infrastructure you need to build secure, autonomous payment systems. 
+              Get started with our SDK and bring your use case to life.
+            </p>
+            <div className="flex gap-4 justify-center">
+              <a 
+                href="/sdk" 
+                className="px-6 py-3 rounded-lg bg-gradient-to-r from-primary to-secondary text-primary-foreground font-normal glow-hover inline-block"
+              >
+                View SDK
+              </a>
+              <a 
+                href="/docs" 
+                className="px-6 py-3 rounded-lg glass border-border/50 hover:border-primary/50 font-normal inline-block"
+              >
+                Read Docs
+              </a>
+            </div>
+          </div>
       </div>
     </section>
   );

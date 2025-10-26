@@ -410,12 +410,12 @@ console.log('Status:', request.status); // 'pending'
   return (
     <div className="min-h-screen">
       <Navbar />
-      <main className="pt-24 px-6 pb-20">
+      <main className="pt-8 px-6 pb-20">
         <div className="container mx-auto max-w-7xl">
-          <div className="mb-8">
+          {/* <div className="mb-8">
             <h1 className="text-4xl font-normal mb-2">AgentCred Playground</h1>
             <p className="text-muted-foreground">Send payments to agents or manage agent payouts</p>
-          </div>
+          </div> */}
 
           {!connected ? (
             <div className="glass p-12 rounded-2xl border-border/50 text-center">

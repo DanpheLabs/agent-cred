@@ -23,9 +23,9 @@ await sdk.payAgent({
   return (
     <div className="min-h-screen">
       <Navbar />
-      <main className="pt-24 px-6 pb-20">
+      <main className="pt-8 px-6 pb-20">
         <div className="container mx-auto max-w-7xl">
-          <h1 className="text-4xl font-normal mb-8">Developer Documentation</h1>
+          {/* <h1 className="text-4xl font-normal mb-8">Developer Documentation</h1> */}
           
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
             <div className="lg:col-span-1">

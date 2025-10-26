@@ -8,6 +8,7 @@ import { ArrowUpDown, TrendingUp, Clock, Link2, Database } from "lucide-react";
 import { AGENT_PAY_PROGRAM_ID, USDC_MINT, connection } from "@/lib/solana";
 import { useSolanaAgent } from "@/hooks/useSolanaAgent";
 import { useState, useEffect } from "react";
+import { TransactionHistory } from "@/components/TransactionHistory";
 
 export default function Dashboard() {
   const { publicKey, connected } = useWallet();
@@ -44,12 +45,12 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen">
       <Navbar />
-      <main className="pt-24 px-6 pb-20">
+      <main className="pt-8 px-6 pb-20">
         <div className="container mx-auto max-w-7xl">
-          <div className="mb-8">
+          {/* <div className="mb-8">
             <h1 className="text-4xl font-normal mb-2">Dashboard</h1>
             <p className="text-muted-foreground">Overview of your AI agent payment system</p>
-          </div>
+          </div> */}
           
           {!connected ? (
             <div className="glass p-12 rounded-2xl border-border/50 text-center">
@@ -132,6 +133,7 @@ export default function Dashboard() {
                   </div>
                 )}
               </Card>
+                 <TransactionHistory />
    
             </div>
           )}

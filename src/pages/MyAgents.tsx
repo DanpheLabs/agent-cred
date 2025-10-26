@@ -87,9 +87,9 @@ export default function MyAgents() {
   };
   
   return (
-    <div className="min-h-screen">
+    <div className="">
       <Navbar />
-      <main className="pt-24 px-6 pb-20">
+      <main className="pt-8 px-6 pb-20">
         <div className="container mx-auto max-w-7xl">
           {/* Contract Info Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -179,7 +179,6 @@ export default function MyAgents() {
             onOpenChange={setRegisterDialogOpen}
             onAgentCreated={loadAgents}
           />
-          
           <AgentSettingsDialog
             agent={selectedAgent}
             open={settingsDialogOpen}

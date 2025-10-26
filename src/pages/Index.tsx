@@ -5,7 +5,7 @@ const Index = () => {
   return (
     <div className="min-h-screen overflow-hidden">
       <Navbar />
-      <main className="h-screen">
+      <main className="">
         <Hero />
       </main>
     </div>
