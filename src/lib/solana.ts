@@ -7,7 +7,7 @@ import {
 import { AnchorProvider, BN, Program } from '@coral-xyz/anchor';
 import { TOKEN_PROGRAM_ID, getAssociatedTokenAddress } from '@solana/spl-token';
 import { WalletContextState } from '@solana/wallet-adapter-react';
-import { IDL, AGENT_PAY_PROGRAM_ID, AgentPayProgram } from './anchor';
+import { IDL, AGENT_PAY_PROGRAM_ID, AgentCredProgram } from './anchor';
 import { saveTransaction } from './database';
 
 export { AGENT_PAY_PROGRAM_ID };
@@ -19,7 +19,7 @@ export const USDC_MINT = new PublicKey('Gh9ZwEmdLJ8DscKNTkTqPbNwLNNBjuSzaG9Vp2KG
 export const connection = new Connection('https://api.devnet.solana.com', 'confirmed');
 
 // Helper to create program instance
-const getProgram = (connection: Connection, wallet: WalletContextState): AgentPayProgram | null => {
+const getProgram = (connection: Connection, wallet: WalletContextState): AgentCredProgram | null => {
   if (!wallet.publicKey || !wallet.signTransaction) {
     return null;
   }

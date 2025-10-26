@@ -27,7 +27,7 @@ export const Hero = () => {
       <div className="container mx-auto text-center max-w-4xl">
 
         {/* Title */}
-        <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 leading-tight text-balance break-words">
+        <h1 className="text-4xl sm:text-5xl md:text-7xl font-normal mb-6 leading-tight text-balance break-words">
           Payment Gateway for{" "}
           <span className="gradient-text">AI Agents</span>
         </h1>
@@ -51,7 +51,7 @@ export const Hero = () => {
           <div className="flex flex-col items-center">
             <div className="flex items-center gap-2">
               <Users className="h-5 w-5 text-primary" />
-              <p className="text-2xl font-bold">{stats.agents}</p>
+              <p className="text-2xl font-normal">{stats.agents}</p>
             </div>
             <p className="text-xs text-muted-foreground mt-1">Active Agents</p>
           </div>
@@ -59,7 +59,7 @@ export const Hero = () => {
           <div className="flex flex-col items-center">
             <div className="flex items-center gap-2">
               <DollarSign className="h-5 w-5 text-secondary" />
-              <p className="text-2xl font-bold">{stats.volume}</p>
+              <p className="text-2xl font-normal">{stats.volume}</p>
             </div>
             <p className="text-xs text-muted-foreground mt-1">Total Volume</p>
           </div>
@@ -67,7 +67,7 @@ export const Hero = () => {
           <div className="flex flex-col items-center col-span-2 sm:col-span-1">
             <div className="flex items-center gap-2">
               <TrendingUp className="h-5 w-5 text-accent" />
-              <p className="text-2xl font-bold">{stats.transactions}</p>
+              <p className="text-2xl font-normal">{stats.transactions}</p>
             </div>
             <p className="text-xs text-muted-foreground mt-1">Transactions</p>
           </div>
@@ -93,7 +93,7 @@ export const Hero = () => {
             },
           ].map((feature, index) => (
             <div key={index} className="glass p-6 rounded-2xl glow-hover">
-              <h3 className="text-xl font-semibold mb-2 text-foreground">
+              <h3 className="text-xl font-normal mb-2 text-foreground">
                 {feature.title}
               </h3>
               <p className="text-muted-foreground">{feature.description}</p>

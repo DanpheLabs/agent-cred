@@ -48,7 +48,7 @@ export const WalletCard = ({ title, address, balance, variant = "owner" }: Walle
       </div>
       
       <div className="mt-6">
-        <p className="text-3xl font-bold gradient-text mb-1">
+        <p className="text-3xl font-normal gradient-text mb-1">
           {balance.toFixed(4)} SOL
         </p>
         <p className="text-sm text-muted-foreground">

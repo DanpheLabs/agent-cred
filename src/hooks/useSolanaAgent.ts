@@ -121,7 +121,7 @@ export function useSolanaAgent(coldkey?: string, hotkey?: string) {
     }
   };
 
-  const sendAgentPayment = async (
+  const sendAgentCredment = async (
     coldkeyAddress: string,
     recipientAddress: string,
     amountUSDC: number
@@ -280,7 +280,7 @@ export function useSolanaAgent(coldkey?: string, hotkey?: string) {
     error,
     registerAgent,
     payAgent,
-    sendAgentPayment,
+    sendAgentCredment,
     requestPaymentApproval,
     updateAgentStatus,
     updateAgentDetails,

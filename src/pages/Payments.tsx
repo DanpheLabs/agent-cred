@@ -63,8 +63,8 @@ export default function Payments() {
 
   const [selectedAgent, setSelectedAgent] = useState("");
   const [payAmount, setPayAmount] = useState("");
-  const [agentPayRecipient, setAgentPayRecipient] = useState("");
-  const [agentPayAmount, setAgentPayAmount] = useState("");
+  const [agentPayRecipient, setAgentCredRecipient] = useState("");
+  const [agentPayAmount, setAgentCredAmount] = useState("");
   const [requestRecipient, setRequestRecipient] = useState("");
   const [requestAmount, setRequestAmount] = useState("");
   const [requestPurpose, setRequestPurpose] = useState("");
@@ -73,11 +73,11 @@ export default function Payments() {
   const generatePayAgentCode = () => {
     const agent = selectedAgent ? agents.find(a => a.id === selectedAgent) : null;
     const code = `// Pay an Agent - User to Agent USDC Payment
-import { AgentPaySDK } from 'agentpay-sdk';
+import { AgentCredSDK } from 'agentpay-sdk';
 import { Connection, PublicKey } from '@solana/web3.js';
 
 // Initialize SDK
-const sdk = new AgentPaySDK({ 
+const sdk = new AgentCredSDK({ 
   network: 'devnet',
   programId: '54ZZfUHiT4AM3nvnipZzJWDumVdXTmdMQuSb4Yc2TzUg'
 });
@@ -99,12 +99,12 @@ console.log('Explorer:', \`https://explorer.solana.com/tx/\${result.signature}?c
     return code;
   };
 
-  const generateAgentPayCode = () => {
+  const generateAgentCredCode = () => {
     const agent = selectedAgent ? agents.find(a => a.id === selectedAgent) : null;
     const code = `// Agent Instant Payment - Within Daily Limit
-import { AgentPaySDK } from 'agentpay-sdk';
+import { AgentCredSDK } from 'agentpay-sdk';
 
-const sdk = new AgentPaySDK({ 
+const sdk = new AgentCredSDK({ 
   network: 'devnet',
   programId: '54ZZfUHiT4AM3nvnipZzJWDumVdXTmdMQuSb4Yc2TzUg'
 });
@@ -126,9 +126,9 @@ console.log('Payment signature:', result.signature);`;
   const generateRequestPaymentCode = () => {
     const agent = selectedAgent ? agents.find(a => a.id === selectedAgent) : null;
     const code = `// Request Payment Approval - Exceeds Daily Limit
-import { AgentPaySDK } from 'agentpay-sdk';
+import { AgentCredSDK } from 'agentpay-sdk';
 
-const sdk = new AgentPaySDK({ 
+const sdk = new AgentCredSDK({ 
   network: 'devnet',
   programId: '54ZZfUHiT4AM3nvnipZzJWDumVdXTmdMQuSb4Yc2TzUg'
 });
@@ -210,12 +210,12 @@ console.log('Status:', request.status); // 'pending'
   };
 
   // Agent → Recipient (Instant if within limit)
-  const handleAgentPayment = async () => {
+  const handleAgentCredment = async () => {
     if (!selectedAgent || !agentPayRecipient || !agentPayAmount || !publicKey) {
       toast.error("Please fill all fields");
       return;
     }
-    setCurrentSdkCode(generateAgentPayCode());
+    setCurrentSdkCode(generateAgentCredCode());
     setShowSdkCode(true);
 
     const agent = agents.find(a => a.id === selectedAgent);
@@ -268,8 +268,8 @@ console.log('Status:', request.status); // 'pending'
       }
 
       toast.success(`Sent ${amount} USDC to recipient`);
-      setAgentPayRecipient("");
-      setAgentPayAmount("");
+      setAgentCredRecipient("");
+      setAgentCredAmount("");
       loadData();
     } catch (error) {
       console.error('Error processing payment:', error);
@@ -413,13 +413,13 @@ console.log('Status:', request.status); // 'pending'
       <main className="pt-24 px-6 pb-20">
         <div className="container mx-auto max-w-7xl">
           <div className="mb-8">
-            <h1 className="text-4xl font-bold mb-2">AgentPay Playground</h1>
+            <h1 className="text-4xl font-normal mb-2">AgentCred Playground</h1>
             <p className="text-muted-foreground">Send payments to agents or manage agent payouts</p>
           </div>
 
           {!connected ? (
             <div className="glass p-12 rounded-2xl border-border/50 text-center">
-              <h3 className="text-xl font-semibold mb-2">Connect Your Wallet</h3>
+              <h3 className="text-xl font-normal mb-2">Connect Your Wallet</h3>
               <p className="text-muted-foreground">Please connect your Solana wallet to make payments</p>
             </div>
           ) : (
@@ -446,7 +446,7 @@ console.log('Status:', request.status); // 'pending'
 
               <TabsContent value="pay-agent">
                 <Card className="glass p-6 rounded-2xl border-border/50">
-                  <h3 className="text-xl font-semibold mb-4">Pay an Agent</h3>
+                  <h3 className="text-xl font-normal mb-4">Pay an Agent</h3>
                   <p className="text-sm text-muted-foreground mb-6">
                     Send USDC directly to an agent's coldkey wallet
                   </p>
@@ -489,7 +489,7 @@ console.log('Status:', request.status); // 'pending'
               <TabsContent value="agent-pay">
                 <div className="grid gap-6 md:grid-cols-2">
                   <Card className="glass p-6 rounded-2xl border-border/50">
-                    <h3 className="text-xl font-semibold mb-4">Instant Payment</h3>
+                    <h3 className="text-xl font-normal mb-4">Instant Payment</h3>
                     <p className="text-sm text-muted-foreground mb-6">
                       Send within daily limit (no approval needed)
                     </p>
@@ -516,7 +516,7 @@ console.log('Status:', request.status); // 'pending'
                         <Input
                           placeholder="Solana address"
                           value={agentPayRecipient}
-                          onChange={(e) => setAgentPayRecipient(e.target.value)}
+                          onChange={(e) => setAgentCredRecipient(e.target.value)}
                         />
                       </div>
 
@@ -526,18 +526,18 @@ console.log('Status:', request.status); // 'pending'
                           type="number"
                           placeholder="0.00"
                           value={agentPayAmount}
-                          onChange={(e) => setAgentPayAmount(e.target.value)}
+                          onChange={(e) => setAgentCredAmount(e.target.value)}
                         />
                       </div>
 
-                      <Button onClick={handleAgentPayment} className="w-full">
+                      <Button onClick={handleAgentCredment} className="w-full">
                         Send Payment
                       </Button>
                     </div>
                   </Card>
 
                   <Card className="glass p-6 rounded-2xl border-border/50">
-                    <h3 className="text-xl font-semibold mb-4">Request Approval</h3>
+                    <h3 className="text-xl font-normal mb-4">Request Approval</h3>
                     <p className="text-sm text-muted-foreground mb-6">
                       Submit payment for coldkey approval
                     </p>
@@ -599,7 +599,7 @@ console.log('Status:', request.status); // 'pending'
 
               <TabsContent value="approvals">
                 <Card className="glass p-6 rounded-2xl border-border/50">
-                  <h3 className="text-xl font-semibold mb-4">Pending Approvals</h3>
+                  <h3 className="text-xl font-normal mb-4">Pending Approvals</h3>
                   
                   {pendingRequests.length === 0 ? (
                     <p className="text-muted-foreground text-center py-8">
@@ -611,13 +611,13 @@ console.log('Status:', request.status); // 'pending'
                         <div key={request.id} className="border border-border/50 rounded-lg p-4">
                           <div className="flex items-start justify-between mb-3">
                             <div>
-                              <h4 className="font-semibold">{request.agentName}</h4>
+                              <h4 className="font-normal">{request.agentName}</h4>
                               <p className="text-sm text-muted-foreground">
                                 {new Date(request.requestedAt).toLocaleString()}
                               </p>
                             </div>
                             <div className="text-right">
-                              <p className="text-lg font-bold">{request.amount} USDC</p>
+                              <p className="text-lg font-normal">{request.amount} USDC</p>
                             </div>
                           </div>
                           
@@ -659,9 +659,9 @@ console.log('Status:', request.status); // 'pending'
 
                 {showSdkCode && (
                   <Card className="glass p-6 rounded-2xl border-border/50 h-fit sticky top-24">
-                    <h3 className="text-xl font-semibold mb-4">SDK Code Example</h3>
+                    <h3 className="text-xl font-normal mb-4">SDK Code Example</h3>
                     <p className="text-sm text-muted-foreground mb-4">
-                      Use this code in your application to integrate AgentPay
+                      Use this code in your application to integrate AgentCred
                     </p>
                     <pre className="bg-black/50 p-4 rounded-lg overflow-x-auto text-xs">
                       <code>{currentSdkCode || "// Select an action to see SDK code example"}</code>

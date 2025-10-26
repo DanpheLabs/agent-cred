@@ -158,7 +158,7 @@ export const RegisterAgentDialog = ({ open, onOpenChange, onAgentCreated }: Regi
                 </p>
                 <div className="flex items-center gap-3">
                   <WalletMultiButton 
-                    className="bg-gradient-to-r from-primary to-secondary text-primary-foreground font-semibold glow-hover"
+                    className="bg-gradient-to-r from-primary to-secondary text-primary-foreground font-normal glow-hover"
                     style={{ height: '40px' }}
                   />
                 </div>
@@ -211,7 +211,7 @@ export const RegisterAgentDialog = ({ open, onOpenChange, onAgentCreated }: Regi
             </Button>
             <Button
               type="submit"
-              className="flex-1 bg-gradient-to-r from-primary to-secondary text-primary-foreground font-semibold glow-hover"
+              className="flex-1 bg-gradient-to-r from-primary to-secondary text-primary-foreground font-normal glow-hover"
               disabled={isRegistering || registerLoading}
             >
               {isRegistering ? "Registering..." : "Register Agent"}

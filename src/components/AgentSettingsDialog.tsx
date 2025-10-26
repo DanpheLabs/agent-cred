@@ -100,7 +100,7 @@ export const AgentSettingsDialog = ({ agent, open, onOpenChange, onUpdate }: Age
           <div className="pt-4 flex gap-3">
             <Button 
               onClick={handleSave} 
-              className="flex-1 bg-gradient-to-r from-primary to-secondary text-primary-foreground font-semibold glow-hover"
+              className="flex-1 bg-gradient-to-r from-primary to-secondary text-primary-foreground font-normal glow-hover"
               disabled={isUpdating || updateLoading}
             >
               {isUpdating ? "Saving..." : "Save Changes"}

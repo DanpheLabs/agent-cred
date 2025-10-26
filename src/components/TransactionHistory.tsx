@@ -42,7 +42,7 @@ export const TransactionHistory = () => {
         </div>
         <div className="flex items-center gap-4">
           <div className="text-right">
-            <p className={`font-semibold ${isReceived ? 'text-primary' : 'text-secondary'}`}>
+            <p className={`font-normal ${isReceived ? 'text-primary' : 'text-secondary'}`}>
               {isReceived ? '+' : '-'}{tx.amount.toFixed(2)} USDC
             </p>
             <p className="text-xs text-muted-foreground capitalize">{tx.status}</p>
@@ -58,7 +58,7 @@ export const TransactionHistory = () => {
   if (transactions.length === 0) {
     return (
       <Card className="glass p-12 rounded-2xl border-border/50 text-center">
-        <h3 className="text-2xl font-bold mb-2">Transaction History</h3>
+        <h3 className="text-2xl font-normal mb-2">Transaction History</h3>
         <p className="text-muted-foreground">No transactions yet</p>
       </Card>
     );
@@ -66,7 +66,7 @@ export const TransactionHistory = () => {
   
   return (
     <Card className="glass p-6 rounded-2xl border-border/50">
-      <h3 className="text-2xl font-bold mb-6">Transaction History</h3>
+      <h3 className="text-2xl font-normal mb-6">Transaction History</h3>
       
       <Tabs defaultValue="all" className="w-full">
         <TabsList className="glass mb-6">

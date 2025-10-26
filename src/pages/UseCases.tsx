@@ -72,9 +72,9 @@ export default function UseCases() {
       <main className="pt-24 px-6 pb-20">
         <div className="container mx-auto max-w-7xl">
           <div className="text-center mb-12">
-            <h1 className="text-5xl font-bold mb-4 gradient-text">Use Cases</h1>
+            <h1 className="text-5xl font-normal mb-4 text-white">Use Cases</h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Discover how AgentPay's hotkey/coldkey architecture powers secure, autonomous payment systems across diverse applications
+              Discover how AgentCred's hotkey/coldkey architecture powers secure, autonomous payment systems across diverse applications
             </p>
           </div>
 
@@ -86,7 +86,7 @@ export default function UseCases() {
                     {useCase.icon}
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-xl font-semibold mb-2">{useCase.title}</h3>
+                    <h3 className="text-xl font-normal mb-2">{useCase.title}</h3>
                   </div>
                 </div>
                 
@@ -95,7 +95,7 @@ export default function UseCases() {
                 </p>
 
                 <div className="space-y-2">
-                  <p className="text-sm font-semibold">Key Features:</p>
+                  <p className="text-sm font-normal">Key Features:</p>
                   <ul className="space-y-1">
                     {useCase.features.map((feature, idx) => (
                       <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
@@ -110,21 +110,21 @@ export default function UseCases() {
           </div>
 
           <div className="mt-16 glass p-8 rounded-2xl border-border/50 text-center">
-            <h2 className="text-3xl font-bold mb-4">Ready to Build?</h2>
+            <h2 className="text-3xl font-normal mb-4">Ready to Build?</h2>
             <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-              AgentPay provides the infrastructure you need to build secure, autonomous payment systems. 
+              AgentCred provides the infrastructure you need to build secure, autonomous payment systems. 
               Get started with our SDK and bring your use case to life.
             </p>
             <div className="flex gap-4 justify-center">
               <a 
                 href="/sdk" 
-                className="px-6 py-3 rounded-lg bg-gradient-to-r from-primary to-secondary text-primary-foreground font-semibold glow-hover inline-block"
+                className="px-6 py-3 rounded-lg bg-gradient-to-r from-primary to-secondary text-primary-foreground font-normal glow-hover inline-block"
               >
                 View SDK
               </a>
               <a 
                 href="/docs" 
-                className="px-6 py-3 rounded-lg glass border-border/50 hover:border-primary/50 font-semibold inline-block"
+                className="px-6 py-3 rounded-lg glass border-border/50 hover:border-primary/50 font-normal inline-block"
               >
                 Read Docs
               </a>

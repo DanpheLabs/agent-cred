@@ -7,10 +7,10 @@ import { Code2, Layout } from "lucide-react";
 export default function PaymentsNew() {
   const { connected } = useWallet();
 
-  const sdkCode = `import { AgentPaySDK } from "agentpay-sdk";
+  const sdkCode = `import { AgentCredSDK } from "agentpay-sdk";
 
 // Initialize SDK
-const sdk = new AgentPaySDK({
+const sdk = new AgentCredSDK({
   apiKey: "YOUR_API_KEY",
   network: "mainnet-beta" // or "devnet"
 });
@@ -56,12 +56,12 @@ sdk.on('balanceChange', (data) => {
   const uiCode = `import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { AgentPaySDK } from 'agentpay-sdk';
+import { AgentCredSDK } from 'agentpay-sdk';
 
 export default function PaymentForm() {
   const [amount, setAmount] = useState('');
   const [loading, setLoading] = useState(false);
-  const sdk = new AgentPaySDK({ 
+  const sdk = new AgentCredSDK({ 
     apiKey: process.env.AGENTPAY_KEY 
   });
 
@@ -83,7 +83,7 @@ export default function PaymentForm() {
 
   return (
     <div className="space-y-4 p-6">
-      <h2 className="text-2xl font-bold">
+      <h2 className="text-2xl font-normal">
         Pay AI Agent
       </h2>
       
@@ -110,13 +110,13 @@ export default function PaymentForm() {
       <main className="pt-24 px-6 pb-20">
         <div className="container mx-auto max-w-7xl">
           <div className="mb-8">
-            <h1 className="text-4xl font-bold mb-2">SDK Implementation Guide</h1>
+            <h1 className="text-4xl font-normal mb-2">SDK Implementation Guide</h1>
             <p className="text-muted-foreground">Complete SDK code and UI implementation examples</p>
           </div>
 
           {!connected ? (
             <div className="glass p-12 rounded-2xl border-border/50 text-center">
-              <h3 className="text-xl font-semibold mb-2">Connect Your Wallet</h3>
+              <h3 className="text-xl font-normal mb-2">Connect Your Wallet</h3>
               <p className="text-muted-foreground">Please connect your Solana wallet to view implementation examples</p>
             </div>
           ) : (
@@ -134,21 +134,21 @@ export default function PaymentForm() {
 
               <TabsContent value="sdk">
                 <Card className="glass p-6 rounded-2xl border-border/50">
-                  <h3 className="text-xl font-semibold mb-4">SDK Code Examples</h3>
+                  <h3 className="text-xl font-normal mb-4">SDK Code Examples</h3>
                   <pre className="bg-black/50 p-6 rounded-lg overflow-x-auto text-sm">
                     <code className="text-foreground">{sdkCode}</code>
                   </pre>
                   
                   <div className="mt-6 space-y-4">
                     <div className="p-4 border border-primary/20 rounded-lg bg-primary/5">
-                      <h4 className="font-semibold mb-2">Installation</h4>
+                      <h4 className="font-normal mb-2">Installation</h4>
                       <pre className="bg-black/50 p-3 rounded text-sm">
                         <code>npm install agentpay-sdk</code>
                       </pre>
                     </div>
 
                     <div className="p-4 border border-secondary/20 rounded-lg bg-secondary/5">
-                      <h4 className="font-semibold mb-2">Environment Setup</h4>
+                      <h4 className="font-normal mb-2">Environment Setup</h4>
                       <pre className="bg-black/50 p-3 rounded text-sm">
                         <code>AGENTPAY_API_KEY=your_api_key_here{'\n'}AGENTPAY_NETWORK=mainnet-beta</code>
                       </pre>
@@ -159,14 +159,14 @@ export default function PaymentForm() {
 
               <TabsContent value="ui">
                 <Card className="glass p-6 rounded-2xl border-border/50">
-                  <h3 className="text-xl font-semibold mb-4">React Component Example</h3>
+                  <h3 className="text-xl font-normal mb-4">React Component Example</h3>
                   <pre className="bg-black/50 p-6 rounded-lg overflow-x-auto text-sm">
                     <code className="text-foreground">{uiCode}</code>
                   </pre>
 
                   <div className="mt-6 space-y-4">
                     <div className="p-4 border border-accent/20 rounded-lg bg-accent/5">
-                      <h4 className="font-semibold mb-2">Key Features</h4>
+                      <h4 className="font-normal mb-2">Key Features</h4>
                       <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
                         <li>Simple and intuitive payment form</li>
                         <li>Loading state management</li>
@@ -176,7 +176,7 @@ export default function PaymentForm() {
                     </div>
 
                     <div className="p-4 border border-primary/20 rounded-lg bg-primary/5">
-                      <h4 className="font-semibold mb-2">Best Practices</h4>
+                      <h4 className="font-normal mb-2">Best Practices</h4>
                       <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
                         <li>Always validate amounts before submission</li>
                         <li>Use environment variables for API keys</li>

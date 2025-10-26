@@ -8,7 +8,7 @@ export default function DocsArchitecture() {
       <Navbar />
       <main className="pt-24 px-6 pb-20">
         <div className="container mx-auto max-w-7xl">
-          <h1 className="text-4xl font-bold mb-8">Architecture</h1>
+          <h1 className="text-4xl font-normal mb-8">Architecture</h1>
           
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
             <div className="lg:col-span-1">
@@ -17,18 +17,18 @@ export default function DocsArchitecture() {
             
             <div className="lg:col-span-3 space-y-6">
               <Card className="glass p-8 rounded-2xl border-border/50">
-                <h2 className="text-3xl font-bold mb-4">System Architecture</h2>
+                <h2 className="text-3xl font-normal mb-4">System Architecture</h2>
                 <p className="text-lg text-muted-foreground mb-6">
-                  AgentPay is built on a secure hotkey/coldkey architecture on Solana
+                  AgentCred is built on a secure hotkey/coldkey architecture on Solana
                 </p>
                 
                 <div className="space-y-6">
                   <section>
-                    <h3 className="text-2xl font-semibold mb-3">Core Components</h3>
+                    <h3 className="text-2xl font-normal mb-3">Core Components</h3>
                     
                     <div className="grid gap-4 mb-6">
                       <div className="p-4 border border-primary/20 rounded-lg bg-primary/5">
-                        <h4 className="font-semibold mb-2 text-primary">🔑 Coldkey Wallet</h4>
+                        <h4 className="font-normal mb-2 text-primary">🔑 Coldkey Wallet</h4>
                         <p className="text-sm text-muted-foreground mb-2">
                           The primary asset owner wallet with full control over funds
                         </p>
@@ -42,7 +42,7 @@ export default function DocsArchitecture() {
                       </div>
 
                       <div className="p-4 border border-secondary/20 rounded-lg bg-secondary/5">
-                        <h4 className="font-semibold mb-2 text-secondary">🔥 Hotkey Wallet</h4>
+                        <h4 className="font-normal mb-2 text-secondary">🔥 Hotkey Wallet</h4>
                         <p className="text-sm text-muted-foreground mb-2">
                           The operational wallet with limited spending power
                         </p>
@@ -56,7 +56,7 @@ export default function DocsArchitecture() {
                       </div>
 
                       <div className="p-4 border border-accent/20 rounded-lg bg-accent/5">
-                        <h4 className="font-semibold mb-2 text-accent">📋 On-Chain Registry</h4>
+                        <h4 className="font-normal mb-2 text-accent">📋 On-Chain Registry</h4>
                         <p className="text-sm text-muted-foreground mb-2">
                           Solana program managing agent relationships
                         </p>
@@ -72,11 +72,11 @@ export default function DocsArchitecture() {
                   </section>
 
                   <section>
-                    <h3 className="text-2xl font-semibold mb-3">Payment Flows</h3>
+                    <h3 className="text-2xl font-normal mb-3">Payment Flows</h3>
                     
                     <div className="space-y-4">
                       <div className="p-6 bg-black/30 rounded-lg border border-primary/20">
-                        <h4 className="font-semibold mb-3 text-primary">Flow 1: User → Agent</h4>
+                        <h4 className="font-normal mb-3 text-primary">Flow 1: User → Agent</h4>
                         <pre className="text-sm text-muted-foreground overflow-x-auto">
 {`┌─────────┐         USDC          ┌──────────┐
 │  User   │ ───────────────────▶   │ Coldkey  │
@@ -96,7 +96,7 @@ export default function DocsArchitecture() {
                       </div>
 
                       <div className="p-6 bg-black/30 rounded-lg border border-secondary/20">
-                        <h4 className="font-semibold mb-3 text-secondary">Flow 2: Agent → Recipient (Auto)</h4>
+                        <h4 className="font-normal mb-3 text-secondary">Flow 2: Agent → Recipient (Auto)</h4>
                         <pre className="text-sm text-muted-foreground overflow-x-auto">
 {`┌─────────┐         Request        ┌──────────┐
 │ Hotkey  │ ───────────────────▶   │ Coldkey  │
@@ -116,7 +116,7 @@ export default function DocsArchitecture() {
                       </div>
 
                       <div className="p-6 bg-black/30 rounded-lg border border-accent/20">
-                        <h4 className="font-semibold mb-3 text-accent">Flow 3: Agent → Recipient (Approval)</h4>
+                        <h4 className="font-normal mb-3 text-accent">Flow 3: Agent → Recipient (Approval)</h4>
                         <pre className="text-sm text-muted-foreground overflow-x-auto">
 {`┌─────────┐      Create Request     ┌──────────────┐
 │ Hotkey  │ ────────────────────▶   │ On-Chain PDA │
@@ -144,10 +144,10 @@ export default function DocsArchitecture() {
                   </section>
 
                   <section>
-                    <h3 className="text-2xl font-semibold mb-3">Security Model</h3>
+                    <h3 className="text-2xl font-normal mb-3">Security Model</h3>
                     <div className="grid gap-4">
                       <div className="p-4 border border-border/50 rounded-lg">
-                        <h4 className="font-semibold mb-2">🔒 Multi-Layer Protection</h4>
+                        <h4 className="font-normal mb-2">🔒 Multi-Layer Protection</h4>
                         <ul className="text-sm text-muted-foreground space-y-1 ml-4">
                           <li>• Daily spending limits prevent runaway agents</li>
                           <li>• Approval workflow for large transactions</li>
@@ -158,7 +158,7 @@ export default function DocsArchitecture() {
                       </div>
 
                       <div className="p-4 border border-border/50 rounded-lg">
-                        <h4 className="font-semibold mb-2">⚡ Performance</h4>
+                        <h4 className="font-normal mb-2">⚡ Performance</h4>
                         <ul className="text-sm text-muted-foreground space-y-1 ml-4">
                           <li>• ~400ms transaction finality on Solana</li>
                           <li>• 2-3 second webhook notification delivery</li>
@@ -169,7 +169,7 @@ export default function DocsArchitecture() {
                       </div>
 
                       <div className="p-4 border border-border/50 rounded-lg">
-                        <h4 className="font-semibold mb-2">📊 Observability</h4>
+                        <h4 className="font-normal mb-2">📊 Observability</h4>
                         <ul className="text-sm text-muted-foreground space-y-1 ml-4">
                           <li>• Real-time transaction monitoring via light client</li>
                           <li>• On-chain event logs for all operations</li>
@@ -182,10 +182,10 @@ export default function DocsArchitecture() {
                   </section>
 
                   <section>
-                    <h3 className="text-2xl font-semibold mb-3">Technology Stack</h3>
+                    <h3 className="text-2xl font-normal mb-3">Technology Stack</h3>
                     <div className="grid md:grid-cols-2 gap-4">
                       <div className="p-4 border border-border/50 rounded-lg">
-                        <h4 className="font-semibold mb-3">Blockchain Layer</h4>
+                        <h4 className="font-normal mb-3">Blockchain Layer</h4>
                         <ul className="text-sm text-muted-foreground space-y-1">
                           <li>• <strong>Solana</strong> - High-performance blockchain</li>
                           <li>• <strong>Anchor</strong> - Solana program framework</li>
@@ -195,7 +195,7 @@ export default function DocsArchitecture() {
                       </div>
 
                       <div className="p-4 border border-border/50 rounded-lg">
-                        <h4 className="font-semibold mb-3">Application Layer</h4>
+                        <h4 className="font-normal mb-3">Application Layer</h4>
                         <ul className="text-sm text-muted-foreground space-y-1">
                           <li>• <strong>TypeScript SDK</strong> - Client integration</li>
                           <li>• <strong>React</strong> - Dashboard interface</li>

@@ -100,7 +100,7 @@ export default function MyAgents() {
                 </div>
                 <div className="flex-1">
                   <p className="text-sm text-muted-foreground mb-1">Network</p>
-                  <p className="font-mono text-sm font-semibold">Solana Devnet</p>
+                  <p className="font-mono text-sm font-normal">Solana Devnet</p>
                 </div>
               </div>
             </Card>
@@ -111,7 +111,7 @@ export default function MyAgents() {
                   <Wallet className="h-5 w-5 text-secondary" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm text-muted-foreground mb-1">AgentPay Contract</p>
+                  <p className="text-sm text-muted-foreground mb-1">AgentCred Contract</p>
                   <p className="font-mono text-xs break-all">{AGENT_PAY_PROGRAM_ID.toBase58().slice(0, 8)}...{AGENT_PAY_PROGRAM_ID.toBase58().slice(-8)}</p>
                   <p className="text-xs text-muted-foreground mt-1">Total Volume: {registry?.totalVolume ? (Number(registry.totalVolume) / 1e6).toFixed(2) : 0} USDC</p>
                 </div>
@@ -134,7 +134,7 @@ export default function MyAgents() {
 
           <div className="flex items-center justify-between mb-8">
             <div>
-              <h1 className="text-4xl font-bold mb-2">My Agents</h1>
+              <h1 className="text-4xl font-normal mb-2">My Agents</h1>
               <p className="text-muted-foreground">Manage your AI agent endpoints and wallets</p>
             </div>
             <div className="flex gap-3">
@@ -149,7 +149,7 @@ export default function MyAgents() {
               <Button 
                 onClick={() => setRegisterDialogOpen(true)}
                 disabled={!connected}
-                className="bg-gradient-to-r from-primary to-secondary text-primary-foreground font-semibold glow-hover"
+                className="bg-gradient-to-r from-primary to-secondary text-primary-foreground font-normal glow-hover"
               >
                 <Plus className="mr-2 h-4 w-4" />
                 Register Agent
@@ -159,7 +159,7 @@ export default function MyAgents() {
           
           {!connected ? (
             <div className="glass p-12 rounded-2xl border-border/50 text-center">
-              <h3 className="text-xl font-semibold mb-2">Connect Your Wallet</h3>
+              <h3 className="text-xl font-normal mb-2">Connect Your Wallet</h3>
               <p className="text-muted-foreground">Please connect your Solana wallet to manage your agents</p>
             </div>
           ) : loading ? (

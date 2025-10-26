@@ -1,4 +1,4 @@
-# AgentPay - AI Agent Payment Infrastructure on Solana
+# AgentCred - AI Agent Payment Infrastructure on Solana
 
 A complete payment system for AI agents on Solana blockchain with hotkey/coldkey architecture, gasless transactions, and real-time monitoring.
 
@@ -20,7 +20,7 @@ A complete payment system for AI agents on Solana blockchain with hotkey/coldkey
 ```
 agentpay/
 ├── anchor/                    # Solana smart contracts
-│   ├── programs/agent-pay/   # Main AgentPay program (Rust)
+│   ├── programs/agent-pay/   # Main AgentCred program (Rust)
 │   │   └── src/lib.rs        # Smart contract logic
 │   ├── tests/                 # Contract tests
 │   │   └── agent-pay.test.ts # Comprehensive test suite
@@ -201,11 +201,11 @@ npm install agentpay-sdk @solana/web3.js
 ### Initialize SDK
 
 ```typescript
-import { AgentPaySDK } from 'agentpay-sdk';
+import { AgentCredSDK } from 'agentpay-sdk';
 import { Connection, Keypair } from '@solana/web3.js';
 
 const connection = new Connection('https://api.devnet.solana.com');
-const sdk = new AgentPaySDK({ 
+const sdk = new AgentCredSDK({ 
   connection,
   network: 'devnet' 
 });
@@ -394,7 +394,7 @@ MIT License - see LICENSE file for details
 
 ## 🔗 Resources
 
-- **Documentation**: [AgentPay Docs](https://agentpay.dev/docs)
+- **Documentation**: [AgentCred Docs](https://agentpay.dev/docs)
 - **SDK Package**: [NPM Registry](https://npmjs.com/package/agentpay-sdk)
 - **Solana Explorer**: [View Transactions](https://explorer.solana.com)
 - **Anchor Docs**: [anchor-lang.com](https://anchor-lang.com)

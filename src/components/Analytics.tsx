@@ -53,7 +53,7 @@ export const Analytics = () => {
               </span>
             </div>
             <p className="text-sm text-muted-foreground mb-1">{metric.title}</p>
-            <p className="text-2xl font-bold">{metric.value}</p>
+            <p className="text-2xl font-normal">{metric.value}</p>
           </Card>
         );
       })}

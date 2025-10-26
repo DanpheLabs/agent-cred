@@ -17,13 +17,13 @@ export default function AnalyticsPage() {
       <main className="pt-24 px-6 pb-20">
         <div className="container mx-auto max-w-7xl">
           <div className="mb-8">
-            <h1 className="text-4xl font-bold mb-2">Transactions</h1>
+            <h1 className="text-4xl font-normal mb-2">Transactions</h1>
             <p className="text-muted-foreground">Real-time on-chain transactions and history</p>
           </div>
           
           {!connected ? (
             <div className="glass p-12 rounded-2xl border-border/50 text-center">
-              <h3 className="text-xl font-semibold mb-2">Connect Your Wallet</h3>
+              <h3 className="text-xl font-normal mb-2">Connect Your Wallet</h3>
               <p className="text-muted-foreground">Please connect your Solana wallet to view analytics</p>
             </div>
           ) : (

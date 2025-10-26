@@ -40,7 +40,7 @@ export const Dashboard = () => {
       <div className="container mx-auto max-w-7xl">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h2 className="text-3xl font-bold mb-2">Dashboard</h2>
+            <h2 className="text-3xl font-normal mb-2">Dashboard</h2>
             <p className="text-muted-foreground">Manage your AI agent payments</p>
           </div>
           <div className="flex gap-3">
@@ -55,7 +55,7 @@ export const Dashboard = () => {
             <Button 
               onClick={() => setRegisterDialogOpen(true)}
               disabled={!connected}
-              className="bg-gradient-to-r from-primary to-secondary text-primary-foreground font-semibold glow-hover"
+              className="bg-gradient-to-r from-primary to-secondary text-primary-foreground font-normal glow-hover"
             >
               <Plus className="mr-2 h-4 w-4" />
               Register Agent
@@ -65,7 +65,7 @@ export const Dashboard = () => {
         
         {!connected ? (
           <div className="glass p-12 rounded-2xl border-border/50 text-center mb-12">
-            <h3 className="text-xl font-semibold mb-2">Connect Your Wallet</h3>
+            <h3 className="text-xl font-normal mb-2">Connect Your Wallet</h3>
             <p className="text-muted-foreground">Please connect your Solana wallet to get started</p>
           </div>
         ) : (
@@ -86,7 +86,7 @@ export const Dashboard = () => {
             </div>
             
             <div className="mb-12">
-              <h3 className="text-2xl font-bold mb-6">Your AI Agents</h3>
+              <h3 className="text-2xl font-normal mb-6">Your AI Agents</h3>
               <AgentList 
                 agents={agents} 
                 onDeleteAgent={handleDeleteAgent}

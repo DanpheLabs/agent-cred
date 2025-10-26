@@ -14,8 +14,8 @@ export const DocsSidebar = () => {
   ];
 
   return (
-    <Card className="glass p-4 rounded-2xl border-border/50 sticky top-24 h-fit">
-      <h3 className="font-semibold mb-4 px-2">Documentation</h3>
+    <Card className="glass p-4 rounded-2xl border-border/50 sticky top-0 h-fit">
+      <h3 className="font-normal mb-4 px-2">Documentation</h3>
       <nav className="space-y-1">
         {navItems.map((item) => {
           const Icon = item.icon;

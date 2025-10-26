@@ -41,7 +41,7 @@ export type RegisterAgentParams = {
   dailyLimit: BN;
 };
 
-export type AgentPayIDL = {
+export type AgentCredIDL = {
   version: "0.1.0";
   name: "agent_pay";
   instructions: [
@@ -193,7 +193,7 @@ export type AgentPayIDL = {
       ];
     },
     {
-      name: "AgentPaymentMade";
+      name: "AgentCredmentMade";
       fields: [
         { name: "agent"; type: "publicKey" },
         { name: "recipient"; type: "publicKey" },

@@ -105,9 +105,9 @@ export default function SDK() {
     loadData();
   };
 
-  const codeExample = `import { AgentPaySDK } from "agentpay-sdk";
+  const codeExample = `import { AgentCredSDK } from "agentpay-sdk";
 
-const sdk = new AgentPaySDK({
+const sdk = new AgentCredSDK({
   apiKey: "YOUR_API_KEY",
   network: "mainnet-beta"
 });
@@ -133,7 +133,7 @@ await sdk.requestPayment({
       <main className="pt-24 px-6 pb-20">
         <div className="container mx-auto max-w-7xl">
           <div className="mb-8">
-            <h1 className="text-4xl font-bold mb-2">SDK & API Keys</h1>
+            <h1 className="text-4xl font-normal mb-2">SDK & API Keys</h1>
             <p className="text-muted-foreground">Manage API keys for agent integration</p>
           </div>
 
@@ -141,7 +141,7 @@ await sdk.requestPayment({
 
           <div className="grid gap-6 lg:grid-cols-2">
             <Card className="glass p-6 rounded-2xl border-border/50">
-              <h3 className="text-xl font-semibold mb-4">Generate API Key</h3>
+              <h3 className="text-xl font-normal mb-4">Generate API Key</h3>
               <div className="space-y-4">
                 <div>
                   <label className="text-sm font-medium mb-2 block">Name your keys</label>
@@ -167,7 +167,7 @@ await sdk.requestPayment({
                 </div>
                 <Button 
                   onClick={handleGenerateKey} 
-                  className="w-full bg-gradient-to-r from-primary to-secondary text-primary-foreground font-semibold glow-hover"
+                  className="w-full bg-gradient-to-r from-primary to-secondary text-primary-foreground font-normal glow-hover"
                   disabled={!walletAddress}
                 >
                   Generate Key
@@ -176,7 +176,7 @@ await sdk.requestPayment({
             </Card>
 
             <Card className="glass p-6 rounded-2xl border-border/50">
-              <h3 className="text-xl font-semibold mb-4">Your API Keys</h3>
+              <h3 className="text-xl font-normal mb-4">Your API Keys</h3>
               <div className="space-y-3 max-h-[400px] overflow-y-auto">
                 {apiKeys.length === 0 ? (
                   <p className="text-muted-foreground text-sm">No API keys generated yet</p>
@@ -184,7 +184,7 @@ await sdk.requestPayment({
                   apiKeys.map(key => (
                     <div key={key.id} className="flex items-center justify-between p-3 glass border border-border/50 rounded-lg">
                       <div className="flex-1">
-                        <p className="font-semibold text-sm">{key.name}</p>
+                        <p className="font-normal text-sm">{key.name}</p>
                         <p className="font-mono text-xs text-muted-foreground">{key.key.slice(0, 20)}...</p>
                         <p className="text-xs text-muted-foreground">{key.agent_name}</p>
                       </div>

@@ -27,7 +27,7 @@ export const WalletConnectDialog = ({
         </DialogHeader>
         
         <div className="flex flex-col items-center gap-4 py-6">
-          <WalletMultiButton className="bg-gradient-to-r from-primary to-secondary text-primary-foreground font-semibold glow-hover" />
+          <WalletMultiButton className="bg-gradient-to-r from-primary to-secondary text-primary-foreground font-normal glow-hover" />
         </div>
       </DialogContent>
     </Dialog>

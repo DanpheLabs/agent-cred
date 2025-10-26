@@ -1,6 +1,6 @@
-# AgentPay - Production Ready Checklist ✅
+# AgentCred - Production Ready Checklist ✅
 
-This document confirms that AgentPay is production-ready with full on-chain integration.
+This document confirms that AgentCred is production-ready with full on-chain integration.
 
 ## ✅ Smart Contract (Anchor Program)
 
@@ -212,12 +212,12 @@ cd ..
 npm install
 npm run dev
 
-# 3. Connect your wallet and start using AgentPay!
+# 3. Connect your wallet and start using AgentCred!
 ```
 
 ## 📝 Summary
 
-AgentPay is **production-ready** with:
+AgentCred is **production-ready** with:
 - ✅ Complete smart contract implementation
 - ✅ Full frontend integration with blockchain
 - ✅ Real-time on-chain data fetching

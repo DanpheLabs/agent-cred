@@ -1,4 +1,4 @@
-// Local storage utilities for AgentPay simulation
+// Local storage utilities for AgentCred simulation
 
 export interface Agent {
   id: string;

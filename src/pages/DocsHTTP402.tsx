@@ -8,22 +8,22 @@ export default function DocsHTTP402() {
       <Navbar />
       <main className="pt-24 px-6 pb-20">
         <div className="container mx-auto max-w-7xl">
-          <h1 className="text-4xl font-bold mb-8">HTTP 402 Protocol</h1>
+          <h1 className="text-4xl font-normal mb-8">HTTP 402 Protocol</h1>
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
             <div className="lg:col-span-1"><DocsSidebar /></div>
             <div className="lg:col-span-3">
               <Card className="glass p-8 rounded-2xl border-border/50">
-                <h2 className="text-3xl font-bold mb-4">HTTP 402: Payment Required Protocol</h2>
+                <h2 className="text-3xl font-normal mb-4">HTTP 402: Payment Required Protocol</h2>
                 <p className="text-lg text-muted-foreground mb-6">
                   Standardized protocol for requesting payments before service delivery
                 </p>
 
                 <div className="space-y-6">
                   <section>
-                    <h3 className="text-2xl font-semibold mb-3">Protocol Overview</h3>
+                    <h3 className="text-2xl font-normal mb-3">Protocol Overview</h3>
                     <p className="text-muted-foreground leading-relaxed mb-4">
                       HTTP 402 ("Payment Required") is a reserved status code that was originally intended for digital payment systems. 
-                      AgentPay leverages this status code as a standardized way for AI agents to request payments before delivering services.
+                      AgentCred leverages this status code as a standardized way for AI agents to request payments before delivering services.
                     </p>
                     <div className="p-4 bg-primary/10 rounded-lg border border-primary/20">
                       <p className="text-sm text-muted-foreground">
@@ -38,7 +38,7 @@ export default function DocsHTTP402() {
                   </section>
 
                   <section>
-                    <h3 className="text-2xl font-semibold mb-3">Request-Response Flow</h3>
+                    <h3 className="text-2xl font-normal mb-3">Request-Response Flow</h3>
                     <div className="p-6 bg-black/30 rounded-lg border border-primary/20 mb-4">
                       <pre className="text-sm text-muted-foreground overflow-x-auto">{`┌──────────┐                           ┌───────────┐
 │  Client  │                           │   Agent   │
@@ -69,7 +69,7 @@ export default function DocsHTTP402() {
                   </section>
 
                   <section>
-                    <h3 className="text-2xl font-semibold mb-3">Standard Response Format</h3>
+                    <h3 className="text-2xl font-normal mb-3">Standard Response Format</h3>
                     <p className="text-muted-foreground mb-3">
                       When a payment is required, the agent responds with HTTP 402 and this JSON structure:
                     </p>
@@ -115,7 +115,7 @@ Content-Type: application/json
                   </section>
 
                   <section>
-                    <h3 className="text-2xl font-semibold mb-3">Agent Implementation</h3>
+                    <h3 className="text-2xl font-normal mb-3">Agent Implementation</h3>
                     <p className="text-muted-foreground mb-3">
                       Server-side implementation for handling payment requests
                     </p>
@@ -134,7 +134,7 @@ app.post('/api/analyze', async (req, res) => {
   
   // Check if payment already made (include payment_signature)
   if (req.body.payment_signature) {
-    // Verify payment with AgentPay
+    // Verify payment with AgentCred
     const isValid = await verifyPayment(req.body.payment_signature);
     
     if (isValid) {
@@ -212,13 +212,13 @@ app.listen(3000);`}</code></pre>
                   </section>
 
                   <section>
-                    <h3 className="text-2xl font-semibold mb-3">Client Implementation</h3>
+                    <h3 className="text-2xl font-normal mb-3">Client Implementation</h3>
                     <p className="text-muted-foreground mb-3">
                       How clients should handle 402 responses
                     </p>
-                    <pre className="bg-black/50 p-4 rounded-lg overflow-x-auto"><code>{`import { AgentPaySDK } from 'agentpay-sdk';
+                    <pre className="bg-black/50 p-4 rounded-lg overflow-x-auto"><code>{`import { AgentCredSDK } from 'agentpay-sdk';
 
-const sdk = new AgentPaySDK({ 
+const sdk = new AgentCredSDK({ 
   apiKey: 'YOUR_API_KEY',
   network: 'devnet'
 });
@@ -286,10 +286,10 @@ console.log('Result:', result);`}</code></pre>
                   </section>
 
                   <section>
-                    <h3 className="text-2xl font-semibold mb-3">Security Best Practices</h3>
+                    <h3 className="text-2xl font-normal mb-3">Security Best Practices</h3>
                     <div className="grid gap-4">
                       <div className="p-4 border border-primary/20 rounded-lg bg-primary/5">
-                        <h4 className="font-semibold mb-2">🔐 Service ID Validation</h4>
+                        <h4 className="font-normal mb-2">🔐 Service ID Validation</h4>
                         <p className="text-sm text-muted-foreground">
                           Always use unique, non-guessable service IDs (UUIDs) to prevent replay attacks.
                           Expire pending services after a reasonable time (5-10 minutes).
@@ -297,15 +297,15 @@ console.log('Result:', result);`}</code></pre>
                       </div>
 
                       <div className="p-4 border border-secondary/20 rounded-lg bg-secondary/5">
-                        <h4 className="font-semibold mb-2">✅ Payment Verification</h4>
+                        <h4 className="font-normal mb-2">✅ Payment Verification</h4>
                         <p className="text-sm text-muted-foreground">
-                          Verify payment signatures on-chain or through AgentPay webhook signatures.
+                          Verify payment signatures on-chain or through AgentCred webhook signatures.
                           Never trust client-provided payment proofs without verification.
                         </p>
                       </div>
 
                       <div className="p-4 border border-accent/20 rounded-lg bg-accent/5">
-                        <h4 className="font-semibold mb-2">⏱️ Expiration Times</h4>
+                        <h4 className="font-normal mb-2">⏱️ Expiration Times</h4>
                         <p className="text-sm text-muted-foreground">
                           Set reasonable expiration times for payment requests. Clean up expired
                           pending services to prevent memory leaks.
@@ -313,7 +313,7 @@ console.log('Result:', result);`}</code></pre>
                       </div>
 
                       <div className="p-4 border border-border/50 rounded-lg">
-                        <h4 className="font-semibold mb-2">🔄 Idempotency</h4>
+                        <h4 className="font-normal mb-2">🔄 Idempotency</h4>
                         <p className="text-sm text-muted-foreground">
                           Use transaction signatures as idempotency keys. Process each payment only once
                           even if webhook is delivered multiple times.
@@ -323,7 +323,7 @@ console.log('Result:', result);`}</code></pre>
                   </section>
 
                   <section>
-                    <h3 className="text-2xl font-semibold mb-3">Solana Pay Integration</h3>
+                    <h3 className="text-2xl font-normal mb-3">Solana Pay Integration</h3>
                     <p className="text-muted-foreground mb-3">
                       The <code>payment_url</code> field uses the Solana Pay standard for easy wallet integration:
                     </p>
@@ -341,7 +341,7 @@ const url = encodeURL({
   recipient,
   amount: payment.amount,
   memo: payment.service_id,
-  label: 'AgentPay Service',
+  label: 'AgentCred Service',
   message: payment.description
 });
 

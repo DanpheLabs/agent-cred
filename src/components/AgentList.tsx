@@ -32,13 +32,13 @@ export const AgentList = ({ agents, onDeleteAgent, onSelectAgent }: AgentListPro
         <Card key={agent.id} className="glass p-6 rounded-2xl border-border/50 glow-hover">
           <div className="flex items-start justify-between mb-4">
             <div className="grid grid-cols-2 gap-2">
-              <h3 className="font-semibold text-lg mb-1">{agent.name}</h3>
+              <h3 className="font-normal text-lg mb-1">{agent.name}</h3>
               {/* <Badge variant={agent.status === 'active' ? 'default' : 'secondary'}>
                 {agent.status}
               </Badge> */}
             </div>
            <div>
-              <p className="text-xl font-bold gradient-text">{agent.balance.toFixed(2)} USDC</p>
+              <p className="text-xl font-normal gradient-text">{agent.balance.toFixed(2)} USDC</p>
               <p className="text-xs text-muted-foreground mb-1">Balance</p>
             </div>
           </div>
@@ -86,11 +86,11 @@ export const AgentList = ({ agents, onDeleteAgent, onSelectAgent }: AgentListPro
             <div className="grid grid-cols-2 gap-2">
               <div>
                 <p className="text-xs text-muted-foreground">Daily Limit</p>
-                <p className="text-sm gradient-text font-semibold">{agent.dailyLimit} USDC</p>
+                <p className="text-sm gradient-text font-normal">{agent.dailyLimit} USDC</p>
               </div>
               <div>
                 <p className="text-xs text-muted-foreground">Spent Today</p>
-                <p className="text-sm gradient-text font-semibold">{agent.dailySpent} USDC</p>
+                <p className="text-sm gradient-text font-normal">{agent.dailySpent} USDC</p>
               </div>
             </div>
             

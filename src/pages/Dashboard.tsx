@@ -47,13 +47,13 @@ export default function Dashboard() {
       <main className="pt-24 px-6 pb-20">
         <div className="container mx-auto max-w-7xl">
           <div className="mb-8">
-            <h1 className="text-4xl font-bold mb-2">Dashboard</h1>
+            <h1 className="text-4xl font-normal mb-2">Dashboard</h1>
             <p className="text-muted-foreground">Overview of your AI agent payment system</p>
           </div>
           
           {!connected ? (
             <div className="glass p-12 rounded-2xl border-border/50 text-center">
-              <h3 className="text-xl font-semibold mb-2">Connect Your Wallet</h3>
+              <h3 className="text-xl font-normal mb-2">Connect Your Wallet</h3>
               <p className="text-muted-foreground">Please connect your Solana wallet to view your dashboard</p>
             </div>
           ) : (
@@ -78,17 +78,17 @@ export default function Dashboard() {
 
               <Analytics />
       <Card className="glass p-6 rounded-2xl border-border/50">
-                <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+                <h3 className="text-xl font-normal mb-4 flex items-center gap-2">
                   <Database className="h-5 w-5 text-primary" />
                   Contract Information
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
                     <p className="text-sm text-muted-foreground mb-1">Network</p>
-                    <p className="font-mono text-sm font-semibold">Solana Devnet</p>
+                    <p className="font-mono text-sm font-normal">Solana Devnet</p>
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground mb-1">AgentPay Contract</p>
+                    <p className="text-sm text-muted-foreground mb-1">AgentCred Contract</p>
                     <div className="flex items-center gap-2">
                       <p className="font-mono text-xs truncate">{AGENT_PAY_PROGRAM_ID.toBase58()}</p>
                       <a 
@@ -122,11 +122,11 @@ export default function Dashboard() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
                         <p className="text-sm text-muted-foreground mb-1">Total Agents On-Chain</p>
-                        <p className="text-2xl font-bold">{registry.agentCount.toString()}</p>
+                        <p className="text-2xl font-normal">{registry.agentCount.toString()}</p>
                       </div>
                       <div>
                         <p className="text-sm text-muted-foreground mb-1">Total Volume On-Chain</p>
-                        <p className="text-2xl font-bold">{formatUSDC(registry.totalVolume)} USDC</p>
+                        <p className="text-2xl font-normal">{formatUSDC(registry.totalVolume)} USDC</p>
                       </div>
                     </div>
                   </div>

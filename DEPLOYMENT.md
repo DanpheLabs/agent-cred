@@ -1,7 +1,7 @@
-# AgentPay System - Deployment Guide
+# AgentCred System - Deployment Guide
 
 ## Overview
-This document provides instructions for deploying and running the AgentPay system, which enables secure AI agent payments on Solana.
+This document provides instructions for deploying and running the AgentCred system, which enables secure AI agent payments on Solana.
 
 ## Prerequisites
 - Node.js v18+
@@ -53,7 +53,7 @@ Create a `.env` file in the root directory:
 SOLANA_CLUSTER=devnet
 SOLANA_WALLET_PATH=~/.config/solana/id.json
 
-# AgentPay Program ID
+# AgentCred Program ID
 AGENT_PAY_PROGRAM_ID=54ZZfUHiT4AM3nvnipZzJWDumVdXTmdMQuSb4Yc2TzUg
 
 # USDC Mint Address (Devnet)

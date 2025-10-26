@@ -123,7 +123,7 @@ pub mod agent_pay {
 
     /// Agent initiates payment (within daily limit)
     pub fn agent_pay(
-        ctx: Context<AgentPay>,
+        ctx: Context<AgentCred>,
         amount: u64,
     ) -> Result<()> {
         // 1. Initial Checks and Immutable Accesses (NO mutable borrow of 'agent' yet)
@@ -178,7 +178,7 @@ pub mod agent_pay {
         agent.total_sent += amount;
 
         // 4. Finalize
-        emit!(AgentPaymentMade {
+        emit!(AgentCredmentMade {
             agent: agent.hotkey,
             recipient: ctx.accounts.recipient.key(),
             amount,
@@ -353,7 +353,7 @@ pub struct PayAgent<'info> {
 }
 
 #[derive(Accounts)]
-pub struct AgentPay<'info> {
+pub struct AgentCred<'info> {
     #[account(mut)]
     pub agent: Account<'info, Agent>,
     pub hotkey: Signer<'info>,
@@ -489,7 +489,7 @@ pub struct PaymentMade {
 }
 
 #[event]
-pub struct AgentPaymentMade {
+pub struct AgentCredmentMade {
     pub agent: Pubkey,
     pub recipient: Pubkey,
     pub amount: u64,

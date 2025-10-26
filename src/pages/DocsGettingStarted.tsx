@@ -8,15 +8,15 @@ export default function DocsGettingStarted() {
       <Navbar />
       <main className="pt-24 px-6 pb-20">
         <div className="container mx-auto max-w-7xl">
-          <h1 className="text-4xl font-bold mb-8">Getting Started</h1>
+          <h1 className="text-4xl font-normal mb-8">Getting Started</h1>
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
             <div className="lg:col-span-1"><DocsSidebar /></div>
             <div className="lg:col-span-3">
               <Card className="glass p-8 rounded-2xl border-border/50">
-                <h2 className="text-3xl font-bold mb-4">Setup AgentPay in 5 Minutes</h2>
+                <h2 className="text-3xl font-normal mb-4">Setup AgentCred in 5 Minutes</h2>
                 <div className="space-y-6">
                   <section>
-                    <h3 className="text-2xl font-semibold mb-3">Prerequisites</h3>
+                    <h3 className="text-2xl font-normal mb-3">Prerequisites</h3>
                     <ul className="space-y-2 text-muted-foreground ml-6 mb-4">
                       <li>• Node.js 16+ and npm/yarn installed</li>
                       <li>• Solana wallet (Phantom, Solflare, etc.)</li>
@@ -26,7 +26,7 @@ export default function DocsGettingStarted() {
                   </section>
 
                   <section>
-                    <h3 className="text-2xl font-semibold mb-3">1. Install SDK</h3>
+                    <h3 className="text-2xl font-normal mb-3">1. Install SDK</h3>
                     <pre className="bg-black/50 p-4 rounded-lg mb-4"><code >npm install agentpay-sdk @solana/web3.js</code></pre>
                     <p className="text-sm text-muted-foreground">
                       Or with yarn: <code>yarn add agentpay-sdk @solana/web3.js</code>
@@ -34,7 +34,7 @@ export default function DocsGettingStarted() {
                   </section>
 
                   <section>
-                    <h3 className="text-2xl font-semibold mb-3">2. Create Wallet Keypairs</h3>
+                    <h3 className="text-2xl font-normal mb-3">2. Create Wallet Keypairs</h3>
                     <p className="text-muted-foreground mb-3">
                       You'll need two Solana wallets: a coldkey (asset owner) and a hotkey (operational wallet)
                     </p>
@@ -62,30 +62,30 @@ console.log('Hotkey:', hotkey.publicKey.toString());
                   </section>
 
                   <section>
-                    <h3 className="text-2xl font-semibold mb-3">3. Get Devnet SOL & USDC</h3>
+                    <h3 className="text-2xl font-normal mb-3">3. Get Devnet SOL & USDC</h3>
                     <p className="text-muted-foreground mb-3">For testing, you'll need devnet tokens:</p>
                     <div className="space-y-2 mb-4">
                       <div className="p-3 border border-border/50 rounded-lg">
-                        <p className="font-semibold mb-1">SOL (for transaction fees):</p>
+                        <p className="font-normal mb-1">SOL (for transaction fees):</p>
                         <pre className="bg-black/50 p-2 rounded text-xs"><code>solana airdrop 2 YOUR_COLDKEY_ADDRESS --url devnet</code></pre>
                       </div>
                       <div className="p-3 border border-border/50 rounded-lg">
-                        <p className="font-semibold mb-1">USDC (for payments):</p>
+                        <p className="font-normal mb-1">USDC (for payments):</p>
                         <p className="text-sm text-muted-foreground">Visit <a href="https://spl-token-faucet.com" target="_blank" className="text-primary hover:underline">SPL Token Faucet</a> to get devnet USDC</p>
                       </div>
                     </div>
                   </section>
 
                   <section>
-                    <h3 className="text-2xl font-semibold mb-3">4. Register Your Agent</h3>
+                    <h3 className="text-2xl font-normal mb-3">4. Register Your Agent</h3>
                     <p className="text-muted-foreground mb-3">
                       Register your agent on-chain with coldkey/hotkey pair and set daily spending limit
                     </p>
-                    <pre className="bg-black/50 p-4 rounded-lg overflow-x-auto mb-2"><code>{`import { AgentPaySDK } from 'agentpay-sdk';
+                    <pre className="bg-black/50 p-4 rounded-lg overflow-x-auto mb-2"><code>{`import { AgentCredSDK } from 'agentpay-sdk';
 import { Connection, Keypair } from '@solana/web3.js';
 
 const connection = new Connection('https://api.devnet.solana.com');
-const sdk = new AgentPaySDK({ 
+const sdk = new AgentCredSDK({ 
   connection,
   network: 'devnet'
 });
@@ -102,9 +102,9 @@ console.log('Transaction:', signature);`}</code></pre>
                   </section>
 
                   <section>
-                    <h3 className="text-2xl font-semibold mb-3">5. Generate API Key</h3>
+                    <h3 className="text-2xl font-normal mb-3">5. Generate API Key</h3>
                     <p className="text-muted-foreground mb-3">
-                      Create an API key for your agent in the AgentPay dashboard
+                      Create an API key for your agent in the AgentCred dashboard
                     </p>
                     <ol className="space-y-2 text-muted-foreground ml-6">
                       <li>1. Connect your wallet to the dashboard</li>
@@ -116,13 +116,13 @@ console.log('Transaction:', signature);`}</code></pre>
                   </section>
 
                   <section>
-                    <h3 className="text-2xl font-semibold mb-3">6. Start Accepting Payments</h3>
+                    <h3 className="text-2xl font-normal mb-3">6. Start Accepting Payments</h3>
                     <p className="text-muted-foreground mb-3">
                       Integrate payment acceptance in your agent application
                     </p>
-                    <pre className="bg-black/50 p-4 rounded-lg overflow-x-auto mb-4"><code>{`import { AgentPaySDK } from 'agentpay-sdk';
+                    <pre className="bg-black/50 p-4 rounded-lg overflow-x-auto mb-4"><code>{`import { AgentCredSDK } from 'agentpay-sdk';
 
-const sdk = new AgentPaySDK({ 
+const sdk = new AgentCredSDK({ 
   apiKey: 'your_api_key_here',
   network: 'devnet'
 });
@@ -148,7 +148,7 @@ app.post('/webhook/payment', async (req, res) => {
                   </section>
 
                   <section>
-                    <h3 className="text-2xl font-semibold mb-3">7. Make Agent Payments</h3>
+                    <h3 className="text-2xl font-normal mb-3">7. Make Agent Payments</h3>
                     <p className="text-muted-foreground mb-3">
                       Your agent can send payments to other addresses
                     </p>
@@ -173,7 +173,7 @@ console.log('Payment request created:', requestId);`}</code></pre>
                   </section>
 
                   <section className="p-6 bg-primary/10 rounded-lg border border-primary/20">
-                    <h3 className="text-2xl font-semibold mb-3">🎉 You're Ready!</h3>
+                    <h3 className="text-2xl font-normal mb-3">🎉 You're Ready!</h3>
                     <p className="text-muted-foreground mb-4">
                       Your agent is now set up to accept and send payments on Solana. Next steps:
                     </p>

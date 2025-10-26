@@ -8,7 +8,7 @@ export default function DocsGasless() {
       <Navbar />
       <main className="pt-24 px-6 pb-20">
         <div className="container mx-auto max-w-7xl">
-          <h1 className="text-4xl font-bold mb-8">Gasless Transactions</h1>
+          <h1 className="text-4xl font-normal mb-8">Gasless Transactions</h1>
           
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
             <div className="lg:col-span-1">
@@ -17,14 +17,14 @@ export default function DocsGasless() {
             
             <div className="lg:col-span-3">
               <Card className="glass p-8 rounded-2xl border-border/50">
-                <h2 className="text-3xl font-bold mb-4">How Gasless Transactions Work</h2>
+                <h2 className="text-3xl font-normal mb-4">How Gasless Transactions Work</h2>
                 <p className="text-lg text-muted-foreground mb-6">
-                  AgentPay enables agents to receive payments without holding SOL for gas fees.
+                  AgentCred enables agents to receive payments without holding SOL for gas fees.
                 </p>
                 
                 <div className="space-y-6">
                   <section>
-                    <h3 className="text-2xl font-semibold mb-3">The Problem</h3>
+                    <h3 className="text-2xl font-normal mb-3">The Problem</h3>
                     <p className="text-muted-foreground leading-relaxed mb-4">
                       Traditional blockchain transactions require the sender to have native tokens (SOL on Solana) 
                       to pay for transaction fees. For AI agents providing services, this creates friction:
@@ -46,14 +46,14 @@ export default function DocsGasless() {
                   </section>
 
                   <section>
-                    <h3 className="text-2xl font-semibold mb-3">HTTP 402: Payment Required</h3>
+                    <h3 className="text-2xl font-normal mb-3">HTTP 402: Payment Required</h3>
                     <p className="text-muted-foreground leading-relaxed mb-4">
                       We leverage the HTTP 402 status code as a medium for payment coordination. 
                       When a user requests a service, the flow works as follows:
                     </p>
                     
                     <div className="p-6 bg-black/30 rounded-lg border border-primary/20 mb-4">
-                      <h4 className="font-semibold mb-3 text-primary">Request Flow</h4>
+                      <h4 className="font-normal mb-3 text-primary">Request Flow</h4>
                       <pre className="text-sm text-muted-foreground overflow-x-auto">
 {`1. User → Agent: "I want service X"
 2. Agent → User: HTTP 402 Response
@@ -74,22 +74,22 @@ export default function DocsGasless() {
                   </section>
 
                   <section>
-                    <h3 className="text-2xl font-semibold mb-3">Key Benefits</h3>
+                    <h3 className="text-2xl font-normal mb-3">Key Benefits</h3>
                     <div className="grid gap-4">
                       <div className="p-4 border border-primary/20 rounded-lg bg-primary/5">
-                        <h4 className="font-semibold mb-2">💰 No Gas Required</h4>
+                        <h4 className="font-normal mb-2">💰 No Gas Required</h4>
                         <p className="text-sm text-muted-foreground">
                           Users pay the agent directly in USDC. The agent doesn't need SOL to receive payments.
                         </p>
                       </div>
                       <div className="p-4 border border-secondary/20 rounded-lg bg-secondary/5">
-                        <h4 className="font-semibold mb-2">⚡ Fast Settlement</h4>
+                        <h4 className="font-normal mb-2">⚡ Fast Settlement</h4>
                         <p className="text-sm text-muted-foreground">
                           Payments are detected within seconds, enabling near-instant service delivery.
                         </p>
                       </div>
                       <div className="p-4 border border-accent/20 rounded-lg bg-accent/5">
-                        <h4 className="font-semibold mb-2">🔒 Secure Protocol</h4>
+                        <h4 className="font-normal mb-2">🔒 Secure Protocol</h4>
                         <p className="text-sm text-muted-foreground">
                           Service IDs prevent replay attacks. Agents only deliver after confirmed payment.
                         </p>
@@ -98,7 +98,7 @@ export default function DocsGasless() {
                   </section>
 
                   <section>
-                    <h3 className="text-2xl font-semibold mb-3">Implementation Example</h3>
+                    <h3 className="text-2xl font-normal mb-3">Implementation Example</h3>
                     <pre className="bg-black/50 p-4 rounded-lg overflow-x-auto">
                       <code className="text-sm">{`// Agent-side implementation
 app.post('/api/service', async (req, res) => {
@@ -151,12 +151,12 @@ app.post('/webhook/payment', async (req, res) => {
                   </section>
 
                   <section>
-                    <h3 className="text-2xl font-semibold mb-3">Client Integration</h3>
+                    <h3 className="text-2xl font-normal mb-3">Client Integration</h3>
                     <pre className="bg-black/50 p-4 rounded-lg overflow-x-auto">
                       <code className="text-sm">{`// Client-side SDK
-import { AgentPaySDK } from 'agentpay-sdk';
+import { AgentCredSDK } from 'agentpay-sdk';
 
-const sdk = new AgentPaySDK({ apiKey: API_KEY });
+const sdk = new AgentCredSDK({ apiKey: API_KEY });
 
 async function requestService() {
   try {

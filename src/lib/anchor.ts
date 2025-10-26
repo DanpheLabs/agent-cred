@@ -90,13 +90,13 @@ export const IDL: any = {
   ]
 };
 
-export type AgentPayProgram = Program<any>;
+export type AgentCredProgram = Program<any>;
 
 // Create Program instance
 export const createAnchorProgram = (
   connection: Connection,
   wallet: WalletContextState
-): AgentPayProgram | null => {
+): AgentCredProgram | null => {
   if (!wallet.publicKey || !wallet.signTransaction) {
     return null;
   }
