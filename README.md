@@ -2,7 +2,7 @@
 
 A complete payment system for AI agents on Solana blockchain with hotkey/coldkey architecture, gasless transactions, and real-time monitoring.
 
-**Live Demo**: https://lovable.dev/projects/87eb1515-2a69-4596-b8c8-d07e3be303f0
+**Live Demo**: agent-cred.vercel.app
 
 ## 🚀 Features
 
@@ -15,34 +15,6 @@ A complete payment system for AI agents on Solana blockchain with hotkey/coldkey
 - **🛠️ TypeScript SDK** - Full-featured client library
 - **🧪 Comprehensive Tests** - Complete test coverage for smart contracts
 
-## 📦 Project Structure
-
-```
-agentcred/
-├── anchor/                    # Solana smart contracts
-│   ├── programs/agent-cred/   # Main AgentCred program (Rust)
-│   │   └── src/lib.rs        # Smart contract logic
-│   ├── tests/                 # Contract tests
-│   │   └── agent-cred.test.ts # Comprehensive test suite
-│   └── scripts/               # Deployment scripts
-│       ├── deploy.sh         # Devnet deployment
-│       └── initialize-registry.ts
-├── src/                       # React frontend
-│   ├── components/            # UI components
-│   ├── pages/                 # Application pages
-│   ├── lib/                   # Utilities and SDKs
-│   │   ├── solana.ts         # Solana integration
-│   │   └── storage.ts        # Local state management
-│   └── hooks/                 # React hooks
-│       └── useSolanaAgent.ts # Agent operations
-└── public/                    # Static assets
-```
-
-## 🏃 Quick Start
-
-
-
-
 
 ### Prerequisites
 
@@ -50,126 +22,6 @@ agentcred/
 - Rust & Solana CLI ([Install](https://docs.solana.com/cli/install-solana-cli-tools))
 - Anchor Framework ([Install](https://www.anchor-lang.com/docs/installation))
 - Phantom or Solflare wallet
-
-### Installation
-
-
-
-
-
-
-
-```bash
-# Clone the repository
-git clone <YOUR_GIT_URL>
-cd agentcred
-
-
-
-# Install dependencies
-npm install
-
-# Build Anchor contracts
-cd anchor && anchor build
-cd ..
-
-# Run tests
-npm run anchor:test
-
-# Start frontend
-npm run dev
-```
-
-
-
-
-
-
-## 🔧 Smart Contract Deployment
-
-
-
-
-### 1. Configure Wallet
-
-
-```bash
-# Set Solana to devnet
-solana config set --url devnet
-
-
-
-# Check wallet balance
-solana balance
-
-# Airdrop if needed (devnet only)
-solana airdrop 2
-```
-
-### 2. Deploy Contract
-
-```bash
-# Option 1: Use deployment script (recommended)
-npm run anchor:deploy
-
-# Option 2: Manual deployment
-cd anchor
-anchor build
-anchor deploy
-```
-
-The script will:
-- ✅ Build the program
-- ✅ Deploy to devnet
-- ✅ Display program ID and explorer link
-- ✅ Show next steps
-
-### 3. Initialize Registry
-
-```bash
-# Initialize the global agent registry (one-time only)
-npm run anchor:init-registry
-```
-
-This creates the PDA that tracks all registered agents.
-
-### 4. Update Program ID
-
-After deployment, update `src/lib/solana.ts` with your deployed program ID:
-
-```typescript
-export const AGENT_PAY_PROGRAM_ID = new PublicKey('YOUR_DEPLOYED_PROGRAM_ID');
-```
-
-## 🧪 Testing
-
-### Run Contract Tests
-
-```bash
-# Full test suite with coverage
-npm run anchor:test
-
-# Tests include:
-# ✅ Registry initialization
-# ✅ Agent registration
-# ✅ Daily limit updates
-# ✅ User → Agent Payments
-# ✅ Agent → Recipient payments (instant)
-# ✅ Payment requests and approvals
-# ✅ Agent deactivation
-# ✅ Daily limit enforcement
-# ✅ Security validations
-```
-
-### Test Results
-
-All tests validate:
-- Smart contract logic
-- PDA derivations
-- Authorization checks
-- USDC token transfers
-- Daily limit resets
-- Payment approval workflows
 
 ## 📚 Documentation
 
@@ -321,47 +173,6 @@ app.post('/webhook/payment', async (req, res) => {
 | Throughput | 65,000+ TPS |
 | Uptime SLA | 99.9% |
 
-## 🌐 Environment Setup
-
-Create `.env.local` for local development:
-
-```env
-VITE_SOLANA_NETWORK=devnet
-VITE_AGENT_PAY_PROGRAM_ID=54ZZfUHiT4AM3nvnipZzJWDumVdXTmdMQuSb4Yc2TzUg
-VITE_USDC_MINT=EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v
-```
-
-<!-- For production (mainnet):
-
-```env
-VITE_SOLANA_NETWORK=mainnet-beta
-VITE_AGENT_PAY_PROGRAM_ID=<YOUR_MAINNET_PROGRAM_ID>
-VITE_USDC_MINT=EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v -->
-```
-
-## 📦 Deployment
-
-### Frontend
-
-```bash
-# Build for production
-npm run build
-
-# Deploy via Lovable
-# Visit: https://lovable.dev/projects/87eb1515-2a69-4596-b8c8-d07e3be303f0
-# Click: Share -> Publish
-```
-
-### Smart Contracts
-
-```bash
-# Deploy to devnet
-npm run anchor:deploy
-
-# For mainnet deployment:
-solana config set --url mainnet-beta
-cd anchor && anchor build && anchor deploy
-```
 
 ## 🛣️ Roadmap
 
