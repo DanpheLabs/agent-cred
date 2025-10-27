@@ -75,9 +75,21 @@ export const Navbar = () => {
           >
             Docs
           </Link>
+          <Link 
+            to="/waitlist" 
+            className={`text-sm font-medium transition-colors ${isActive('/waitlist') ? 'text-white font-normal' : 'text-muted-foreground hover:text-foreground'}`}
+          >
+            Waitlist
+          </Link>
         </div>
 
-        <WalletMultiButton className="" />
+<WalletMultiButton
+  style={{
+    background: 'var(--gradient-primary)',
+    borderRadius: "0",   // 👈 makes it squared
+    color: "white",
+  }}
+/>
       </div>
     </nav>
   );

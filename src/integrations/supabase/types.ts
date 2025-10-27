@@ -16,190 +16,112 @@ export type Database = {
     Tables: {
       agents: {
         Row: {
-          balance: number | null
           coldkey: string
-          created_at: string | null
-          daily_limit: number
-          daily_spent: number | null
-          endpoint: string
+          created_at: string
+          daily_limit_usdc: number
+          endpoint: string | null
           hotkey: string
           id: string
-          last_reset_date: string | null
-          name: string
-          status: string | null
-          total_received: number | null
-          total_sent: number | null
-          tx_signature: string | null
+          is_active: boolean
+          name: string | null
+          total_received: number
+          total_spent: number
+          updated_at: string
           wallet_address: string
         }
         Insert: {
-          balance?: number | null
           coldkey: string
-          created_at?: string | null
-          daily_limit: number
-          daily_spent?: number | null
-          endpoint: string
+          created_at?: string
+          daily_limit_usdc?: number
+          endpoint?: string | null
           hotkey: string
-          id: string
-          last_reset_date?: string | null
-          name: string
-          status?: string | null
-          total_received?: number | null
-          total_sent?: number | null
-          tx_signature?: string | null
+          id?: string
+          is_active?: boolean
+          name?: string | null
+          total_received?: number
+          total_spent?: number
+          updated_at?: string
           wallet_address: string
         }
         Update: {
-          balance?: number | null
           coldkey?: string
-          created_at?: string | null
-          daily_limit?: number
-          daily_spent?: number | null
-          endpoint?: string
+          created_at?: string
+          daily_limit_usdc?: number
+          endpoint?: string | null
           hotkey?: string
           id?: string
-          last_reset_date?: string | null
-          name?: string
-          status?: string | null
-          total_received?: number | null
-          total_sent?: number | null
-          tx_signature?: string | null
-          wallet_address?: string
-        }
-        Relationships: []
-      }
-      api_keys: {
-        Row: {
-          agent_hotkey: string
-          agent_id: string
-          agent_name: string
-          created_at: string | null
-          id: string
-          is_active: boolean | null
-          key: string
-          last_used: string | null
-          name: string
-          request_count: number | null
-          wallet_address: string
-        }
-        Insert: {
-          agent_hotkey: string
-          agent_id: string
-          agent_name: string
-          created_at?: string | null
-          id: string
-          is_active?: boolean | null
-          key: string
-          last_used?: string | null
-          name: string
-          request_count?: number | null
-          wallet_address: string
-        }
-        Update: {
-          agent_hotkey?: string
-          agent_id?: string
-          agent_name?: string
-          created_at?: string | null
-          id?: string
-          is_active?: boolean | null
-          key?: string
-          last_used?: string | null
-          name?: string
-          request_count?: number | null
-          wallet_address?: string
-        }
-        Relationships: []
-      }
-      payment_requests: {
-        Row: {
-          agent_id: string
-          agent_name: string
-          amount: number
-          coldkey: string
-          hotkey: string
-          id: string
-          processed_at: string | null
-          purpose: string | null
-          recipient: string
-          requested_at: string | null
-          status: string | null
-          tx_signature: string | null
-          wallet_address: string
-        }
-        Insert: {
-          agent_id: string
-          agent_name: string
-          amount: number
-          coldkey: string
-          hotkey: string
-          id: string
-          processed_at?: string | null
-          purpose?: string | null
-          recipient: string
-          requested_at?: string | null
-          status?: string | null
-          tx_signature?: string | null
-          wallet_address: string
-        }
-        Update: {
-          agent_id?: string
-          agent_name?: string
-          amount?: number
-          coldkey?: string
-          hotkey?: string
-          id?: string
-          processed_at?: string | null
-          purpose?: string | null
-          recipient?: string
-          requested_at?: string | null
-          status?: string | null
-          tx_signature?: string | null
+          is_active?: boolean
+          name?: string | null
+          total_received?: number
+          total_spent?: number
+          updated_at?: string
           wallet_address?: string
         }
         Relationships: []
       }
       transactions: {
         Row: {
-          agent_id: string | null
+          agent_coldkey: string | null
+          agent_hotkey: string | null
           amount: number
+          created_at: string
           description: string | null
           from_address: string
           id: string
-          request_id: string | null
-          status: string | null
-          timestamp: string | null
+          status: string
           to_address: string
-          tx_signature: string | null
+          transaction_hash: string
           type: string
-          wallet_address: string
         }
         Insert: {
-          agent_id?: string | null
+          agent_coldkey?: string | null
+          agent_hotkey?: string | null
           amount: number
+          created_at?: string
           description?: string | null
           from_address: string
-          id: string
-          request_id?: string | null
-          status?: string | null
-          timestamp?: string | null
+          id?: string
+          status?: string
           to_address: string
-          tx_signature?: string | null
+          transaction_hash: string
           type: string
-          wallet_address: string
         }
         Update: {
-          agent_id?: string | null
+          agent_coldkey?: string | null
+          agent_hotkey?: string | null
           amount?: number
+          created_at?: string
           description?: string | null
           from_address?: string
           id?: string
-          request_id?: string | null
-          status?: string | null
-          timestamp?: string | null
+          status?: string
           to_address?: string
-          tx_signature?: string | null
+          transaction_hash?: string
           type?: string
-          wallet_address?: string
+        }
+        Relationships: []
+      }
+      waitlist: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          name: string
+          use_case: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          name: string
+          use_case?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string
+          use_case?: string | null
         }
         Relationships: []
       }
@@ -208,7 +130,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      set_wallet_context: { Args: { wallet_addr: string }; Returns: undefined }
+      [_ in never]: never
     }
     Enums: {
       [_ in never]: never

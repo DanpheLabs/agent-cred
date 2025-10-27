@@ -18,6 +18,7 @@ import DocsGasless from "./pages/DocsGasless";
 import DocsHTTP402 from "./pages/DocsHTTP402";
 import DocsMonitoring from "./pages/DocsMonitoring";
 import UseCases from "./pages/UseCases";
+import WaitList from "./pages/Waitlist";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -44,6 +45,7 @@ const App = () => (
             <Route path="/docs/http-402" element={<DocsHTTP402 />} />
             <Route path="/docs/monitoring" element={<DocsMonitoring />} />
             <Route path="/use-cases" element={<UseCases />} />
+            <Route path="/waitlist" element={<WaitList />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
