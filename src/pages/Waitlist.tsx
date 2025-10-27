@@ -70,23 +70,18 @@ const Waitlist = () => {
       <Navbar />
       <main className="container mx-auto px-4 sm:px-6 py-16 sm:py-24">
         <div className="max-w-2xl mx-auto">
-          <div className="text-center mb-10">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-normal mb-4">
+          <div className="text-center mb-5">
+            <h1 className="text-3xl sm:text-3xl md:text-3xl font-normal mb-4">
               Join the <span className="gradient-text">Waitlist</span>
             </h1>
-            <p className="text-muted-foreground text-lg">
+            <p className="text-muted-foreground text-sm">
               Be the first to know when we launch new features and get early access to AgentCred.
             </p>
           </div>
 
           <Card className="glass border-primary/20">
-            <CardHeader>
-              <CardTitle className="text-2xl font-normal">Sign Up</CardTitle>
-              <CardDescription>
-                Fill out the form below to join our waitlist
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
+    
+            <CardContent className="pt-5">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="space-y-2">
                   <Label htmlFor="name">Name</Label>
