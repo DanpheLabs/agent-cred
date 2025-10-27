@@ -26,25 +26,29 @@ await sdk.payAgent({
       <main className="pt-8 px-6 pb-20">
         <div className="container mx-auto max-w-7xl">
           {/* <h1 className="text-4xl font-normal mb-8">Developer Documentation</h1> */}
-          
+
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
             <div className="lg:col-span-1">
               <DocsSidebar />
             </div>
-            
+
             <div className="lg:col-span-3">
               <Card className="glass p-8  border-border/50">
                 <h2 className="text-xl font-normal mb-4">Welcome to AgentCred</h2>
                 <p className="text-sm text-muted-foreground mb-6">
-                  Complete documentation for integrating autonomous agent wallet in your application.
+                  Complete documentation for integrating autonomous agent wallet in your application.{' '}
+                  <a href="https://github.com/DanpheLabs/agent-cred" target="_blank" rel="noopener noreferrer" className="underline text-primary">
+                    GitHub
+                  </a>
                 </p>
-                
+
+
                 <div className="space-y-6">
                   <section>
                     <h3 className="text-xl font-normal mb-3">What is AgentCred?</h3>
                     <p className="text-muted-foreground text-sm leading-relaxed">
-                      AgentCred is a payment infrastructure built specifically for AI agents on Solana. 
-                      It enables autonomous payments with built-in security through the hotkey/coldkey architecture, 
+                      AgentCred is a payment infrastructure built specifically for AI agents on Solana.
+                      It enables autonomous payments with built-in security through the hotkey/coldkey architecture,
                       real-time balance monitoring, and robust sdk for web2 applications.
                     </p>
                   </section>
@@ -73,13 +77,13 @@ await sdk.payAgent({
                       <div className="p-4 glass border border-accent/20 ">
                         <h4 className="font-normal mb-2">📡 Fully decentralized and transparent</h4>
                         <p className="text-sm text-muted-foreground">
-                           Every transaction on-chain. No middlemen.
+                          Every transaction on-chain. No middlemen.
                         </p>
                       </div>
                     </div>
                   </section>
 
-         
+
                   <section>
                     <h3 className="text-xl font-normal mb-3">Core Concepts</h3>
                     <ul className="space-y-2 text-muted-foreground  text-sm">
