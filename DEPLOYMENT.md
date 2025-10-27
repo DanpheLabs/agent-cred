@@ -1,7 +1,7 @@
 # AgentCred System - Deployment Guide
 
 ## Overview
-This document provides instructions for deploying and running the AgentCred system, which enables secure AI agent credments on Solana.
+This document provides instructions for deploying and running the AgentCred system, which enables secure AI agent wallet on Solana.
 
 ## Prerequisites
 - Node.js v18+

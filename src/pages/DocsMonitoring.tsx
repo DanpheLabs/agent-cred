@@ -19,7 +19,7 @@ export default function DocsMonitoring() {
               <Card className="glass p-8  border-border/50">
                 <h2 className="text-xl font-normal mb-4">Real-time Transaction Monitoring</h2>
                 <p className="text-sm text-sm text-muted-foreground mb-6">
-                  AgentCred runs a light client that monitors the Solana blockchain for agent credments 
+                  AgentCred runs a light client that monitors the Solana blockchain for agent wallet
                   and delivers instant notifications.
                 </p>
                 
@@ -130,18 +130,7 @@ function verifyWebhook(payload, signature, secret) {
 }`}</code>
                         </pre>
                       </div>
-                      <div className="p-4 border border-secondary/20  bg-secondary/5">
-                        <h4 className="font-normal mb-2">🔄 Retry Logic</h4>
-                        <p className="text-sm text-sm text-muted-foreground">
-                          Failed webhooks are retried with exponential backoff: 2s, 4s, 8s, 16s, 32s
-                        </p>
-                      </div>
-                      <div className="p-4 border border-accent/20  bg-accent/5">
-                        <h4 className="font-normal mb-2">📝 Idempotency</h4>
-                        <p className="text-sm text-sm text-muted-foreground">
-                          Use transaction signature as idempotency key to prevent duplicate processing
-                        </p>
-                      </div>
+                   
                     </div>
                   </section>
 
@@ -163,53 +152,6 @@ function verifyWebhook(payload, signature, secret) {
                     </div>
                   </section>
 
-                  <section>
-                    <h3 className="text-lg font-normal mb-3">Implementation Guide</h3>
-                    <pre className="text-sm bg-black/50 p-4  overflow-x-auto">
-                      <code className="text-sm">{`// Express.js webhook handler
-import express from 'express';
-import { verifyWebhook } from './utils';
-
-const app = express();
-app.use(express.json());
-
-// Store processed transactions to prevent duplicates
-const processedTxs = new Set();
-
-app.post('/webhook/payment', async (req, res) => {
-  const signature = req.headers['x-agentcred-signature'];
-  const payload = req.body;
-  
-  // 1. Verify signature
-  if (!verifyWebhook(payload, signature, process.env.WEBHOOK_SECRET)) {
-    return res.status(401).json({ error: 'Invalid signature' });
-  }
-  
-  // 2. Check idempotency
-  const txSignature = payload.transaction.signature;
-  if (processedTxs.has(txSignature)) {
-    return res.status(200).json({ message: 'Already processed' });
-  }
-  
-  // 3. Process payment
-  try {
-    await processPayment({
-      serviceId: payload.transaction.memo,
-      amount: payload.transaction.amount,
-      sender: payload.transaction.sender
-    });
-    
-    processedTxs.add(txSignature);
-    res.json({ success: true });
-  } catch (error) {
-    console.error('Payment processing failed:', error);
-    res.status(500).json({ error: 'Processing failed' });
-  }
-});
-
-app.listen(3000);`}</code>
-                    </pre>
-                  </section>
                 </div>
               </Card>
             </div>

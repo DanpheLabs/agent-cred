@@ -41,7 +41,7 @@ export const Dashboard = () => {
         <div className="flex items-center justify-between mb-8">
           <div>
             <h2 className="text-3xl font-normal mb-2">Dashboard</h2>
-            <p className="text-muted-foreground">Manage your AI agent credments</p>
+            <p className="text-muted-foreground">Manage your AI Agent Payments</p>
           </div>
           <div className="flex gap-3">
     

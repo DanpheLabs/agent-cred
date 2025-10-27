@@ -153,7 +153,7 @@ npm run anchor:test
 # ✅ Registry initialization
 # ✅ Agent registration
 # ✅ Daily limit updates
-# ✅ User → Agent credments
+# ✅ User → Agent Payments
 # ✅ Agent → Recipient payments (instant)
 # ✅ Payment requests and approvals
 # ✅ Agent deactivation

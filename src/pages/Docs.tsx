@@ -36,7 +36,7 @@ await sdk.payAgent({
               <Card className="glass p-8  border-border/50">
                 <h2 className="text-xl font-normal mb-4">Welcome to AgentCred</h2>
                 <p className="text-sm text-muted-foreground mb-6">
-                  Complete documentation for integrating autonomous agent credments in your application.
+                  Complete documentation for integrating autonomous agent wallet in your application.
                 </p>
                 
                 <div className="space-y-6">
@@ -45,7 +45,7 @@ await sdk.payAgent({
                     <p className="text-muted-foreground text-sm leading-relaxed">
                       AgentCred is a payment infrastructure built specifically for AI agents on Solana. 
                       It enables autonomous payments with built-in security through the hotkey/coldkey architecture, 
-                      real-time balance monitoring, and gasless transaction support.
+                      real-time balance monitoring, and robust sdk for web2 applications.
                     </p>
                   </section>
 
@@ -59,9 +59,9 @@ await sdk.payAgent({
                         </p>
                       </div>
                       <div className="p-4 glass border border-secondary/20 ">
-                        <h4 className="font-normal mb-2">⚡ Gasless Transactions</h4>
+                        <h4 className="font-normal mb-2">⚡ Works off-chain with on-chain security</h4>
                         <p className="text-sm text-muted-foreground">
-                          Using HTTP 402 protocol, agents can receive payments without gas fees
+                          Agents transact safely from any environment.
                         </p>
                       </div>
                       <div className="p-4 glass border border-accent/20 ">
@@ -70,24 +70,16 @@ await sdk.payAgent({
                           Light client monitors on-chain transactions and notifies agents instantly
                         </p>
                       </div>
+                      <div className="p-4 glass border border-accent/20 ">
+                        <h4 className="font-normal mb-2">📡 Fully decentralized and transparent</h4>
+                        <p className="text-sm text-muted-foreground">
+                           Every transaction on-chain. No middlemen.
+                        </p>
+                      </div>
                     </div>
                   </section>
 
-                  <section>
-                    <h3 className="text-xl font-normal mb-3">Quick Start</h3>
-                    <SyntaxHighlighter 
-                      language="typescript" 
-                      style={vscDarkPlus}
-                      customStyle={{
-                        borderRadius: '0.5rem',
-                        padding: '1.5rem',
-                        fontSize: '0.875rem'
-                      }}
-                    >
-                      {quickStartCode}
-                    </SyntaxHighlighter>
-                  </section>
-
+         
                   <section>
                     <h3 className="text-xl font-normal mb-3">Core Concepts</h3>
                     <ul className="space-y-2 text-muted-foreground  text-sm">

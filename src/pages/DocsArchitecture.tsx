@@ -78,16 +78,7 @@ export default function DocsArchitecture() {
                       <div className="p-6 bg-black/30  border border-primary/20">
                         <h4 className="font-normal mb-3 text-primary">Flow 1: User → Agent</h4>
                         <pre className="text-sm text-muted-foreground overflow-x-auto">
-{`┌─────────┐         USDC          ┌──────────┐
-│  User   │ ───────────────────▶   │ Coldkey  │
-└─────────┘                         └──────────┘
-                                         │
-                                         │ Notification
-                                         ▼
-                                    ┌──────────┐
-                                    │  Agent   │
-                                    └──────────┘
-
+{`
 • Direct USDC transfer to agent's coldkey
 • No approval needed
 • Agent receives webhook notification
@@ -98,16 +89,7 @@ export default function DocsArchitecture() {
                       <div className="p-6 bg-black/30  border border-secondary/20">
                         <h4 className="font-normal mb-3 text-green-400">Flow 2: Agent → Recipient (Auto)</h4>
                         <pre className="text-sm text-muted-foreground overflow-x-auto">
-{`┌─────────┐         Request        ┌──────────┐
-│ Hotkey  │ ───────────────────▶   │ Coldkey  │
-└─────────┘                         └──────────┘
-                                         │
-                                         │ USDC (if within limit)
-                                         ▼
-                                    ┌──────────┐
-                                    │Recipient │
-                                    └──────────┘
-
+{`
 • Hotkey initiates payment
 • Smart contract checks daily limit
 • If within limit: instant transfer
@@ -118,22 +100,7 @@ export default function DocsArchitecture() {
                       <div className="p-6 bg-black/30  border border-accent/20">
                         <h4 className="font-normal mb-3 text-accent">Flow 3: Agent → Recipient (Approval)</h4>
                         <pre className="text-sm text-muted-foreground overflow-x-auto">
-{`┌─────────┐      Create Request     ┌──────────────┐
-│ Hotkey  │ ────────────────────▶   │ On-Chain PDA │
-└─────────┘                          └──────────────┘
-                                           │
-                                           │ Notification
-                                           ▼
-                                      ┌──────────┐
-                                      │ Coldkey  │
-                                      └──────────┘
-                                           │
-                                           │ Approve/Reject
-                                           ▼
-                                      ┌──────────┐
-                                      │Recipient │
-                                      └──────────┘
-
+{`
 • Hotkey creates payment request on-chain
 • Coldkey receives notification
 • Coldkey approves or rejects

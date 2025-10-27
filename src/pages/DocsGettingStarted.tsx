@@ -148,7 +148,7 @@ app.post('/webhook/payment', async (req, res) => {
                   </section>
 
                   <section>
-                    <h3 className="text-xl font-normal mb-3">7. Make Agent Credments</h3>
+                    <h3 className="text-xl font-normal mb-3">7. Make Agent Payments</h3>
                     <p className="text-sm text-muted-foreground mb-3">
                       Your agent can send payments to other addresses
                     </p>
