@@ -60,7 +60,6 @@ import { AgentCredSDK } from 'agentcred-sdk';
 
 export default function PaymentForm() {
   const [amount, setAmount] = useState('');
-  const [loading, setLoading] = useState(false);
   const sdk = new AgentCredSDK({ 
     apiKey: process.env.agentcred_KEY 
   });

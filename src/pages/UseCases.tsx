@@ -74,7 +74,7 @@ export default function UseCases() {
           <div className="text-center mb-12">
             <h1 className="text-5xl font-normal mb-4 text-white">Use Cases</h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Discover how AgentCred's hotkey/coldkey architecture powers secure, autonomous payment systems across diverse applications
+              Discover how AgentCred's hotkey/coldkey architecture powers secure and autonomous payment systems across diverse applications
             </p>
           </div>
 
